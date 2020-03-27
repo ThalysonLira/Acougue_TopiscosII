@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+			.ui-panelgrid.form-elements .ui-grc-2 {
+				padding-left: 60px;
+			}
+	
+			@media ( max-width :1024px) {
+				.ui-panelgrid.form-elements .ui-grc-2 {
+					padding-left: 20px;
+				}
+			}
+
+			@media ( max-width :640px) {
+				.ui-panelgrid.form-elements .ui-grc-2 {
+					padding-left: 6px;
+				}
+			}
+
+			.dialogDemo label {
+				line-height: 2.1em;
+			}
+		</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="images/loading.gif" />
+		</p:dialog>
+
+		<!-- Conteúdo -->
+
+		<section id="sobre" class="layout-content">
+			<h2>SOBRE</h2>
+			<p>Somos uma empresa voltada a ...</p>
+			<a href="#contato" class="botao">ENTRAR EM CONTATO</a>
+		</section>
+
+		<section id="contato" class="layout-content">
+			<h2>CONTATO</h2>
+			<p>Entre em contato conosco.</p>
+			<div>
+				<img src="https://img.icons8.com/color/48/000000/whatsapp.png"
+					alt="Fone" />
+				<p>
+					<a href="tel:xx00000000">(xx) 0000-0000</a>
+				</p>
+			</div>
+			<div>
+				<img src="https://img.icons8.com/color/48/000000/new-post.png"
+					alt="Mail" />
+				<p>
+					<a href="mailto:acougue.com.br">acougue.com.br</a>
+				</p>
+			</div>
+		</section>
+
+	</ui:define>
+</ui:composition>
