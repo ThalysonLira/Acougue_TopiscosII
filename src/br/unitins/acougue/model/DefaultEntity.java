@@ -2,6 +2,7 @@ package br.unitins.acougue.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ public class DefaultEntity<T> implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment do id no bd
 	private Integer id;
+	
 
 	public Integer getId() {
 		return id;
