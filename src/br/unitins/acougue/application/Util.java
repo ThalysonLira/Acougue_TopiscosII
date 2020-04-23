@@ -8,7 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class Util {
 
 	public static void main(String args[]) {
-
+		System.out.println("Hello");
 	}
 
 	public static String hashSHA256(String valor) {
