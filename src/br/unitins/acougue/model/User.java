@@ -20,6 +20,9 @@ public class User extends DefaultEntity<User>{
 	
 	@Temporal(TemporalType.DATE)
 	private Date creationDate;
+	
+	@Column(nullable = false)
+	private Profile profile;
 
 	public String getEmail() {
 		return email;
