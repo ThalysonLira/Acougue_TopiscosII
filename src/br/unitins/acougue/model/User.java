@@ -12,7 +12,7 @@ public class User extends DefaultEntity<User>{
 
 	private static final long serialVersionUID = 6179265536423951695L;
 	
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 100, unique = true)
 	private String email;
 	
 	@Column(nullable = false, length = 20)
@@ -23,6 +23,10 @@ public class User extends DefaultEntity<User>{
 	
 	@Column(nullable = false)
 	private Profile profile;
+	
+	public User() {
+		super();
+	}
 
 	public String getEmail() {
 		return email;

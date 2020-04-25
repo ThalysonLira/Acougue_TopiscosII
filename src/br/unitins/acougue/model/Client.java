@@ -17,7 +17,7 @@ public class Client extends DefaultEntity<Client>{
 	@Column(nullable = false)
 	private String name;
 	
-	@Column(nullable = false, length = 11)
+	@Column(nullable = false, length = 14, unique = true)
 	private String cpf;
 	
 	@Temporal(TemporalType.DATE)

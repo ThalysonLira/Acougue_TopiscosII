@@ -2,26 +2,39 @@ package br.unitins.acougue.controller;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import br.unitins.acougue.factory.JPAFactory;
+import br.unitins.acougue.model.User;
 
 @Named
 @RequestScoped
 public class LoginController {
 
-	private String user;
+	private String email;
 	private String password;
-	
-	public boolean login() {
+
+	public void login() {
 		// TODO Consultar BD
-		System.out.println("Ok");
-		return false;
+//		EntityManager em = JPAFactory.getEntityManager();
+//		Query query = em.createQuery("SELECT u " + "FROM User u " + "WHERE u.email LIKE :email");
+//		query.setParameter("email", "%" + getEmail() + "%");
+//		User user = (User) query.getSingleResult();
+//		
+//		if (user.getPassword().equals(getPassword())) {
+//			System.out.println("Entrou");
+//		} else {
+//			System.out.println("Erro");
+//		}
 	}
 
-	public String getUser() {
-		return user;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

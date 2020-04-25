@@ -51,24 +51,41 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Nome: " onclick="PF('listagem').show();">
-									<p:message for="itNome" escape="false" />
+								<p:commandLink value="Nome: " onclick="PF('list').show();">
+									<p:message for="itName" escape="false" />
 								</p:commandLink>
-								<p:inputText id="itNome" value="#{alunoController.entity.nome}"
+								<p:inputText id="itName" value="#{clientController.entity.name}"
 									required="true" requiredMessage="Informe o nome." />
 
-								<p:outputLabel value="Matricula: ">
-									<p:message for="itMatricula" escape="false" />
+								<p:outputLabel value="Cpf: ">
+									<p:message for="itCpf" escape="false" />
 								</p:outputLabel>
-								<p:inputText id="itMatricula"
-									value="#{alunoController.entity.matricula}" />
+								<p:inputMask id="itCpf" value="#{clientController.entity.cpf}"
+									mask="999.999.999-99" />
 
-								<p:outputLabel value="Data de Aniversário:" />
-								<p:calendar value="#{alunoController.entity.dataAniversario}"
-									pattern="dd/MM/yyyy" />
+								<p:outputLabel value="Data de Nascimento: " />
+								<p:calendar value="#{clientController.entity.birthDate}"
+									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
 
-								<p:outputLabel value="E-mail:" />
-								<p:inputText value="#{alunoController.entity.email}" />
+								<p:outputLabel value="Sexo: " />
+								<p:selectOneListbox id="slbSex"
+									value="#{clientController.entity.sex}" size="1">
+									<f:selectItem itemLabel="Selecione ..." />
+									<f:selectItems value="#{clientController.listSex}" var="sex"
+										itemLabel="#{sex.label}" itemValue="#{sex}" />
+								</p:selectOneListbox>
+
+								<div>
+									<h:outputText value="Cliente acessará o sistema?" />
+									<p:toggleSwitch id="tsUser" value="#{clientController.userCreation}">
+										<p:ajax update="@form" />
+									</p:toggleSwitch>
+								</div>
+								<p:outputLabel value="Email: " rendered="#{clientController.userCreation}" >
+									<p:message for="itEmail" escape="false" />
+								</p:outputLabel>
+								<p:inputText id="itEmail" rendered="#{clientController.userCreation}" 
+									value="#{clientController.entity.user.email}" />
 							</p:panelGrid>
 
 						</div>
@@ -77,10 +94,10 @@
 				<p:toolbar>
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
-							update="@form" action="#{alunoController.salvar}" />
+							update="@form" action="#{clientController.salvar}" />
 
 						<p:commandButton value="Limpar" process="@this" update="panel"
-							action="#{alunoController.limpar}">
+							action="#{clientController.limpar}">
 							<p:ajax update="@form" resetValues="true" />
 						</p:commandButton>
 
@@ -89,7 +106,7 @@
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@form" update="panel"
-							action="#{alunoController.excluir}">
+							action="#{clientController.excluir}">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>
@@ -103,36 +120,32 @@
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
 
-			<p:dialog header="Listagem de Alunos" widgetVar="listagem"
-				height="300" width="90%" modal="true" resizable="true">
+			<p:dialog header="Listagem de Clientes" widgetVar="list" height="300"
+				width="90%" modal="true" resizable="true">
 				<p:outputLabel value="Nome: " />
-				<p:inputText id="itFiltro" value="#{alunoController.filtro}" />
+				<p:inputText id="itSearch" value="#{clientController.search}" />
 				<p:commandButton value="Pesquisar"
-					actionListener="#{alunoController.pesquisar}"
-					process="@this itFiltro" update="dtListagem" />
+					actionListener="#{clientController.search}"
+					process="@this itSearch" update="dtList" />
 				<br />
-				<p:dataTable id="dtListagem" var="entity"
-					value="#{alunoController.listaAluno}">
-					<p:column headerText="Id">
-						<h:outputText value="#{entity.id}" />
-					</p:column>
-
+				<p:dataTable id="dtList" var="entity"
+					value="#{clientController.listClient}">
 					<p:column headerText="Nome">
-						<p:commandLink value="#{entity.nome}"
-							actionListener="#{alunoController.editar(entity.id)}"
+						<p:commandLink value="#{entity.name}"
+							actionListener="#{clientController.editar(entity.id)}"
 							process="@this" update="@form" resetValues="true" />
 					</p:column>
 
-					<p:column headerText="Matricula">
-						<h:outputText value="#{entity.matricula}" />
+					<p:column headerText="Cpf">
+						<h:outputText value="#{entity.cpf}" />
 					</p:column>
 
-					<p:column headerText="Data Aniversário">
-						<h:outputText value="#{entity.dataAniversario}" />
+					<p:column headerText="Data de Nascimento">
+						<h:outputLabel value="#{entity.birthDate}" />
 					</p:column>
 
-					<p:column headerText="E-Mail">
-						<h:outputText value="#{entity.email}" />
+					<p:column headerText="Sexo">
+						<h:outputLabel value="#{entity.sex}" />
 					</p:column>
 				</p:dataTable>
 			</p:dialog>
