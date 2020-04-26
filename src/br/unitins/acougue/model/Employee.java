@@ -3,9 +3,11 @@ package br.unitins.acougue.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@Entity
 public class Employee extends DefaultEntity<Employee>{
 
 	private static final long serialVersionUID = 4721400599346259192L;
@@ -15,7 +17,7 @@ public class Employee extends DefaultEntity<Employee>{
 	@Column(nullable = false)
 	private String name;
 	
-	@Column(nullable = false, length = 11)
+	@Column(nullable = false, length = 14, unique = true)
 	private String cpf;
 	
 	@Temporal(TemporalType.DATE)
@@ -40,6 +42,8 @@ public class Employee extends DefaultEntity<Employee>{
 	}
 
 	public User getUser() {
+		if (user == null)
+			user = new User();
 		return user;
 	}
 

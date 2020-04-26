@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+//@Entity
 public class Sale extends DefaultEntity<Sale>{
 
 	private static final long serialVersionUID = 2834281686033039479L;

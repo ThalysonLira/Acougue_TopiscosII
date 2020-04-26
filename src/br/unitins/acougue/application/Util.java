@@ -1,7 +1,10 @@
 package br.unitins.acougue.application;
 
+import java.text.ParseException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.swing.text.MaskFormatter;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -10,9 +13,30 @@ public class Util {
 	public static void main(String args[]) {
 		System.out.println("Hello");
 	}
+	
+	public static String maskCpf(String value) {
+		MaskFormatter mask;
+		try {
+			
+		if (value.length() < 4) {
+			return value;
+		} else if (value.length() < 7) {
+			mask = new MaskFormatter("###.###");
+		} else if (value.length() < 9){
+			mask = new MaskFormatter("###.###.###");
+		} else {
+			mask = new MaskFormatter("###.###.###-##");
+		}
+		
+			mask.setValueContainsLiteralCharacters(false);
+			return mask.valueToString(value).trim();
+		} catch (ParseException e) {
+			return value;
+		}
+	}
 
-	public static String hashSHA256(String valor) {
-		return DigestUtils.sha256Hex(valor);
+	public static String hashSHA256(String value) {
+		return DigestUtils.sha256Hex(value);
 	}
 
 	public static void addMessageInfo(String message) {

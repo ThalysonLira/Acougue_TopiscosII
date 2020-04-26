@@ -1,7 +1,9 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
 public class Provider extends DefaultEntity<Provider>{
 
 	private static final long serialVersionUID = -308678649071787773L;
@@ -22,6 +24,8 @@ public class Provider extends DefaultEntity<Provider>{
 	}
 
 	public User getUser() {
+		if (user == null)
+			user = new User();
 		return user;
 	}
 

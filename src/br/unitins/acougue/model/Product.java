@@ -1,5 +1,8 @@
 package br.unitins.acougue.model;
 
+import javax.persistence.Entity;
+
+//@Entity
 public class Product extends DefaultEntity<Product>{
 
 	private static final long serialVersionUID = -5366950394656130455L;

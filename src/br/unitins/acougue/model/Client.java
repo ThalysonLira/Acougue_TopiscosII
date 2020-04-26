@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.unitins.acougue.application.Util;
+
 @Entity
 public class Client extends DefaultEntity<Client>{
 
@@ -39,6 +41,8 @@ public class Client extends DefaultEntity<Client>{
 	}
 
 	public User getUser() {
+		if (user == null)
+			user = new User();
 		return user;
 	}
 

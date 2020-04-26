@@ -1,7 +1,9 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
+//@Entity
 public class ItemSale extends DefaultEntity<ItemSale>{
 
 	private static final long serialVersionUID = 2392701376843797285L;

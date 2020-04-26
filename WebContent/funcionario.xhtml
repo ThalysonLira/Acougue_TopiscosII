@@ -38,12 +38,12 @@
 			<p:graphicImage name="/images/loading.gif" />
 		</p:dialog>
 
-		<h:form id="form">
+		<h:form>
 			<p:growl id="growl" globalOnly="false" />
 			<p:panel id="panel">
 				<f:facet name="header">
 					<div align="center">
-						<h1>Cadastro de Cliente</h1>
+						<h1>Cadastro de Funcionários</h1>
 					</div>
 				</f:facet>
 				<div class="ui-g ui-fluid">
@@ -54,42 +54,53 @@
 								<p:commandLink value="Nome: " onclick="PF('list').show();">
 									<p:message for="itName" escape="false" />
 								</p:commandLink>
-								<p:inputText id="itName" value="#{clientController.entity.name}"
-									required="true" requiredMessage="Informe o nome." />
+								<p:inputText id="itName"
+									value="#{employeeController.entity.name}" required="true"
+									requiredMessage="Informe o nome." />
 
 								<p:outputLabel value="Cpf: ">
 									<p:message for="itCpf" escape="false" />
 								</p:outputLabel>
-								<p:inputMask id="itCpf" value="#{clientController.entity.cpf}"
+								<p:inputMask id="itCpf" value="#{employeeController.entity.cpf}"
 									mask="999.999.999-99" />
 
 								<p:outputLabel value="Data de Nascimento: " />
-								<p:calendar value="#{clientController.entity.birthDate}"
+								<p:calendar value="#{employeeController.entity.birthDate}"
 									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
 
 								<p:outputLabel value="Sexo: " />
 								<p:selectOneMenu id="slbSex"
-									value="#{clientController.entity.sex}" size="1">
+									value="#{employeeController.entity.sex}" size="1">
 									<f:selectItem itemLabel="Selecione ..." itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{clientController.listSex}" var="sex"
+									<f:selectItems value="#{employeeController.listSex}" var="sex"
 										itemLabel="#{sex.label}" itemValue="#{sex}" />
 								</p:selectOneMenu>
 
+								<p:outputLabel value="Situação: " />
+								<p:selectOneMenu id="slbSituation"
+									value="#{employeeController.entity.situation}" size="1">
+									<f:selectItem itemLabel="Selecione ..." itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{employeeController.listSituation}"
+										var="situation" itemLabel="#{situation.label}"
+										itemValue="#{situation}" />
+								</p:selectOneMenu>
+
 								<div>
-									<h:outputText value="Cliente acessará o sistema?" />
+									<h:outputText value="Funcionário acessará o sistema?" />
 									<p:toggleSwitch id="tsUser"
-										value="false">
+										value="#{employeeController.userCreation}">
 										<p:ajax update="@form" />
 									</p:toggleSwitch>
 								</div>
 								<p:outputLabel value="Email: "
-									rendered="tsUser">
+									rendered="#{employeeController.userCreation}">
 									<p:message for="itEmail" escape="false" />
 								</p:outputLabel>
 								<p:inputText id="itEmail"
-									rendered="false" immediate="true"
-									value="#{clientController.entity.user.email}" />
+									rendered="#{employeeController.userCreation}"
+									value="#{employeeController.entity.user.email}" />
 							</p:panelGrid>
 
 						</div>
@@ -98,10 +109,10 @@
 				<p:toolbar>
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
-							update="@form" action="#{clientController.save}" />
+							update="@form" action="#{employeeController.save}" />
 
 						<p:commandButton value="Limpar" process="@this" update="panel"
-							action="#{clientController.clear}">
+							action="#{employeeController.clear}">
 							<p:ajax update="@form" resetValues="true" />
 						</p:commandButton>
 
@@ -110,7 +121,7 @@
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@form" update="panel"
-							action="#{clientController.delete}">
+							action="#{employeeController.delete}">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>
@@ -124,19 +135,19 @@
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
 
-			<p:dialog header="Listagem de Clientes" widgetVar="list" height="300"
-				width="90%" modal="true" resizable="true">
+			<p:dialog header="Listagem de Funcionários" widgetVar="list"
+				height="300" width="90%" modal="true" resizable="true">
 				<p:outputLabel value="Nome: " />
-				<p:inputText id="itSearch" value="#{clientController.search}" />
+				<p:inputText id="itSearch" value="#{employeeController.search}" />
 				<p:commandButton value="Pesquisar"
-					actionListener="#{clientController.search}"
+					actionListener="#{employeeController.search}"
 					process="@this itSearch" update="dtList" />
 				<br />
 				<p:dataTable id="dtList" var="entity"
-					value="#{clientController.listClient}">
+					value="#{employeeController.listEmployee}">
 					<p:column headerText="Nome">
 						<p:commandLink value="#{entity.name}"
-							actionListener="#{clientController.edit(entity.id)}"
+							actionListener="#{employeeController.edit(entity.id)}"
 							process="@this" update="@form" resetValues="true" />
 					</p:column>
 
@@ -150,6 +161,10 @@
 
 					<p:column headerText="Sexo">
 						<h:outputLabel value="#{entity.sex}" />
+					</p:column>
+
+					<p:column headerText="Situação">
+						<h:outputLabel value="#{entity.situation}" />
 					</p:column>
 				</p:dataTable>
 			</p:dialog>

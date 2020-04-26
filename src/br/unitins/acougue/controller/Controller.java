@@ -20,7 +20,7 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 		super();
 	}
 
-	public void salvar() {
+	public void save() {
 		Repository<T> r = new Repository<T>();
 	
 		try {
@@ -34,11 +34,11 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 			return;
 		}
 	
-		this.limpar();
+		this.clear();
 		Util.addMessageInfo("Cadastro realizado com sucesso.");
 	}
 
-	public void excluir() {
+	public void delete() {
 		Repository<T> r = new Repository<T>();
 	
 		try {
@@ -52,16 +52,16 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 			return;
 		}
 	
-		this.limpar();
+		this.clear();
 		Util.addMessageInfo("Exclusão realizada com sucesso.");
 	}
 	
-	public void editar(int id) {
+	public void edit(int id) {
 		EntityManager em = JPAFactory.getEntityManager();
 		setEntity((T) em.find(getEntity().getClass(), id));
 	}
 	
-	public void limpar() {
+	public void clear() {
 		setEntity(null);
 	}
 

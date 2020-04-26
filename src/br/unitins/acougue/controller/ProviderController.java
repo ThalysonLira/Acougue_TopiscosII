@@ -1,6 +1,5 @@
 package br.unitins.acougue.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -10,46 +9,40 @@ import javax.persistence.Query;
 
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.factory.JPAFactory;
-import br.unitins.acougue.model.Client;
-import br.unitins.acougue.model.Sex;
+import br.unitins.acougue.model.Provider;
+import br.unitins.acougue.model.Situation;
 
 @Named
 @ViewScoped
-public class ClientController extends Controller<Client> {
+public class ProviderController extends Controller<Provider>{
 
-	private static final long serialVersionUID = -1443526557455688665L;
+	private static final long serialVersionUID = 3679724066632322580L;
 
 	private String search;
-	private List<Client> listClient;
+	private List<Provider> listProvider;
 	private boolean userCreation;
 	
 	public void search() {
 		EntityManager em = JPAFactory.getEntityManager();
 		Query query = em.createQuery(
-				"SELECT c "
-			  + "FROM Client c "
-			  + "WHERE upper(c.name) LIKE upper(:search)"
-			  + "OR c.cpf LIKE :search");
+				"SELECT p "
+			  + "FROM Provider p "
+			  + "WHERE upper(p.name) LIKE upper(:search)"
+			  + "OR p.cnpj LIKE :search");
 		query.setParameter("search", "%"+ getSearch() + "%");
-		query.setParameter("search", "%" + Util.maskCpf(search) + "%");
-		listClient = query.getResultList();
+		// TODO Criar maskCnpj
+		//query.setParameter("search", "%" + Util.maskCpf(search) + "%");
+		listProvider = query.getResultList();
 	}
 	
-	public Sex[] getListSex() {
-		return Sex.values();
-	}
-	
-	public boolean renderEmail() {
-		if (userCreation == false)
-			return true;
-		else
-			return false;
+	public Situation[] getListSituation() {
+		return Situation.values();
 	}
 	
 	@Override
-	public Client getEntity() {
+	public Provider getEntity() {
 		if (entity == null)
-			entity = new Client();
+			entity = new Provider();
 		return entity;
 	}
 
@@ -60,7 +53,15 @@ public class ClientController extends Controller<Client> {
 	public void setSearch(String search) {
 		this.search = search;
 	}
-	
+
+	public List<Provider> getListProvider() {
+		return listProvider;
+	}
+
+	public void setListProvider(List<Provider> listProvider) {
+		this.listProvider = listProvider;
+	}
+
 	public boolean isUserCreation() {
 		return userCreation;
 	}
@@ -69,10 +70,4 @@ public class ClientController extends Controller<Client> {
 		this.userCreation = userCreation;
 	}
 
-	public List<Client> getListClient() {
-		if (listClient == null)
-			listClient = new ArrayList<Client>();
-		return listClient;
-	}
-	
 }
