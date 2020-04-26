@@ -8,7 +8,6 @@ public class ItemSale extends DefaultEntity<ItemSale>{
 
 	private static final long serialVersionUID = 2392701376843797285L;
 	
-	@Column(nullable = false)
 	private ItemStock item;
 	
 	@Column(nullable = false)

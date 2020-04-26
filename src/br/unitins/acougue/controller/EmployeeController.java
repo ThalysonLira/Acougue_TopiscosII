@@ -24,6 +24,7 @@ public class EmployeeController extends Controller<Employee> {
 	private List<Employee> listEmployee;
 	private boolean userCreation;
 	
+	// TODO Buscar apenas ativos
 	public void search() {
 		EntityManager em = JPAFactory.getEntityManager();
 		Query query = em.createQuery(

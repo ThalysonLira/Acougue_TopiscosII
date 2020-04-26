@@ -1,0 +1,183 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 60px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.dialogDemo label {
+	line-height: 2.1em;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+		<h:form id="form">
+			<p:growl id="growl" globalOnly="false" />
+			<p:panel id="panel">
+				<f:facet name="header">
+					<div align="center">
+						<h1>Gerenciamento de Estoque</h1>
+					</div>
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<p:commandLink value="Visualizar estoque"
+									onclick="PF('listStock').show();">
+									<p:message for="itProduct" escape="false" />
+								</p:commandLink>
+
+								<p:commandLink value="Produto: "
+									onclick="PF('listProduct').show();">
+									<p:message for="itProduct" escape="false" />
+								</p:commandLink>
+
+								<p:inputText id="itProduct"
+									value="#{itemStockController.entity.name}" readonly="true"
+									requiredMessage="Informe o produto." />
+
+								<p:outputLabel value="Data de Validade: " />
+								<p:calendar value="#{itemStockController.entity.shelfLife}"
+									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
+
+								<p:outputLabel value="Quantidade disponível: " />
+								<p:spinner min="0" prefix="Kg " stepFactor="0.10"
+									value="#{itemStockController.entity.availableQuantity}" />
+
+								<p:outputLabel value="Avaliação: ">
+									<p:message for="itEvaluation" escape="false" />
+								</p:outputLabel>
+								<p:rating id="itEvaluation" readonly="true"
+									value="#{itemStockController.entity.evaluation}" />
+							</p:panelGrid>
+
+						</div>
+					</div>
+				</div>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
+							update="@form" action="#{itemStockController.save}" />
+
+						<p:commandButton value="Limpar" process="@this" update="panel"
+							action="#{itemStockController.clear}">
+							<p:ajax update="@form" resetValues="true" />
+						</p:commandButton>
+
+					</f:facet>
+
+					<f:facet name="right">
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@form" update="panel"
+							action="#{itemStockController.delete}">
+							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</p:panel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+
+			<p:dialog header="Listagem de Produtos" widgetVar="listProduct"
+				height="300" width="90%" modal="true" resizable="true">
+				<p:outputLabel value="Nome: " />
+				<p:inputText id="itSearchProduct"
+					value="#{productController.search}" />
+				<p:commandButton value="Pesquisar"
+					actionListener="#{productController.search}"
+					process="@this itSearchProduct" update="dtListProduct" />
+				<br />
+				<p:dataTable id="dtListProduct" var="entity"
+					value="#{productController.listProduct}">
+					<p:column headerText="Corte">
+						<p:commandLink value="#{entity.cut}"
+							action="#{itemStockController.addProduct(entity)}"
+							process="@this" update="@form" resetValues="true" />
+					</p:column>
+
+					<p:column headerText="Animal">
+						<h:outputText value="#{entity.animal}" />
+					</p:column>
+
+					<p:column headerText="Categoria">
+						<h:outputLabel value="#{entity.category}" />
+					</p:column>
+
+					<p:column headerText="Tipo">
+						<h:outputLabel value="#{entity.type}" />
+					</p:column>
+
+					<p:column headerText="Valor Kg">
+						<h:outputLabel value="#{entity.valueKG}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+			<p:dialog header="Listagem de Estoque" widgetVar="listStock"
+				height="300" width="90%" modal="true" resizable="true">
+				<p:outputLabel value="Nome: " />
+				<p:inputText id="itSearchStock"
+					value="#{itemStockController.search}" />
+				<p:commandButton value="Pesquisar"
+					actionListener="#{itemStockController.search}"
+					process="@this itSearchStock" update="dtListStock" />
+				<br />
+				<p:dataTable id="dtListStock" var="entity"
+					value="#{itemStockController.stock}">
+					<p:column headerText="Corte">
+						<p:commandLink value="#{entity.product.cut}"
+							actionListener="#{itemStockController.edit(entity.id)}"
+							process="@this" update="@form" resetValues="true" />
+					</p:column>
+
+					<p:column headerText="Animal">
+						<h:outputText value="#{entity.product.animal}" />
+					</p:column>
+
+					<p:column headerText="Data de Validade">
+						<h:outputLabel value="#{entity.shelfLife}" />
+					</p:column>
+
+					<p:column headerText="Quantidade">
+						<h:outputLabel value="#{entity.availableQuantity}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

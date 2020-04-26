@@ -22,6 +22,7 @@ public class ProviderController extends Controller<Provider>{
 	private List<Provider> listProvider;
 	private boolean userCreation;
 	
+	// TODO Buscar apenas ativos
 	public void search() {
 		EntityManager em = JPAFactory.getEntityManager();
 		Query query = em.createQuery(
@@ -30,8 +31,7 @@ public class ProviderController extends Controller<Provider>{
 			  + "WHERE upper(p.name) LIKE upper(:search)"
 			  + "OR p.cnpj LIKE :search");
 		query.setParameter("search", "%"+ getSearch() + "%");
-		// TODO Criar maskCnpj
-		//query.setParameter("search", "%" + Util.maskCpf(search) + "%");
+		query.setParameter("search", "%"+ Util.maskCnpj(getSearch()) + "%");
 		listProvider = query.getResultList();
 	}
 	

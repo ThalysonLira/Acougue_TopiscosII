@@ -12,6 +12,7 @@ public class Util {
 
 	public static void main(String args[]) {
 		System.out.println("Hello");
+		System.out.println(maskCnpj("999"));
 	}
 	
 	public static String maskCpf(String value) {
@@ -26,6 +27,29 @@ public class Util {
 			mask = new MaskFormatter("###.###.###");
 		} else {
 			mask = new MaskFormatter("###.###.###-##");
+		}
+		
+			mask.setValueContainsLiteralCharacters(false);
+			return mask.valueToString(value).trim();
+		} catch (ParseException e) {
+			return value;
+		}
+	}
+	
+	public static String maskCnpj(String value) {
+		MaskFormatter mask;
+		try {
+			
+		if (value.length() < 3) {
+			return value;
+		} else if (value.length() < 6) {
+			mask = new MaskFormatter("##.###");
+		} else if (value.length() < 9){
+			mask = new MaskFormatter("##.###.###");
+		} else if (value.length() < 13){
+			mask = new MaskFormatter("##.###.###/####");
+		} else {
+			mask = new MaskFormatter("##.###.###/####-##");
 		}
 		
 			mask.setValueContainsLiteralCharacters(false);
