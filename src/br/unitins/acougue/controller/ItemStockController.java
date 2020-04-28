@@ -29,29 +29,26 @@ public class ItemStockController extends Controller<ItemStock> {
 
 	public void getProductByAnimal() {
 		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT p " + "FROM Product p " + "WHERE upper(p.cut) LIKE upper(:search)"
-				+ "OR upper(p.animal) LIKE upper(:search)");
+		Query query = em.createQuery("SELECT s " + "FROM Stock s " + "WHERE upper(s.product.animal) LIKE upper(:search)");
 		query.setParameter("search", "%" + getSearch() + "%");
 		stock = query.getResultList();
 	}
 
 	public void getProductByType() {
 		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT p " + "FROM Product p " + "WHERE upper(p.cut) LIKE upper(:search)"
-				+ "OR upper(p.animal) LIKE upper(:search)");
+		Query query = em.createQuery("SELECT s " + "FROM Stock s " + "WHERE upper(s.product.type) LIKE upper(:search)");
 		query.setParameter("search", "%" + getSearch() + "%");
 		stock = query.getResultList();
 	}
 
 	public void getProductByCategory() {
 		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT p " + "FROM Product p " + "WHERE upper(p.cut) LIKE upper(:search)"
-				+ "OR upper(p.animal) LIKE upper(:search)");
+		Query query = em.createQuery("SELECT s " + "FROM Stock s " + "WHERE upper(s.product.category) LIKE upper(:search)");
 		query.setParameter("search", "%" + getSearch() + "%");
 		stock = query.getResultList();
 	}
-	
-	public void addProduct(Product p) {
+
+	public void addName(Product p) {
 		entity.setProduct(p);
 		entity.setName(p.getCut() + " - " + p.getAnimal());
 	}

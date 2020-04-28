@@ -10,6 +10,7 @@
 		<class>br.unitins.acougue.model.ItemStock</class>
 		<class>br.unitins.acougue.model.Product</class>
 		<class>br.unitins.acougue.model.Provider</class>
+		<class>br.unitins.acougue.model.Sale</class>
 		<class>br.unitins.acougue.model.User</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url"

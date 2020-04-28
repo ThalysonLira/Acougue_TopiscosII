@@ -1,6 +1,7 @@
 package br.unitins.acougue.application;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class Util {
 
 	public static void main(String args[]) {
-		System.out.println("Hello");
-		System.out.println(maskCnpj("999"));
+
 	}
 	
 	public static String maskCpf(String value) {
@@ -59,7 +59,7 @@ public class Util {
 		}
 	}
 
-	public static String hashSHA256(String value) {
+	public static String encrypt(String value) {
 		return DigestUtils.sha256Hex(value);
 	}
 

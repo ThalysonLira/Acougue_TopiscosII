@@ -8,14 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-//@Entity
+@Entity
 public class Sale extends DefaultEntity<Sale>{
 
 	private static final long serialVersionUID = 2834281686033039479L;
 
-	@Column(nullable = false)
-	private User buyer;
-	private User salesman;
+	private Client buyer;
+	private Employee salesman;
 	
 	@Column(nullable = false)
 	private Double total;
@@ -30,19 +29,19 @@ public class Sale extends DefaultEntity<Sale>{
 		super();
 	}
 
-	public User getBuyer() {
+	public Client getBuyer() {
 		return buyer;
 	}
 
-	public void setBuyer(User buyer) {
+	public void setBuyer(Client buyer) {
 		this.buyer = buyer;
 	}
 
-	public User getSalesman() {
+	public Employee getSalesman() {
 		return salesman;
 	}
 
-	public void setSalesman(User salesman) {
+	public void setSalesman(Employee salesman) {
 		this.salesman = salesman;
 	}
 

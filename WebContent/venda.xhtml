@@ -1,0 +1,201 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 60px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.dialogDemo label {
+	line-height: 2.1em;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+		<h:form id="form">
+			<p:growl id="growl" globalOnly="false" />
+			<p:panel id="panel">
+				<f:facet name="header">
+					<div align="center">
+						<h1>Gerenciamento de Venda</h1>
+					</div>
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<p:commandLink value="Visualizar vendas"
+									onclick="PF('listSale').show();">
+									<p:message for="itBuyer" escape="false" />
+								</p:commandLink>
+
+								<p:commandLink value="Comprador: "
+									onclick="PF('listBuyer').show();">
+									<p:message for="itBuyer" escape="false" />
+								</p:commandLink>
+								<p:inputText id="itBuyer"
+									value="#{saleController.entity.buyer.name}" readonly="true"
+									requiredMessage="Informe o comprador." />
+
+								<p:commandLink value="Produtos: "
+									onclick="PF('listProduct').show();">
+									<p:message for="dtListItem" escape="false" />
+								</p:commandLink>
+								<p:dataTable id="dtListItem" var="entity"
+									value="#{saleController.entity.listSale}">
+									<p:column headerText="Produto">
+										<h:outputLabel value="#{entity.item.name}" />
+									</p:column>
+									<p:column headerText="Valor">
+										<h:outputLabel value="#{entity.value}" />
+									</p:column>
+								</p:dataTable>
+
+								<p:outputLabel value="Valor Total: " />
+								<p:inputText readonly="true"
+									value="#{saleController.entity.total}" />
+
+								<p:outputLabel value="Data de Venda: " />
+								<p:calendar value="#{saleController.entity.saleDate}"
+									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
+							</p:panelGrid>
+
+						</div>
+					</div>
+				</div>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
+							update="@form" action="#{saleController.save}" />
+
+						<p:commandButton value="Limpar" process="@this" update="panel"
+							action="#{saleController.clear}">
+							<p:ajax update="@form" resetValues="true" />
+						</p:commandButton>
+
+					</f:facet>
+
+					<f:facet name="right">
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@form" update="panel" action="#{saleController.delete}">
+							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</p:panel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+
+			<p:dialog header="Listagem de Clientes" widgetVar="listBuyer"
+				height="300" width="90%" modal="true" resizable="true">
+				<p:outputLabel value="Nome: " />
+				<p:inputText id="itSearchBuyer" value="#{clientController.search}" />
+				<p:commandButton value="Pesquisar"
+					actionListener="#{clientController.search}"
+					process="@this itSearchBuyer" update="dtListBuyer" />
+				<br />
+				<p:dataTable id="dtListBuyer" var="entity"
+					value="#{clientController.listClient}">
+					<p:column headerText="Nome">
+						<p:commandLink value="#{entity.name}"
+							action="#{saleController.addBuyer(entity)}" process="@this"
+							update="@form" resetValues="true" />
+					</p:column>
+
+					<p:column headerText="Cpf">
+						<h:outputText value="#{entity.cpf}" />
+					</p:column>
+
+					<p:column headerText="Sexo">
+						<h:outputLabel value="#{entity.sex}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+			<p:dialog header="Listagem de Produtos" widgetVar="listProduct"
+				height="300" width="90%" modal="true" resizable="true">
+				<p:outputLabel value="Nome: " />
+				<p:inputText id="itSearchProduct" value="#{clientController.search}" />
+				<p:commandButton value="Pesquisar"
+					actionListener="#{clientController.search}"
+					process="@this itSearchProduct" update="dtListProduct" />
+				<br />
+				<p:dataTable id="dtListProduct" var="entity"
+					value="#{clientController.listClient}">
+					<p:column headerText="Nome">
+						<p:commandLink value="#{entity.name}"
+							action="#{saleController.addBuyer(entity)}" process="@this"
+							update="@form" resetValues="true" />
+					</p:column>
+
+					<p:column headerText="Cpf">
+						<h:outputText value="#{entity.cpf}" />
+					</p:column>
+
+					<p:column headerText="Sexo">
+						<h:outputLabel value="#{entity.sex}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+			<p:dialog header="Listagem de Vendas" widgetVar="listSale"
+				height="300" width="90%" modal="true" resizable="true">
+				<p:outputLabel value="Nome: " />
+				<p:inputText id="itSearchSale" value="#{saleController.search}" />
+				<p:commandButton value="Pesquisar"
+					actionListener="#{saleController.search}"
+					process="@this itSearchSale" update="dtListSale" />
+				<br />
+				<p:dataTable id="dtListSale" var="entity"
+					value="#{saleController.listSale}">
+					<p:column headerText="Comprador">
+						<p:commandLink value="#{entity.buyer}"
+							actionListener="#{saleController.edit(entity.id)}"
+							process="@this" update="@form" resetValues="true" />
+					</p:column>
+
+					<p:column headerText="Total">
+						<h:outputText value="#{entity.total}" />
+					</p:column>
+
+					<p:column headerText="Data da venda">
+						<h:outputLabel value="#{entity.saleDate}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

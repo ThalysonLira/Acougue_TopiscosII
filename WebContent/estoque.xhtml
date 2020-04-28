@@ -125,7 +125,7 @@
 					value="#{productController.listProduct}">
 					<p:column headerText="Corte">
 						<p:commandLink value="#{entity.cut}"
-							action="#{itemStockController.addProduct(entity)}"
+							action="#{itemStockController.addName(entity)}"
 							process="@this" update="@form" resetValues="true" />
 					</p:column>
 
