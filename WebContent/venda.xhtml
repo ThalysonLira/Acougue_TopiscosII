@@ -69,18 +69,31 @@
 									<p:message for="dtListItem" escape="false" />
 								</p:commandLink>
 								<p:dataTable id="dtListItem" var="entity"
-									value="#{saleController.entity.listSale}">
+									value="#{saleController.entity.listPurchase}">
 									<p:column headerText="Produto">
 										<h:outputLabel value="#{entity.item.name}" />
 									</p:column>
 									<p:column headerText="Valor">
-										<h:outputLabel value="#{entity.value}" />
+										<h:outputLabel value="R$ #{entity.value}" />
+									</p:column>
+									<p:column headerText="Quantidade">
+										<p:spinner min="0" prefix="Kg " stepFactor="0.25"
+											value="#{entity.quantity}">
+											<p:ajax listener="#{saleController.generateTotal}" update="@form"/>
+											</p:spinner>
+									</p:column>
+									<p:column headerText="Ação">
+										<p:commandButton icon="pi pi-trash" process="@form"
+											update="@form"
+											actionListener="#{saleController.removePurchase(entity)}"
+											action="#{saleController.generateTotal}">
+										</p:commandButton>
 									</p:column>
 								</p:dataTable>
 
 								<p:outputLabel value="Valor Total: " />
 								<p:inputText readonly="true"
-									value="#{saleController.entity.total}" />
+									value="R$ #{saleController.entity.total}" />
 
 								<p:outputLabel value="Data de Venda: " />
 								<p:calendar value="#{saleController.entity.saleDate}"
@@ -104,7 +117,7 @@
 
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@form" update="panel" action="#{saleController.delete}">
+							process="@form" update="@form" action="#{saleController.delete}">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>
@@ -147,25 +160,34 @@
 			<p:dialog header="Listagem de Produtos" widgetVar="listProduct"
 				height="300" width="90%" modal="true" resizable="true">
 				<p:outputLabel value="Nome: " />
-				<p:inputText id="itSearchProduct" value="#{clientController.search}" />
+				<p:inputText id="itSearchProduct"
+					value="#{itemStockController.search}" />
 				<p:commandButton value="Pesquisar"
-					actionListener="#{clientController.search}"
+					actionListener="#{itemStockController.search}"
 					process="@this itSearchProduct" update="dtListProduct" />
 				<br />
 				<p:dataTable id="dtListProduct" var="entity"
-					value="#{clientController.listClient}">
+					value="#{itemStockController.stock}">
 					<p:column headerText="Nome">
 						<p:commandLink value="#{entity.name}"
-							action="#{saleController.addBuyer(entity)}" process="@this"
+							action="#{saleController.addPurchase(entity)}" process="@this"
 							update="@form" resetValues="true" />
 					</p:column>
 
-					<p:column headerText="Cpf">
-						<h:outputText value="#{entity.cpf}" />
+					<p:column headerText="Valor Kg">
+						<h:outputText value="R$ #{entity.product.valueKG}" />
 					</p:column>
 
-					<p:column headerText="Sexo">
-						<h:outputLabel value="#{entity.sex}" />
+					<p:column headerText="Categoria">
+						<h:outputLabel value="#{entity.product.category}" />
+					</p:column>
+
+					<p:column headerText="Data de Validade">
+						<h:outputLabel value="#{entity.shelfLife}" />
+					</p:column>
+
+					<p:column headerText="Quantidade Disponível">
+						<h:outputLabel value="#{entity.availableQuantity}" />
 					</p:column>
 				</p:dataTable>
 			</p:dialog>
@@ -181,13 +203,14 @@
 				<p:dataTable id="dtListSale" var="entity"
 					value="#{saleController.listSale}">
 					<p:column headerText="Comprador">
-						<p:commandLink value="#{entity.buyer}"
+						<p:commandLink value="#{entity.buyer.name}"
 							actionListener="#{saleController.edit(entity.id)}"
+							action="#{saleController.getPurchaseBySale}"
 							process="@this" update="@form" resetValues="true" />
 					</p:column>
 
 					<p:column headerText="Total">
-						<h:outputText value="#{entity.total}" />
+						<h:outputText value="R$ #{entity.total}" />
 					</p:column>
 
 					<p:column headerText="Data da venda">

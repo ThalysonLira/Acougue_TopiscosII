@@ -22,16 +22,16 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 
 	public void save() {
 		Repository<T> r = new Repository<T>();
-	
+		
 		try {
 			r.beginTransaction();
-			r.salvar(getEntity());
+			r.save(getEntity());
 			r.commitTransaction();
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 			r.rollbackTransaction();
 			Util.addMessageError("Erro ao salvar.");
-			return;
+			setEntity(null);
 		}
 	
 		this.clear();
@@ -43,7 +43,7 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 	
 		try {
 			r.beginTransaction();
-			r.excluir(getEntity());
+			r.delete(getEntity());
 			r.commitTransaction();
 		} catch (RepositoryException e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 		}
 	
 		this.clear();
-		Util.addMessageInfo("Exclus√£o realizada com sucesso.");
+		Util.addMessageInfo("Exclus„o realizada com sucesso.");
 	}
 	
 	public void edit(int id) {

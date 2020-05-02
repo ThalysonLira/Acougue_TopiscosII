@@ -1,5 +1,6 @@
 package br.unitins.acougue.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Sale extends DefaultEntity<Sale>{
@@ -22,11 +24,13 @@ public class Sale extends DefaultEntity<Sale>{
 	@Temporal(TemporalType.DATE)
 	private Date saleDate;
 	
-	@Column(nullable = false)
-	private List<ItemSale> listSale;
+	@Transient
+	private List<Purchase> listPurchase;
 	
 	public Sale() {
 		super();
+		this.total = 0.0;
+		this.saleDate = new Date();
 	}
 
 	public Client getBuyer() {
@@ -61,12 +65,14 @@ public class Sale extends DefaultEntity<Sale>{
 		this.saleDate = saleDate;
 	}
 
-	public List<ItemSale> getListSale() {
-		return listSale;
+	public List<Purchase> getListPurchase() {
+		if (listPurchase == null)
+			listPurchase = new ArrayList<Purchase>();
+		return listPurchase;
 	}
 
-	public void setListSale(List<ItemSale> listSale) {
-		this.listSale = listSale;
+	public void setListPurchase(List<Purchase> listPurchase) {
+		this.listPurchase = listPurchase;
 	}
-	
+
 }

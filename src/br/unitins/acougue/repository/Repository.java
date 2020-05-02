@@ -24,7 +24,7 @@ public class Repository<T extends DefaultEntity<T>> {
 			getEntityManager().getTransaction().begin();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao iniciar uma transaÃ§Ã£o.");
+			throw new RepositoryException("Erro ao iniciar uma transação.");
 		}
 	}
 
@@ -33,10 +33,10 @@ public class Repository<T extends DefaultEntity<T>> {
 			getEntityManager().getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao commitar uma transaÃ§Ã£o.");
+			throw new RepositoryException("Erro ao commitar uma transação.");
 		}
 	}
-
+	
 	public void rollbackTransaction() {
 		try {
 			getEntityManager().getTransaction().rollback();
@@ -45,24 +45,37 @@ public class Repository<T extends DefaultEntity<T>> {
 		}
 	}
 
-	public void salvar(T entity) throws RepositoryException {
+	public void save(T entity) throws RepositoryException {
 		try {
 			getEntityManager().merge(entity);
 		} catch (Exception e) {
 			System.out.println("Erro ao relizar merge.");
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao salvar uma transaÃ§Ã£o.");
+			throw new RepositoryException("Erro ao salvar uma transação.");
 		}
 	}
 
-	public void excluir(T entity) throws RepositoryException {
+	public void delete(T entity) throws RepositoryException {
 		try {
 			T obj = getEntityManager().merge(entity);
 			getEntityManager().remove(obj);
 		} catch (Exception e) {
 			System.out.println("Erro ao relizar merge.");
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao salvar uma transaÃ§Ã£o.");
+			throw new RepositoryException("Erro ao salvar uma transação.");
+		}
+	}
+	
+	public T refresh(T entity) throws RepositoryException {
+		try {
+			T obj = getEntityManager().merge(entity);
+			getEntityManager().flush();
+			getEntityManager().refresh(obj);
+			return obj;
+		} catch (Exception e) {
+			System.out.println("Erro ao relizar merge.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao salvar uma transação.");
 		}
 	}
 

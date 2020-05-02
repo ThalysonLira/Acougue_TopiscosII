@@ -3,8 +3,8 @@ package br.unitins.acougue.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-//@Entity
-public class ItemSale extends DefaultEntity<ItemSale>{
+@Entity(name = "Purchase")
+public class Purchase extends DefaultEntity<Purchase>{
 
 	private static final long serialVersionUID = 2392701376843797285L;
 	
@@ -12,15 +12,17 @@ public class ItemSale extends DefaultEntity<ItemSale>{
 	
 	@Column(nullable = false)
 	private Double value;
-	
-	@Column(nullable = false)
+	private Double quantity;
 	private Sale sale;
 
-	public ItemSale() {
+	public Purchase() {
 		super();
+		this.quantity = 0.0;
 	}
 
 	public ItemStock getItem() {
+		if (item == null)
+			item = new ItemStock();
 		return item;
 	}
 
@@ -29,11 +31,20 @@ public class ItemSale extends DefaultEntity<ItemSale>{
 	}
 
 	public Double getValue() {
+		value = getItem().getProduct().getValueKG();
 		return value;
 	}
 
 	public void setValue(Double value) {
 		this.value = value;
+	}
+
+	public Double getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Double quantity) {
+		this.quantity = quantity;
 	}
 
 	public Sale getSale() {
@@ -43,5 +54,5 @@ public class ItemSale extends DefaultEntity<ItemSale>{
 	public void setSale(Sale sale) {
 		this.sale = sale;
 	}
-	
+
 }

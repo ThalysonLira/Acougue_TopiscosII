@@ -7,6 +7,7 @@
 		<class>br.unitins.acougue.model.Client</class>
 		<class>br.unitins.acougue.model.DefaultEntity</class>
 		<class>br.unitins.acougue.model.Employee</class>
+		<class>br.unitins.acougue.model.Purchase</class>
 		<class>br.unitins.acougue.model.ItemStock</class>
 		<class>br.unitins.acougue.model.Product</class>
 		<class>br.unitins.acougue.model.Provider</class>

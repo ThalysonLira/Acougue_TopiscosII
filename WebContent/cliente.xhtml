@@ -109,7 +109,7 @@
 
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@form" update="panel"
+							process="@form" update="@form"
 							action="#{clientController.delete}">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
