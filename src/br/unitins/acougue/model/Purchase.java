@@ -3,7 +3,7 @@ package br.unitins.acougue.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity(name = "Purchase")
+@Entity
 public class Purchase extends DefaultEntity<Purchase>{
 
 	private static final long serialVersionUID = 2392701376843797285L;

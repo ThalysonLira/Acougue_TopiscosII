@@ -89,17 +89,17 @@
 
 								<div>
 									<h:outputText value="Funcionário acessará o sistema?" />
-									<p:toggleSwitch id="tsUser"
-										value="#{employeeController.userCreation}">
-										<p:ajax update="@form" />
+									<p:toggleSwitch id="tsUser" 
+										value="#{employeeController.userCreation}" disabled="#{employeeController.disableToggle()}">
+										<p:ajax process="#{employeeController.renderEmail()}" update="@form" />
 									</p:toggleSwitch>
 								</div>
-								<p:outputLabel value="Email: "
-									rendered="#{employeeController.userCreation}">
+								<p:outputLabel for="itEmail" value="Email: "
+									rendered="#{!employeeController.userCreation}">
 									<p:message for="itEmail" escape="false" />
 								</p:outputLabel>
 								<p:inputText id="itEmail"
-									rendered="#{employeeController.userCreation}"
+									rendered="#{!employeeController.userCreation}" immediate="true"
 									value="#{employeeController.entity.user.email}" />
 							</p:panelGrid>
 

@@ -78,17 +78,17 @@
 
 								<div>
 									<h:outputText value="Cliente acessará o sistema?" />
-									<p:toggleSwitch id="tsUser"
-										value="false">
-										<p:ajax update="@form" />
+									<p:toggleSwitch id="tsUser" 
+										value="#{clientController.userCreation}" disabled="#{clientController.disableToggle()}">
+										<p:ajax process="#{clientController.renderEmail()}" update="@form" />
 									</p:toggleSwitch>
 								</div>
-								<p:outputLabel value="Email: "
-									rendered="tsUser">
+								<p:outputLabel for="itEmail" value="Email: "
+									rendered="#{!clientController.userCreation}">
 									<p:message for="itEmail" escape="false" />
 								</p:outputLabel>
 								<p:inputText id="itEmail"
-									rendered="false" immediate="true"
+									rendered="#{!clientController.userCreation}" immediate="true"
 									value="#{clientController.entity.user.email}" />
 							</p:panelGrid>
 
@@ -100,7 +100,7 @@
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
 							update="@form" action="#{clientController.save}" />
 
-						<p:commandButton value="Limpar" process="@this" update="panel"
+						<p:commandButton value="Limpar" process="@this" update="@form"
 							action="#{clientController.clear}">
 							<p:ajax update="@form" resetValues="true" />
 						</p:commandButton>

@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
+@Entity(name = "UserSystem")
 public class User extends DefaultEntity<User>{
 
 	private static final long serialVersionUID = 6179265536423951695L;
@@ -15,7 +15,7 @@ public class User extends DefaultEntity<User>{
 	@Column(nullable = false, length = 100, unique = true)
 	private String email;
 	
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 150)
 	private String password;
 	
 	@Temporal(TemporalType.DATE)
@@ -50,6 +50,14 @@ public class User extends DefaultEntity<User>{
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
 }

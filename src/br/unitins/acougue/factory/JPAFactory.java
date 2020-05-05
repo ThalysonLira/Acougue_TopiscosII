@@ -18,8 +18,8 @@ public class JPAFactory {
 	}
 	
 	public static void main(String args[]) {
-		EntityManagerFactory emf = 
-				Persistence.createEntityManagerFactory("Vestter");
+//		EntityManagerFactory emf = 
+//				Persistence.createEntityManagerFactory("Vestter");
 		EntityManager em = emf.createEntityManager();
 		Query query = em.createQuery("Select u FROM User u");
 		query.getResultList();

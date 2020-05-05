@@ -44,7 +44,6 @@ public class SaleController extends Controller<Sale> {
 		EntityManager em = JPAFactory.getEntityManager();
 		Query query = em.createQuery("SELECT p " + "FROM Purchase p " + "WHERE p.sale.id= :sale_id");
 		query.setParameter("sale_id", getEntity().getId());
-
 		getEntity().setListPurchase(query.getResultList());
 	}
 
@@ -81,6 +80,7 @@ public class SaleController extends Controller<Sale> {
 
 	@Override
 	public void save() {
+		// TODO remover itens do estoque
 		Repository<Sale> rs = new Repository<Sale>();
 		Repository<Purchase> rp = new Repository<Purchase>();
 		Sale sale = getEntity();
@@ -111,6 +111,7 @@ public class SaleController extends Controller<Sale> {
 
 	@Override
 	public void delete() {
+		// TODO devolver itens ao estoque
 		Repository<Sale> rs = new Repository<Sale>();
 		Repository<Purchase> rp = new Repository<Purchase>();
 		Sale sale = getEntity();

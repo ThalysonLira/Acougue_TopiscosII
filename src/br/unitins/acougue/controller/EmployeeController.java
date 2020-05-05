@@ -1,6 +1,7 @@
 package br.unitins.acougue.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -8,11 +9,16 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import br.unitins.acougue.application.RandomPassword;
+import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.factory.JPAFactory;
 import br.unitins.acougue.model.Employee;
+import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.Sex;
 import br.unitins.acougue.model.Situation;
+import br.unitins.acougue.model.User;
+import br.unitins.acougue.repository.Repository;
 
 @Named
 @ViewScoped
@@ -30,7 +36,7 @@ public class EmployeeController extends Controller<Employee> {
 		Query query = em.createQuery(
 				"SELECT e "
 			  + "FROM Employee e "
-			  + "WHERE upper(e.name) LIKE upper(:search)"
+			  + "WHERE upper(e.name) LIKE upper(:search) "
 			  + "OR e.cpf LIKE :search");
 		query.setParameter("search", "%"+ getSearch() + "%");
 		query.setParameter("search", "%" + Util.maskCpf(search) + "%");
@@ -45,11 +51,53 @@ public class EmployeeController extends Controller<Employee> {
 		return Situation.values();
 	}
 	
-	public boolean renderEmail() {
-		if (userCreation == false)
-			return true;
-		else
+	public void renderEmail() {
+		if ((getEntity().getUser().getEmail() == null) || (getEntity().getUser().getEmail().isEmpty())) {
+			userCreation = !userCreation;
+		} else {
+			userCreation = true;
+		}
+	}
+
+	private void createUser() {
+		if (getEntity().getUser().getId() == null) {
+			// TODO encaminhar senha criada para email
+			getEntity().getUser().setPassword(RandomPassword.generatePassword(8));
+			getEntity().getUser().setCreationDate(new Date());
+			getEntity().getUser().setProfile(Profile.FUNCIONARIO);
+		}
+	}
+
+	public boolean disableToggle() {
+		if ((getEntity().getUser().getEmail() == null) || (getEntity().getUser().getEmail().isEmpty()))
 			return false;
+		else
+			return true;
+	}
+
+	@Override
+	public void save() {
+		if ((getEntity().getUser().getEmail() != null) || (!getEntity().getUser().getEmail().isEmpty())) {
+			Repository<User> ru = new Repository<User>();
+			User user = getEntity().getUser();
+			createUser();
+
+			try {
+				ru.beginTransaction();
+				ru.save(user);
+				user = (ru.refresh(user));
+				ru.commitTransaction();
+
+				getEntity().setUser(user);
+				super.save();
+			} catch (RepositoryException e) {
+				e.printStackTrace();
+				ru.rollbackTransaction();
+				Util.addMessageError("Erro ao salvar.");
+			}
+		} else {
+			super.save();
+		}
 	}
 	
 	@Override

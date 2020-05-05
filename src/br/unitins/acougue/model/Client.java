@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.unitins.acougue.application.Util;
-
 @Entity
 public class Client extends DefaultEntity<Client>{
 
