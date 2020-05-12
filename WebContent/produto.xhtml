@@ -51,8 +51,11 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Corte: "
-									onclick="PF('list').show();">
+								<p:commandLink value="Corte: " actionListener="#{productController.openProductListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{productController.getProductListener}"
+										update="@form" />
 									<p:message for="itCut" escape="false" />
 								</p:commandLink>
 								<p:inputText id="itCut" value="#{productController.entity.cut}"
@@ -122,40 +125,6 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
-
-			<p:dialog header="Listagem de Produtos" widgetVar="list" height="300"
-				width="90%" modal="true" resizable="true">
-				<p:outputLabel value="Nome: " />
-				<p:inputText id="itSearch" value="#{productController.search}" />
-				<p:commandButton value="Pesquisar"
-					actionListener="#{productController.search}"
-					process="@this itSearch" update="dtList" />
-				<br />
-				<p:dataTable id="dtList" var="entity"
-					value="#{productController.listProduct}">
-					<p:column headerText="Corte">
-						<p:commandLink value="#{entity.cut}"
-							actionListener="#{productController.edit(entity.id)}"
-							process="@this" update="@form" resetValues="true" />
-					</p:column>
-
-					<p:column headerText="Animal">
-						<h:outputText value="#{entity.animal}" />
-					</p:column>
-
-					<p:column headerText="Categoria">
-						<h:outputLabel value="#{entity.category}" />
-					</p:column>
-
-					<p:column headerText="Tipo">
-						<h:outputLabel value="#{entity.type}" />
-					</p:column>
-
-					<p:column headerText="Valor Kg">
-						<h:outputLabel value="#{entity.valueKG}" />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 
 		</h:form>
 	</ui:define>

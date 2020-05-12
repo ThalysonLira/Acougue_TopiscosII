@@ -6,13 +6,13 @@ import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
+import org.primefaces.event.SelectEvent;
 
 import br.unitins.acougue.application.RandomPassword;
 import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
-import br.unitins.acougue.factory.JPAFactory;
+import br.unitins.acougue.controller.listener.EmployeeListener;
 import br.unitins.acougue.model.Employee;
 import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.Sex;
@@ -31,22 +31,16 @@ public class EmployeeController extends Controller<Employee> {
 	private boolean userCreation;
 	
 	// TODO Buscar apenas ativos
-	public void search() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery(
-				"SELECT e "
-			  + "FROM Employee e "
-			  + "WHERE upper(e.name) LIKE upper(:search) "
-			  + "OR e.cpf LIKE :search");
-		query.setParameter("search", "%"+ getSearch() + "%");
-		query.setParameter("search", "%" + Util.maskCpf(search) + "%");
-		listEmployee = query.getResultList();
-	}
-
-	public Sex[] getListSex() {
-		return Sex.values();
+	public void openEmployeeListener() {
+		EmployeeListener listener = new EmployeeListener();
+		listener.open();
 	}
 	
+	public void getEmployeeListener(SelectEvent event) {
+		Employee entity = (Employee) event.getObject();
+		setEntity(entity);
+	}
+
 	public Situation[] getListSituation() {
 		return Situation.values();
 	}
@@ -73,6 +67,10 @@ public class EmployeeController extends Controller<Employee> {
 			return false;
 		else
 			return true;
+	}
+	
+	public Sex[] getListSex() {
+		return Sex.values();
 	}
 
 	@Override

@@ -52,13 +52,19 @@
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
 								<p:commandLink value="Visualizar estoque"
-									onclick="PF('listStock').show();">
+									actionListener="#{itemStockController.openItemStockListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{itemStockController.getItemStockListener}"
+										update="@form" />
 									<p:message for="itProduct" escape="false" />
 								</p:commandLink>
 
-								<p:commandLink value="Produto: "
-									onclick="PF('listProduct').show();">
-									<p:message for="itProduct" escape="false" />
+								<p:commandLink value="Produto: " actionListener="#{productController.openProductListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{itemStockController.getProductListener}"
+										update="@form" />
 								</p:commandLink>
 
 								<p:inputText id="itProduct"
@@ -111,72 +117,6 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
-
-			<p:dialog header="Listagem de Produtos" widgetVar="listProduct"
-				height="300" width="90%" modal="true" resizable="true">
-				<p:outputLabel value="Nome: " />
-				<p:inputText id="itSearchProduct"
-					value="#{productController.search}" />
-				<p:commandButton value="Pesquisar"
-					actionListener="#{productController.search}"
-					process="@this itSearchProduct" update="dtListProduct" />
-				<br />
-				<p:dataTable id="dtListProduct" var="entity"
-					value="#{productController.listProduct}">
-					<p:column headerText="Corte">
-						<p:commandLink value="#{entity.cut}"
-							action="#{itemStockController.addName(entity)}"
-							process="@this" update="@form" resetValues="true" />
-					</p:column>
-
-					<p:column headerText="Animal">
-						<h:outputText value="#{entity.animal}" />
-					</p:column>
-
-					<p:column headerText="Categoria">
-						<h:outputLabel value="#{entity.category}" />
-					</p:column>
-
-					<p:column headerText="Tipo">
-						<h:outputLabel value="#{entity.type}" />
-					</p:column>
-
-					<p:column headerText="Valor Kg">
-						<h:outputLabel value="#{entity.valueKG}" />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
-
-			<p:dialog header="Listagem de Estoque" widgetVar="listStock"
-				height="300" width="90%" modal="true" resizable="true">
-				<p:outputLabel value="Nome: " />
-				<p:inputText id="itSearchStock"
-					value="#{itemStockController.search}" />
-				<p:commandButton value="Pesquisar"
-					actionListener="#{itemStockController.search}"
-					process="@this itSearchStock" update="dtListStock" />
-				<br />
-				<p:dataTable id="dtListStock" var="entity"
-					value="#{itemStockController.stock}">
-					<p:column headerText="Corte">
-						<p:commandLink value="#{entity.product.cut}"
-							actionListener="#{itemStockController.edit(entity.id)}"
-							process="@this" update="@form" resetValues="true" />
-					</p:column>
-
-					<p:column headerText="Animal">
-						<h:outputText value="#{entity.product.animal}" />
-					</p:column>
-
-					<p:column headerText="Data de Validade">
-						<h:outputLabel value="#{entity.shelfLife}" />
-					</p:column>
-
-					<p:column headerText="Quantidade">
-						<h:outputLabel value="#{entity.availableQuantity}" />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 
 		</h:form>
 	</ui:define>

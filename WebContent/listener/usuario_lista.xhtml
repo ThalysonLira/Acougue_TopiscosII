@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Usuário</title>
+</h:head>
+
+<h:body>
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage name="/images/loading.gif" />
+	</p:dialog>
+
+	<h:form>
+		<p:growl id="growl" globalOnly="false" />
+		<p:panel id="panel">
+			<f:facet name="header">
+				<div align="center">
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+							<div class="card card-w-title">
+								<div class="ui-inputgroup">
+									<p:inputText id="itSearch" value="#{userListener.search}"
+										placeholder="Informe o nome do usuário ..." />
+									<p:commandButton value="Pesquisar"
+										actionListener="#{userListener.search}"
+										process="@this itSearch" update="dtList" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</f:facet>
+
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-12">
+
+					<div class="card card-w-title">
+
+						<p:dataTable id="dtList" var="entity" rowIndexVar="row"
+							paginator="false" reflow="true" value="#{userListener.list}">
+							<p:column headerText="Email">
+								<p:commandLink value="#{entity.email}"
+									action="#{userListener.select(entity.id)}" process="@this"
+									update="@form" resetValues="true" />
+							</p:column>
+
+							<p:column headerText="Data de Cadastro">
+								<h:outputLabel value="#{entity.creationDate}" />
+							</p:column>
+
+							<p:column headerText="Perfil">
+								<h:outputLabel value="#{entity.profile}" />
+							</p:column>
+
+							<f:facet name="footer">
+							        Total de #{userListener.list.size()} usuários.
+							    </f:facet>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>

@@ -51,7 +51,11 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Email: " onclick="PF('list').show();">
+								<p:commandLink value="Email: "
+									actionListener="#{userController.openUserListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{userController.getUserListener}" update="@form" />
 									<p:message for="itEmail" escape="false" />
 								</p:commandLink>
 								<p:inputText id="itEmail" value="#{userController.entity.email}"
@@ -66,8 +70,9 @@
 									value="#{userController.entity.profile}" size="1">
 									<f:selectItem itemLabel="Selecione ..." itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{userController.listProfile}" var="profile"
-										itemLabel="#{profile.label}" itemValue="#{profile}" />
+									<f:selectItems value="#{userController.listProfile}"
+										var="profile" itemLabel="#{profile.label}"
+										itemValue="#{profile}" />
 								</p:selectOneMenu>
 							</p:panelGrid>
 
@@ -88,8 +93,7 @@
 
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@form" update="@form"
-							action="#{userController.delete}">
+							process="@form" update="@form" action="#{userController.delete}">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>
@@ -108,8 +112,8 @@
 				<p:outputLabel value="Email: " />
 				<p:inputText id="itSearch" value="#{userController.search}" />
 				<p:commandButton value="Pesquisar"
-					actionListener="#{userController.search}"
-					process="@this itSearch" update="dtList" />
+					actionListener="#{userController.search}" process="@this itSearch"
+					update="dtList" />
 				<br />
 				<p:dataTable id="dtList" var="entity"
 					value="#{userController.listUser}">

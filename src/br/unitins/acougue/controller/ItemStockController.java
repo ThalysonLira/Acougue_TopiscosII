@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
-import br.unitins.acougue.factory.JPAFactory;
+import org.primefaces.event.SelectEvent;
+
+import br.unitins.acougue.controller.listener.ItemStockListener;
 import br.unitins.acougue.model.ItemStock;
 import br.unitins.acougue.model.Product;
 
@@ -20,37 +20,20 @@ public class ItemStockController extends Controller<ItemStock> {
 	private String search;
 	private List<ItemStock> stock;
 
-	public void search() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT s " + "FROM Stock s " + "WHERE upper(s.name) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		stock = query.getResultList();
+	public void openItemStockListener() {
+		ItemStockListener listener = new ItemStockListener();
+		listener.open();
+	}
+	
+	public void getItemStockListener(SelectEvent event) {
+		ItemStock entity = (ItemStock) event.getObject();
+		setEntity(entity);
 	}
 
-	public void getProductByAnimal() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT s " + "FROM Stock s " + "WHERE upper(s.product.animal) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		stock = query.getResultList();
-	}
-
-	public void getProductByType() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT s " + "FROM Stock s " + "WHERE upper(s.product.type) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		stock = query.getResultList();
-	}
-
-	public void getProductByCategory() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT s " + "FROM Stock s " + "WHERE upper(s.product.category) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		stock = query.getResultList();
-	}
-
-	public void addName(Product p) {
-		entity.setProduct(p);
-		entity.setName(p.getCut() + " - " + p.getAnimal());
+	public void getProductListener(SelectEvent event) {
+		Product product = (Product) event.getObject();
+		getEntity().setProduct(product);
+		getEntity().setName(product.getCut() + " - " + product.getAnimal());
 	}
 
 	@Override

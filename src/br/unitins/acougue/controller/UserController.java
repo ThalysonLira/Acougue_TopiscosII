@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
-import br.unitins.acougue.factory.JPAFactory;
+import org.primefaces.event.SelectEvent;
+
+import br.unitins.acougue.controller.listener.UserListener;
 import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.User;
 
@@ -20,31 +20,25 @@ public class UserController extends Controller<User>{
 	private String search;
 	private List<User> listUser;
 	
-	public void search() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery(
-				"SELECT u " + "FROM UserSystem u" + "WHERE upper(u.email) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		listUser = query.getResultList();
+	public void openUserListener() {
+		UserListener listener = new UserListener();
+		listener.open();
 	}
 	
-	public void getUserByProfile() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery(
-				"SELECT u " + "FROM User u " + "WHERE u.profile LIKE :search");
-		query.setParameter("search", "%" + getSearch() + "%");
-		listUser = query.getResultList();
+	public void getUserListener(SelectEvent event) {
+		User entity = (User) event.getObject();
+		setEntity(entity);
 	}
 	
-	public Profile[] getListProfile() {
-		return Profile.values();
-	}
-
 	@Override
 	public User getEntity() {
 		if (entity == null)
 			entity = new User();
 		return entity;
+	}
+	
+	public Profile[] getListProfile() {
+		return Profile.values();
 	}
 
 	public String getSearch() {

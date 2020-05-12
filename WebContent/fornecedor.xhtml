@@ -51,7 +51,12 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Nome: " onclick="PF('list').show();">
+								<p:commandLink value="Nome: "
+									actionListener="#{providerController.openProviderListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{providerController.getProviderListener}"
+										update="@form" />
 									<p:message for="itName" escape="false" />
 								</p:commandLink>
 								<p:inputText id="itName"
@@ -121,32 +126,6 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
-
-			<p:dialog header="Listagem de Fornecedores" widgetVar="list"
-				height="300" width="90%" modal="true" resizable="true">
-				<p:outputLabel value="Nome: " />
-				<p:inputText id="itSearch" value="#{providerController.search}" />
-				<p:commandButton value="Pesquisar"
-					actionListener="#{providerController.search}"
-					process="@this itSearch" update="dtList" />
-				<br />
-				<p:dataTable id="dtList" var="entity"
-					value="#{providerController.listProvider}">
-					<p:column headerText="Nome">
-						<p:commandLink value="#{entity.name}"
-							actionListener="#{providerController.edit(entity.id)}"
-							process="@this" update="@form" resetValues="true" />
-					</p:column>
-
-					<p:column headerText="Cnpj">
-						<h:outputText value="#{entity.cnpj}" />
-					</p:column>
-
-					<p:column headerText="Situação">
-						<h:outputLabel value="#{entity.situation}" />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 
 		</h:form>
 	</ui:define>

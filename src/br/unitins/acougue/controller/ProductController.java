@@ -4,11 +4,10 @@ import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
-import br.unitins.acougue.application.Util;
-import br.unitins.acougue.factory.JPAFactory;
+import org.primefaces.event.SelectEvent;
+
+import br.unitins.acougue.controller.listener.ProductListener;
 import br.unitins.acougue.factory.MeatType;
 import br.unitins.acougue.model.Product;
 
@@ -21,12 +20,14 @@ public class ProductController extends Controller<Product> {
 	private String search;
 	private List<Product> listProduct;
 
-	public void search() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT p " + "FROM Product p " + "WHERE upper(p.cut) LIKE upper(:search)"
-				+ "OR upper(p.animal) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		listProduct = query.getResultList();
+	public void openProductListener() {
+		ProductListener listener = new ProductListener();
+		listener.open();
+	}
+	
+	public void getProductListener(SelectEvent event) {
+		Product entity = (Product) event.getObject();
+		setEntity(entity);
 	}
 
 	@Override

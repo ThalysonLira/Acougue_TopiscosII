@@ -5,15 +5,15 @@ import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
+import org.primefaces.event.SelectEvent;
 
 import br.unitins.acougue.application.RandomPassword;
 import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
-import br.unitins.acougue.factory.JPAFactory;
-import br.unitins.acougue.model.Profile;
+import br.unitins.acougue.controller.listener.ProviderListener;
 import br.unitins.acougue.model.Provider;
+import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.Situation;
 import br.unitins.acougue.model.User;
 import br.unitins.acougue.repository.Repository;
@@ -28,20 +28,14 @@ public class ProviderController extends Controller<Provider>{
 	private List<Provider> listProvider;
 	private boolean userCreation;
 	
-	public void search() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery(
-				"SELECT p "
-			  + "FROM Provider p "
-			  + "WHERE upper(p.name) LIKE upper(:search) "
-			  + "OR p.cnpj LIKE :search");
-		query.setParameter("search", "%"+ getSearch() + "%");
-		query.setParameter("search", "%"+ Util.maskCnpj(getSearch()) + "%");
-		listProvider = query.getResultList();
+	public void openProviderListener() {
+		ProviderListener listener = new ProviderListener();
+		listener.open();
 	}
 	
-	public Situation[] getListSituation() {
-		return Situation.values();
+	public void getProviderListener(SelectEvent event) {
+		Provider entity = (Provider) event.getObject();
+		setEntity(entity);
 	}
 	
 	public void renderEmail() {
@@ -66,6 +60,11 @@ public class ProviderController extends Controller<Provider>{
 			return false;
 		else
 			return true;
+	}
+	
+	
+	public Situation[] getListSituation() {
+		return Situation.values();
 	}
 
 	@Override

@@ -51,7 +51,12 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Nome: " onclick="PF('list').show();">
+								<p:commandLink value="Nome: "
+									actionListener="#{clientController.openClientListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{clientController.getClientListener}"
+										update="@form" />
 									<p:message for="itName" escape="false" />
 								</p:commandLink>
 								<p:inputText id="itName" value="#{clientController.entity.name}"
@@ -78,9 +83,11 @@
 
 								<div>
 									<h:outputText value="Cliente acessará o sistema?" />
-									<p:toggleSwitch id="tsUser" 
-										value="#{clientController.userCreation}" disabled="#{clientController.disableToggle()}">
-										<p:ajax process="#{clientController.renderEmail()}" update="@form" />
+									<p:toggleSwitch id="tsUser"
+										value="#{clientController.userCreation}"
+										disabled="#{clientController.disableToggle()}">
+										<p:ajax process="#{clientController.renderEmail()}"
+											update="@form" resetValues="true" />
 									</p:toggleSwitch>
 								</div>
 								<p:outputLabel for="itEmail" value="Email: "
@@ -110,7 +117,7 @@
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@form" update="@form"
-							action="#{clientController.delete}">
+							action="#{clientController.delete}" resetValues="true">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>
@@ -123,36 +130,6 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
-
-			<p:dialog header="Listagem de Clientes" widgetVar="list" height="300"
-				width="90%" modal="true" resizable="true">
-				<p:outputLabel value="Nome: " />
-				<p:inputText id="itSearch" value="#{clientController.search}" />
-				<p:commandButton value="Pesquisar"
-					actionListener="#{clientController.search}"
-					process="@this itSearch" update="dtList" />
-				<br />
-				<p:dataTable id="dtList" var="entity"
-					value="#{clientController.listClient}">
-					<p:column headerText="Nome">
-						<p:commandLink value="#{entity.name}"
-							actionListener="#{clientController.edit(entity.id)}"
-							process="@this" update="@form" resetValues="true" />
-					</p:column>
-
-					<p:column headerText="Cpf">
-						<h:outputText value="#{entity.cpf}" />
-					</p:column>
-
-					<p:column headerText="Data de Nascimento">
-						<h:outputLabel value="#{entity.birthDate}" />
-					</p:column>
-
-					<p:column headerText="Sexo">
-						<h:outputLabel value="#{entity.sex}" />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 
 		</h:form>
 	</ui:define>

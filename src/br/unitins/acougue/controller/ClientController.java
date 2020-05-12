@@ -9,9 +9,12 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.primefaces.event.SelectEvent;
+
 import br.unitins.acougue.application.RandomPassword;
 import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
+import br.unitins.acougue.controller.listener.ClientListener;
 import br.unitins.acougue.factory.JPAFactory;
 import br.unitins.acougue.model.Client;
 import br.unitins.acougue.model.Profile;
@@ -28,24 +31,18 @@ public class ClientController extends Controller<Client> {
 	private String search;
 	private List<Client> listClient;
 	private boolean userCreation;
-	private User user; // TODO modificar user em xhtml
 	
-
-	// TODO formulário buga quando está preenchido e seta um novo objeto
-	// TODO campo email seta true, mesmo vazio
-	public void search() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery(
-				"SELECT c " + "FROM Client c " + "WHERE upper(c.name) LIKE upper(:search) " + "OR c.cpf LIKE :search");
-		query.setParameter("search", "%" + getSearch() + "%");
-		query.setParameter("search", "%" + Util.maskCpf(search) + "%");
-		listClient = query.getResultList();
+	public void openClientListener() {
+		ClientListener listener = new ClientListener();
+		listener.open();
+	}
+	
+	public void getClientListener(SelectEvent event) {
+		Client entity = (Client) event.getObject();
+		setEntity(entity);
 	}
 
-	public Sex[] getListSex() {
-		return Sex.values();
-	}
-
+	// TODO refazer definição de email
 	public void renderEmail() {
 		if ((getEntity().getUser().getEmail() == null) || (getEntity().getUser().getEmail().isEmpty())) {
 			userCreation = !userCreation;
@@ -69,6 +66,10 @@ public class ClientController extends Controller<Client> {
 		else
 			return true;
 	}
+	
+	public Sex[] getListSex() {
+		return Sex.values();
+	}
 
 	@Override
 	public void save() {
@@ -80,10 +81,9 @@ public class ClientController extends Controller<Client> {
 			try {
 				ru.beginTransaction();
 				ru.save(user);
-				user = (ru.refresh(user));
+				getEntity().setUser(ru.refresh(user));
 				ru.commitTransaction();
 
-				getEntity().setUser(user);
 				super.save();
 			} catch (RepositoryException e) {
 				e.printStackTrace();
@@ -123,16 +123,6 @@ public class ClientController extends Controller<Client> {
 		if (listClient == null)
 			listClient = new ArrayList<Client>();
 		return listClient;
-	}
-
-	public User getUser() {
-		if(user == null)
-			user = new User();
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 }

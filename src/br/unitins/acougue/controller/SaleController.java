@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
+import org.primefaces.event.SelectEvent;
 
 import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
-import br.unitins.acougue.factory.JPAFactory;
+import br.unitins.acougue.controller.listener.SaleListener;
 import br.unitins.acougue.model.Client;
 import br.unitins.acougue.model.Purchase;
 import br.unitins.acougue.model.ItemStock;
@@ -26,34 +26,25 @@ public class SaleController extends Controller<Sale> {
 	private String search;
 	private List<Sale> listSale;
 
-	public void search() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT s " + "FROM Sale s " + "WHERE upper(s.buyer.name) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		listSale = query.getResultList();
+	public void openSaleListener() {
+		SaleListener listener = new SaleListener();
+		listener.open();
+	}
+	
+	public void getSaleListener(SelectEvent event) {
+		Sale entity = (Sale) event.getObject();
+		setEntity(entity);
 	}
 
-	public void getSaleBySalesman() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT s " + "FROM Sale s " + "WHERE upper(s.salesman.name) LIKE upper(:search)");
-		query.setParameter("search", "%" + getSearch() + "%");
-		listSale = query.getResultList();
-	}
-
-	public void getPurchaseBySale() {
-		EntityManager em = JPAFactory.getEntityManager();
-		Query query = em.createQuery("SELECT p " + "FROM Purchase p " + "WHERE p.sale.id= :sale_id");
-		query.setParameter("sale_id", getEntity().getId());
-		getEntity().setListPurchase(query.getResultList());
-	}
-
-	public void addBuyer(Client u) {
+	public void getClientListener(SelectEvent event) {
 		// TODO adicionar verificação de usuário logado para cliente e funcionário
-		entity.setBuyer(u);
+		Client client = (Client) event.getObject();
+		getEntity().setBuyer(client);
 //		entity.setSalesman("logUser");
 	}
 
-	public void addPurchase(ItemStock item) {
+	public void getItemStockListener(SelectEvent event) {
+		ItemStock item = (ItemStock) event.getObject();
 		Purchase purchase = new Purchase();
 		purchase.setItem(item);
 		getEntity().getListPurchase().add(purchase);
