@@ -86,16 +86,15 @@
 									<p:toggleSwitch id="tsUser"
 										value="#{clientController.userCreation}"
 										disabled="#{clientController.disableToggle()}">
-										<p:ajax process="#{clientController.renderEmail()}"
-											update="@form" resetValues="true" />
+										<p:ajax update="@form" resetValues="true" />
 									</p:toggleSwitch>
 								</div>
 								<p:outputLabel for="itEmail" value="Email: "
-									rendered="#{!clientController.userCreation}">
+									rendered="#{clientController.userCreation}">
 									<p:message for="itEmail" escape="false" />
 								</p:outputLabel>
 								<p:inputText id="itEmail"
-									rendered="#{!clientController.userCreation}" immediate="true"
+									rendered="#{clientController.userCreation}" immediate="true"
 									value="#{clientController.entity.user.email}" />
 							</p:panelGrid>
 

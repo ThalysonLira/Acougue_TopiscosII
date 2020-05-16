@@ -66,7 +66,8 @@
 								<p:outputLabel value="Cnpj: ">
 									<p:message for="itCnpj" escape="false" />
 								</p:outputLabel>
-								<p:inputMask id="itCnpj" value="#{providerController.entity.cnpj}"
+								<p:inputMask id="itCnpj"
+									value="#{providerController.entity.cnpj}"
 									mask="99.999.999/9999-99" />
 
 								<p:outputLabel value="Situação: " />
@@ -81,17 +82,18 @@
 
 								<div>
 									<h:outputText value="Fornecedor acessará o sistema?" />
-									<p:toggleSwitch id="tsUser" 
-										value="#{providerController.userCreation}" disabled="#{providerController.disableToggle()}">
-										<p:ajax process="#{providerController.renderEmail()}" update="@form" />
+									<p:toggleSwitch id="tsUser"
+										value="#{providerController.userCreation}"
+										disabled="#{providerController.disableToggle()}">
+										<p:ajax update="@form" resetValues="true" />
 									</p:toggleSwitch>
 								</div>
 								<p:outputLabel for="itEmail" value="Email: "
-									rendered="#{!providerController.userCreation}">
+									rendered="#{providerController.userCreation}">
 									<p:message for="itEmail" escape="false" />
 								</p:outputLabel>
 								<p:inputText id="itEmail"
-									rendered="#{!providerController.userCreation}" immediate="true"
+									rendered="#{providerController.userCreation}" immediate="true"
 									value="#{providerController.entity.user.email}" />
 							</p:panelGrid>
 

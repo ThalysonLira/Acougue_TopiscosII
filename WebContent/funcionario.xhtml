@@ -51,7 +51,8 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Nome: " actionListener="#{employeeController.openEmployeeListener}"
+								<p:commandLink value="Nome: "
+									actionListener="#{employeeController.openEmployeeListener}"
 									process="@this" update="@none">
 									<p:ajax event="dialogReturn"
 										listener="#{employeeController.getEmployeeListener}"
@@ -93,17 +94,18 @@
 
 								<div>
 									<h:outputText value="Funcionário acessará o sistema?" />
-									<p:toggleSwitch id="tsUser" 
-										value="#{employeeController.userCreation}" disabled="#{employeeController.disableToggle()}">
-										<p:ajax process="#{employeeController.renderEmail()}" update="@form" />
+									<p:toggleSwitch id="tsUser"
+										value="#{employeeController.userCreation}"
+										disabled="#{employeeController.disableToggle()}">
+										<p:ajax update="@form" resetValues="true" />
 									</p:toggleSwitch>
 								</div>
 								<p:outputLabel for="itEmail" value="Email: "
-									rendered="#{!employeeController.userCreation}">
+									rendered="#{employeeController.userCreation}">
 									<p:message for="itEmail" escape="false" />
 								</p:outputLabel>
 								<p:inputText id="itEmail"
-									rendered="#{!employeeController.userCreation}" immediate="true"
+									rendered="#{employeeController.userCreation}" immediate="true"
 									value="#{employeeController.entity.user.email}" />
 							</p:panelGrid>
 
