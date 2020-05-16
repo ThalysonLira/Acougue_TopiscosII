@@ -3,7 +3,7 @@ package br.unitins.acougue.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import br.unitins.acougue.factory.MeatType;
+import br.unitins.acougue.model.validator.Validator;
 
 @Entity
 public class Product extends DefaultEntity<Product>{
@@ -30,6 +30,11 @@ public class Product extends DefaultEntity<Product>{
 	
 	public Product() {
 		super();
+	}
+	
+	@Override
+	public Validator<Product> getValidator() {
+		return null;
 	}
 
 	public String getCut() {

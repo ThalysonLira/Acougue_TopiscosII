@@ -2,12 +2,17 @@ package br.unitins.acougue.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+import br.unitins.acougue.model.validator.ProviderValidator;
+import br.unitins.acougue.model.validator.Validator;
 
 @Entity
 public class Provider extends DefaultEntity<Provider>{
 
 	private static final long serialVersionUID = -308678649071787773L;
 	
+	@OneToOne()
 	private User user;
 	
 	@Column(nullable = false)
@@ -21,6 +26,11 @@ public class Provider extends DefaultEntity<Provider>{
 	
 	public Provider() {
 		super();
+	}
+	
+	@Override
+	public Validator<Provider> getValidator() {
+		return new ProviderValidator();
 	}
 
 	public User getUser() {
@@ -56,5 +66,5 @@ public class Provider extends DefaultEntity<Provider>{
 	public void setSituation(Situation situation) {
 		this.situation = situation;
 	}
-	
+
 }

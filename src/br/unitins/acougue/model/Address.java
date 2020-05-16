@@ -2,6 +2,8 @@ package br.unitins.acougue.model;
 
 import javax.persistence.Column;
 
+import br.unitins.acougue.model.validator.Validator;
+
 public class Address extends DefaultEntity<Address>{
 
 	private static final long serialVersionUID = 205467836201825885L;
@@ -10,7 +12,7 @@ public class Address extends DefaultEntity<Address>{
 	private String cep;
 	
 	@Column(nullable = false)
-	private String address;
+	private String street;
 	
 	@Column(nullable = false)
 	private String number;
@@ -30,13 +32,18 @@ public class Address extends DefaultEntity<Address>{
 	public Address() {
 		super();
 	}
-
-	public String getAddress() {
-		return address;
+	
+	@Override
+	public Validator<Address> getValidator() {
+		return null;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
 	public String getCep() {
@@ -86,5 +93,5 @@ public class Address extends DefaultEntity<Address>{
 	public void setState(String state) {
 		this.state = state;
 	}
-	
+
 }

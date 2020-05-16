@@ -36,4 +36,18 @@ public class UserRepository extends Repository<User> {
 		return query.getResultList();
 	}
 	
+	public boolean contains(Integer id, String email) {
+		StringBuffer jpql = new StringBuffer();
+		jpql.append("SELECT COUNT(*) ");
+		jpql.append("FROM UserSystem u ");
+		jpql.append("WHERE upper(u.email) = ? ");
+		jpql.append("AND u.id <> ? ");
+		
+		Query query = getEntityManager().createNativeQuery(jpql.toString());
+		query.setParameter(1, email);
+		query.setParameter(2, id == null ? -1 : id);
+		
+		return (long) query.getSingleResult() == 0 ? false : true;
+	}
+	
 }

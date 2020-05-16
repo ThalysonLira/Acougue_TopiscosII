@@ -8,7 +8,7 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import br.unitins.acougue.controller.listener.ProductListener;
-import br.unitins.acougue.factory.MeatType;
+import br.unitins.acougue.model.MeatType;
 import br.unitins.acougue.model.Product;
 
 @Named

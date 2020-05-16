@@ -2,11 +2,6 @@ package br.unitins.acougue.controller;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
-import br.unitins.acougue.factory.JPAFactory;
-import br.unitins.acougue.model.User;
 
 @Named
 @RequestScoped

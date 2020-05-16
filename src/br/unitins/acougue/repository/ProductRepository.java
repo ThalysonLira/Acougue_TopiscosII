@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.model.Product;
 
-public class ProductRepository extends Repository<Product>{
+public class ProductRepository extends Repository<Product> {
 
 	public List<Product> findByCut(String cut) {
 

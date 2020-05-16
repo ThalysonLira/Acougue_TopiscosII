@@ -6,16 +6,25 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import br.unitins.acougue.model.validator.Validator;
 
 @Entity
 public class Sale extends DefaultEntity<Sale>{
 
 	private static final long serialVersionUID = 2834281686033039479L;
 
+	@ManyToOne()
+	@JoinColumn(nullable = false)
 	private Client buyer;
+	
+	@OneToOne()
 	private Employee salesman;
 	
 	@Column(nullable = false)
@@ -31,6 +40,11 @@ public class Sale extends DefaultEntity<Sale>{
 		super();
 		this.total = 0.0;
 		this.saleDate = new Date();
+	}
+	
+	@Override
+	public Validator<Sale> getValidator() {
+		return null;
 	}
 
 	public Client getBuyer() {

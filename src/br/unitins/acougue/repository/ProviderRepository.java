@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.model.Provider;
 
-public class ProviderRepository extends Repository<Provider>{
+public class ProviderRepository extends Repository<Provider> {
 
 	public List<Provider> findByName(String name) {
 
@@ -52,6 +52,20 @@ public class ProviderRepository extends Repository<Provider>{
 		query.setParameter("search", "%" + Util.maskCnpj(search) + "%");
 
 		return query.getResultList();
-	}	
+	}
+	
+	public boolean contains(Integer id, String cnpj) {
+		StringBuffer jpql = new StringBuffer();
+		jpql.append("SELECT COUNT(*) ");
+		jpql.append("FROM Provider p ");
+		jpql.append("WHERE p.cnpj = ? ");
+		jpql.append("AND p.id <> ? ");
+		
+		Query query = getEntityManager().createNativeQuery(jpql.toString());
+		query.setParameter(1, cnpj);
+		query.setParameter(2, id == null ? -1 : id);
+		
+		return (long) query.getSingleResult() == 0 ? false : true;
+	}
 	
 }

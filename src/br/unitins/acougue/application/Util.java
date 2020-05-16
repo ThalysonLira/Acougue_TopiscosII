@@ -1,8 +1,6 @@
 package br.unitins.acougue.application;
 
 import java.text.ParseException;
-import java.util.Date;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.swing.text.MaskFormatter;

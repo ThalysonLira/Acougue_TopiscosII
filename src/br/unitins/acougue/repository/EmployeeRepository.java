@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.model.Employee;
 
-public class EmployeeRepository extends Repository<Employee>{
+public class EmployeeRepository extends Repository<Employee> {
 
 	public List<Employee> findByName(String name) {
 
@@ -52,6 +52,20 @@ public class EmployeeRepository extends Repository<Employee>{
 		query.setParameter("search", "%" + Util.maskCpf(search) + "%");
 
 		return query.getResultList();
+	}
+	
+	public boolean contains(Integer id, String cpf) {
+		StringBuffer jpql = new StringBuffer();
+		jpql.append("SELECT COUNT(*) ");
+		jpql.append("FROM Employee e ");
+		jpql.append("WHERE e.cpf = ? ");
+		jpql.append("AND e.id <> ? ");
+		
+		Query query = getEntityManager().createNativeQuery(jpql.toString());
+		query.setParameter(1, cpf);
+		query.setParameter(2, id == null ? -1 : id);
+		
+		return (long) query.getSingleResult() == 0 ? false : true;
 	}
 
 }

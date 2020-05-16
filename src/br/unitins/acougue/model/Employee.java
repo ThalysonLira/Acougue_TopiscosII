@@ -4,14 +4,19 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.unitins.acougue.model.validator.EmployeeValidator;
+import br.unitins.acougue.model.validator.Validator;
 
 @Entity
 public class Employee extends DefaultEntity<Employee>{
 
 	private static final long serialVersionUID = 4721400599346259192L;
 
+	@OneToOne()
 	private User user;
 	
 	@Column(nullable = false)
@@ -31,6 +36,11 @@ public class Employee extends DefaultEntity<Employee>{
 	
 	public Employee() {
 		super();
+	}
+	
+	@Override
+	public Validator<Employee> getValidator() {
+		return new EmployeeValidator();
 	}
 	
 	public String getName() {
@@ -82,5 +92,5 @@ public class Employee extends DefaultEntity<Employee>{
 	public void setSituation(Situation situation) {
 		this.situation = situation;
 	}
-	
+
 }

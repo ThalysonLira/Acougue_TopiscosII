@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.model.ItemStock;
 
-public class ItemStockRepository extends Repository<ItemStock>{
+public class ItemStockRepository extends Repository<ItemStock> {
 
 	public List<ItemStock> findByName(String name) {
 

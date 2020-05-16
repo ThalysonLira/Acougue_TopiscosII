@@ -6,12 +6,13 @@ import javax.persistence.EntityManager;
 
 import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
+import br.unitins.acougue.application.ValidateException;
 import br.unitins.acougue.factory.JPAFactory;
 import br.unitins.acougue.model.DefaultEntity;
 import br.unitins.acougue.repository.Repository;
 
-public abstract class Controller<T extends DefaultEntity<T>> implements Serializable{
-
+public abstract class Controller<T extends DefaultEntity<T>> implements Serializable {
+	
 	private static final long serialVersionUID = 3135991960979657083L;
 	
 	protected T entity;
@@ -24,6 +25,8 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 		Repository<T> r = new Repository<T>();
 		
 		try {
+			if (getEntity().getValidator() != null)
+				getEntity().getValidator().validate(getEntity());
 			r.beginTransaction();
 			r.save(getEntity());
 			r.commitTransaction();
@@ -32,6 +35,10 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 			r.rollbackTransaction();
 			Util.addMessageError("Erro ao salvar.");
 			setEntity(null);
+		} catch (ValidateException v) {
+			System.out.println(v.getMessage());
+			Util.addMessageError(v.getMessage());
+			return;
 		}
 	
 		this.clear();

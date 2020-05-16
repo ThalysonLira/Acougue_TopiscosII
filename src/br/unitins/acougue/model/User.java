@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.unitins.acougue.model.validator.UserValidator;
+import br.unitins.acougue.model.validator.Validator;
+
 @Entity(name = "UserSystem")
 public class User extends DefaultEntity<User>{
 
@@ -26,6 +29,11 @@ public class User extends DefaultEntity<User>{
 	
 	public User() {
 		super();
+	}
+	
+	@Override
+	public Validator<User> getValidator() {
+		return new UserValidator();
 	}
 
 	public String getEmail() {

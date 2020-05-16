@@ -1,4 +1,4 @@
-package br.unitins.acougue.factory;
+package br.unitins.acougue.model;
 
 public enum MeatType {
 	BRANCA(0, "Branca"),

@@ -5,15 +5,19 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.unitins.acougue.model.validator.Validator;
 
 @Entity(name = "Stock")
 public class ItemStock extends DefaultEntity<ItemStock> {
 
 	private static final long serialVersionUID = -4750642961165057477L;
 
+	@OneToOne()
+	@JoinColumn(nullable = false)
 	private Product product;
 	private String name;
 	private int evaluation;
@@ -26,6 +30,11 @@ public class ItemStock extends DefaultEntity<ItemStock> {
 
 	public ItemStock() {
 		super();
+	}
+	
+	@Override
+	public Validator<ItemStock> getValidator() {
+		return null;
 	}
 
 	public Product getProduct() {

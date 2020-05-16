@@ -53,5 +53,19 @@ public class ClientRepository extends Repository<Client> {
 
 		return query.getResultList();
 	}
+	
+	public boolean contains(Integer id, String cpf) {
+		StringBuffer jpql = new StringBuffer();
+		jpql.append("SELECT COUNT(*) ");
+		jpql.append("FROM Client c ");
+		jpql.append("WHERE c.cpf = ? ");
+		jpql.append("AND c.id <> ? ");
+		
+		Query query = getEntityManager().createNativeQuery(jpql.toString());
+		query.setParameter(1, cpf);
+		query.setParameter(2, id == null ? -1 : id);
+		
+		return (long) query.getSingleResult() == 0 ? false : true;
+	}
 
 }
