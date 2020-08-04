@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Consulta de Produto</title>
+	<title>Consulta de Carrinho</title>
 </h:head>
 
 <h:body>
@@ -28,10 +28,10 @@
 						<div class="ui-g-12">
 							<div class="card card-w-title">
 								<div class="ui-inputgroup">
-									<p:inputText id="itSearch" value="#{purchaseListener.search}"
-										placeholder="Informe o nome do produto ..." />
+									<p:inputText id="itSearch" value="#{cartListener.search}"
+										placeholder="Informe o nome do cliente ..." />
 									<p:commandButton value="Pesquisar"
-										actionListener="#{purchaseListener.search}"
+										actionListener="#{cartListener.search}"
 										process="@this itSearch" update="dtList" />
 								</div>
 							</div>
@@ -46,31 +46,27 @@
 					<div class="card card-w-title">
 
 						<p:dataTable id="dtList" var="entity" rowIndexVar="row"
-							paginator="false" reflow="true" value="#{purchaseListener.list}">
+							paginator="false" reflow="true" value="#{cartListener.list}">
 							<p:column headerText="Comprador">
-								<p:commandLink value="#{entity.sale.buyer.name}"
-									action="#{purchaseListener.select(entity.id)}" process="@this"
+								<p:commandLink value="#{entity.client.name}"
+									action="#{cartListener.select(entity.id)}" process="@this"
 									update="@form" resetValues="true" />
 							</p:column>
 
 							<p:column headerText="Vendedor">
 								<h:outputText value="#{entity.sale.salesman.name}" />
 							</p:column>
-
-							<p:column headerText="Item">
-								<h:outputText value="#{entity.item.name}" />
-							</p:column>
-
-							<p:column headerText="Quantidade">
-								<h:outputLabel value="#{entity.quantity}" />
+							
+							<p:column headerText="Quantidade de Itens">
+								<h:outputText value="#{entity.items.size()}" />
 							</p:column>
 
 							<p:column headerText="Valor">
-								<h:outputLabel value="#{entity.value}" />
+								<h:outputLabel value="#{entity.getTotal()}" />
 							</p:column>
 
 							<f:facet name="footer">
-							        Total de #{purchaseListener.list.size()} produtos vendidos.
+							        Total de #{cartListener.list.size()} produtos vendidos.
 							    </f:facet>
 						</p:dataTable>
 					</div>

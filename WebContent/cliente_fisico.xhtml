@@ -38,12 +38,12 @@
 			<p:graphicImage name="/images/loading.gif" />
 		</p:dialog>
 
-		<h:form>
+		<h:form id="form">
 			<p:growl id="growl" globalOnly="false" />
 			<p:panel id="panel">
 				<f:facet name="header">
 					<div align="center">
-						<h1>Cadastro de Fornecedores</h1>
+						<h1>Cadastro de Cliente (Físico)</h1>
 					</div>
 				</f:facet>
 				<div class="ui-g ui-fluid">
@@ -52,60 +52,50 @@
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
 								<p:commandLink value="Nome: "
-									actionListener="#{providerController.openProviderListener}"
+									actionListener="#{physicalClientController.openClientListener}"
 									process="@this" update="@none">
 									<p:ajax event="dialogReturn"
-										listener="#{providerController.getProviderListener}"
+										listener="#{physicalClientController.getClientListener}"
 										update="@form" />
 									<p:message for="itName" escape="false" />
 								</p:commandLink>
-								<p:inputText id="itName"
-									value="#{providerController.entity.name}" required="true"
-									requiredMessage="Informe o nome." />
+								<p:inputText id="itName" value="#{physicalClientController.entity.name}"
+									required="true" requiredMessage="Informe o nome." />
 
-								<p:outputLabel value="Razão Social: ">
-									<p:message for="itCompany" escape="false" />
+								<p:outputLabel value="Cpf: ">
+									<p:message for="itCpf" escape="false" />
 								</p:outputLabel>
-								<p:inputText id="itCompany"
-									value="#{providerController.entity.companyName}"
-									required="true" requiredMessage="Informe a razão social." />
+								<p:inputMask id="itCpf" value="#{physicalClientController.entity.cpf}"
+									mask="999.999.999-99" />
 
-								<p:outputLabel value="Cnpj: ">
-									<p:message for="itCnpj" escape="false" />
-								</p:outputLabel>
-								<p:inputMask id="itCnpj"
-									value="#{providerController.entity.cnpj}"
-									mask="99.999.999/9999-99" />
-
-								<p:outputLabel value="Data de Fundação: " />
-								<p:calendar value="#{providerController.entity.birthDate}"
+								<p:outputLabel value="Data de Nascimento: " />
+								<p:calendar value="#{physicalClientController.entity.birthDate}"
 									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
 
-								<p:outputLabel value="Situação: " />
-								<p:selectOneMenu id="slbSituation"
-									value="#{providerController.entity.situation}" size="1">
+								<p:outputLabel value="Sexo: " />
+								<p:selectOneMenu id="slbSex"
+									value="#{physicalClientController.entity.sex}" size="1">
 									<f:selectItem itemLabel="Selecione ..." itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{providerController.listSituation}"
-										var="situation" itemLabel="#{situation.label}"
-										itemValue="#{situation}" />
+									<f:selectItems value="#{physicalClientController.listSex}" var="sex"
+										itemLabel="#{sex.label}" itemValue="#{sex}" />
 								</p:selectOneMenu>
 
 								<div>
-									<h:outputText value="Fornecedor acessará o sistema?" />
+									<h:outputText value="Cliente acessará o sistema?" />
 									<p:toggleSwitch id="tsUser"
-										value="#{providerController.userCreation}"
-										disabled="#{providerController.disableToggle()}">
+										value="#{physicalClientController.userCreation}"
+										disabled="#{physicalClientController.disableToggle()}">
 										<p:ajax update="@form" resetValues="true" />
 									</p:toggleSwitch>
 								</div>
 								<p:outputLabel for="itEmail" value="Email: "
-									rendered="#{providerController.userCreation}">
+									rendered="#{physicalClientController.userCreation}">
 									<p:message for="itEmail" escape="false" />
 								</p:outputLabel>
 								<p:inputText id="itEmail"
-									rendered="#{providerController.userCreation}" immediate="true"
-									value="#{providerController.entity.user.email}" />
+									rendered="#{physicalClientController.userCreation}" immediate="true"
+									value="#{physicalClientController.entity.user.email}" />
 							</p:panelGrid>
 
 						</div>
@@ -114,10 +104,10 @@
 				<p:toolbar>
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
-							update="@form" action="#{providerController.save}" />
+							update="@form" action="#{physicalClientController.save}" />
 
-						<p:commandButton value="Limpar" process="@this" update="panel"
-							action="#{providerController.clear}">
+						<p:commandButton value="Limpar" process="@this" update="@form"
+							action="#{physicalClientController.clear}">
 							<p:ajax update="@form" resetValues="true" />
 						</p:commandButton>
 
@@ -126,7 +116,7 @@
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@form" update="@form"
-							action="#{providerController.delete}">
+							action="#{physicalClientController.delete}" resetValues="true">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>

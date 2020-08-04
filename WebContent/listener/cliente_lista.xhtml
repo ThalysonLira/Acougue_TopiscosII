@@ -53,16 +53,16 @@
 									update="@form" resetValues="true" />
 							</p:column>
 
-							<p:column headerText="Cpf">
-								<h:outputText value="#{entity.cpf}" />
+							<p:column headerText="Email">
+								<h:outputText value="#{entity.user.email}" />
 							</p:column>
 
 							<p:column headerText="Data de Nascimento">
 								<h:outputLabel value="#{entity.birthDate}" />
 							</p:column>
 
-							<p:column headerText="Sexo">
-								<h:outputLabel value="#{entity.sex}" />
+							<p:column headerText="Tipo">
+								<h:outputLabel value="#{entity.type}" />
 							</p:column>
 
 							<f:facet name="footer">

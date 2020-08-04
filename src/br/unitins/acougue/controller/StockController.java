@@ -7,26 +7,26 @@ import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 
-import br.unitins.acougue.controller.listener.ItemStockListener;
-import br.unitins.acougue.model.ItemStock;
+import br.unitins.acougue.controller.listener.ItemListener;
+import br.unitins.acougue.model.Item;
 import br.unitins.acougue.model.Product;
 
 @Named
 @ViewScoped
-public class ItemStockController extends Controller<ItemStock> {
+public class StockController extends Controller<Item> {
 
 	private static final long serialVersionUID = -4855085041221455440L;
 
 	private String search;
-	private List<ItemStock> stock;
+	private List<Item> stock;
 
 	public void openItemStockListener() {
-		ItemStockListener listener = new ItemStockListener();
+		ItemListener listener = new ItemListener();
 		listener.open();
 	}
 	
 	public void getItemStockListener(SelectEvent event) {
-		ItemStock entity = (ItemStock) event.getObject();
+		Item entity = (Item) event.getObject();
 		setEntity(entity);
 	}
 
@@ -37,9 +37,9 @@ public class ItemStockController extends Controller<ItemStock> {
 	}
 
 	@Override
-	public ItemStock getEntity() {
+	public Item getEntity() {
 		if (entity == null)
-			entity = new ItemStock();
+			entity = new Item();
 		return entity;
 	}
 
@@ -51,11 +51,11 @@ public class ItemStockController extends Controller<ItemStock> {
 		this.search = search;
 	}
 
-	public List<ItemStock> getStock() {
+	public List<Item> getStock() {
 		return stock;
 	}
 
-	public void setStock(List<ItemStock> stock) {
+	public void setStock(List<Item> stock) {
 		this.stock = stock;
 	}
 

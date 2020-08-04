@@ -5,9 +5,10 @@ import java.util.List;
 import javax.persistence.Query;
 
 import br.unitins.acougue.application.Util;
+import br.unitins.acougue.model.Person;
 import br.unitins.acougue.model.Provider;
 
-public class ProviderRepository extends Repository<Provider> {
+public class ProviderRepository extends Repository<Person> {
 
 	public List<Provider> findByName(String name) {
 

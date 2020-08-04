@@ -24,7 +24,7 @@ public class Repository<T extends DefaultEntity<T>> {
 			getEntityManager().getTransaction().begin();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao iniciar uma transação.");
+			throw new RepositoryException("Erro ao iniciar uma transaÃ§Ã£o.");
 		}
 	}
 
@@ -33,7 +33,7 @@ public class Repository<T extends DefaultEntity<T>> {
 			getEntityManager().getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao commitar uma transação.");
+			throw new RepositoryException("Erro ao commitar uma transaÃ§Ã£o.");
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class Repository<T extends DefaultEntity<T>> {
 		} catch (Exception e) {
 			System.out.println("Erro ao relizar merge.");
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao salvar uma transação.");
+			throw new RepositoryException("Erro ao salvar uma transaÃ§Ã£o.");
 		}
 	}
 
@@ -62,7 +62,7 @@ public class Repository<T extends DefaultEntity<T>> {
 		} catch (Exception e) {
 			System.out.println("Erro ao relizar merge.");
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao salvar uma transação.");
+			throw new RepositoryException("Erro ao salvar uma transaÃ§Ã£o.");
 		}
 	}
 	
@@ -75,7 +75,7 @@ public class Repository<T extends DefaultEntity<T>> {
 		} catch (Exception e) {
 			System.out.println("Erro ao relizar merge.");
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao salvar uma transação.");
+			throw new RepositoryException("Erro ao salvar uma transaÃ§Ã£o.");
 		}
 	}
 

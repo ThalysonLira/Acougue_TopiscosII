@@ -12,8 +12,9 @@ import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.controller.listener.SaleListener;
 import br.unitins.acougue.model.Client;
-import br.unitins.acougue.model.Purchase;
-import br.unitins.acougue.model.ItemStock;
+import br.unitins.acougue.model.Cart;
+import br.unitins.acougue.model.Item;
+import br.unitins.acougue.model.Product;
 import br.unitins.acougue.model.Sale;
 import br.unitins.acougue.repository.Repository;
 
@@ -30,36 +31,26 @@ public class SaleController extends Controller<Sale> {
 		SaleListener listener = new SaleListener();
 		listener.open();
 	}
-	
+
 	public void getSaleListener(SelectEvent event) {
 		Sale entity = (Sale) event.getObject();
 		setEntity(entity);
 	}
 
 	public void getClientListener(SelectEvent event) {
-		// TODO adicionar verificaÁ„o de usu·rio logado para cliente e funcion·rio
+		// TODO adicionar verifica√ß√£o de usu√°rio logado para cliente e funcion√°rio
 		Client client = (Client) event.getObject();
-		getEntity().setBuyer(client);
+		getEntity().getCart().setClient(client);
 //		entity.setSalesman("logUser");
 	}
 
 	public void getItemStockListener(SelectEvent event) {
-		ItemStock item = (ItemStock) event.getObject();
-		Purchase purchase = new Purchase();
-		purchase.setItem(item);
-		getEntity().getListPurchase().add(purchase);
+		Product product = (Product) event.getObject();
+		getEntity().getCart().getItems().add(new Item(product));
 	}
 
-	public void removePurchase(Purchase item) {
-		getEntity().getListPurchase().remove(item);
-	}
-
-	public void generateTotal() {
-		Double sum = 0.0;
-		for (Purchase p : entity.getListPurchase()) {
-			sum += p.getQuantity() * p.getValue();
-		}
-		entity.setTotal(sum);
+	public void removePurchase(Item item) {
+		getEntity().getCart().getItems().remove(item);
 	}
 
 	@Override
@@ -71,62 +62,14 @@ public class SaleController extends Controller<Sale> {
 
 	@Override
 	public void save() {
-		// TODO remover itens do estoque
-		Repository<Sale> rs = new Repository<Sale>();
-		Repository<Purchase> rp = new Repository<Purchase>();
-		Sale sale = getEntity();
-
-		try {
-			rs.beginTransaction();
-			rs.save(getEntity());
-			sale.setId(rs.refresh(getEntity()).getId());
-			rs.commitTransaction();
-
-			rp.beginTransaction();
-			for (Purchase p : sale.getListPurchase()) {
-				p.setSale(sale);
-				rp.save(p);
-			}
-			rp.commitTransaction();
-		} catch (RepositoryException e) {
-			e.printStackTrace();
-			rs.rollbackTransaction();
-			rp.rollbackTransaction();
-			Util.addMessageError("Erro ao salvar.");
-			setEntity(null);
+		if (getEntity().getCart().getItems().size() >= 1) {
+			super.save();
 		}
-
-		this.clear();
-		Util.addMessageInfo("Cadastro realizado com sucesso.");
 	}
 
 	@Override
 	public void delete() {
-		// TODO devolver itens ao estoque
-		Repository<Sale> rs = new Repository<Sale>();
-		Repository<Purchase> rp = new Repository<Purchase>();
-		Sale sale = getEntity();
-
-		try {
-			rp.beginTransaction();
-			for (Purchase p : sale.getListPurchase()) {
-				p.setSale(sale);
-				rp.delete(p);
-			}
-			rp.commitTransaction();
-			
-			rs.beginTransaction();
-			rs.delete(getEntity());
-			rs.commitTransaction();
-		} catch (RepositoryException e) {
-			e.printStackTrace();
-			rs.rollbackTransaction();
-			rp.rollbackTransaction();
-			Util.addMessageError("Erro ao salvar.");
-			return;
-		}
-		this.clear();
-		Util.addMessageInfo("Exclus„o realizada com sucesso.");
+		super.delete();
 	}
 
 	public String getSearch() {

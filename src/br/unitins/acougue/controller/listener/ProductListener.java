@@ -15,8 +15,7 @@ import br.unitins.acougue.factory.JPAFactory;
 import br.unitins.acougue.model.Product;
 import br.unitins.acougue.repository.ProductRepository;
 
-@Named
-@ViewScoped
+@Named @ViewScoped
 public class ProductListener extends Listener<Product> {
 	
 	private static final long serialVersionUID = -3808967038976026818L;
@@ -25,7 +24,7 @@ public class ProductListener extends Listener<Product> {
 	
 	public void search() {
 		ProductRepository repository = new ProductRepository();
-		setList(repository.findByCutOrAnimal(getSearch()));
+		setList(repository.findByName(getSearch()));
 	}
 	
 	public void select(int id) {

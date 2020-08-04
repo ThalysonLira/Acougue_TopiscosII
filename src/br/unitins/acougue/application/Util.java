@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class Util {
 
 	public static void main(String args[]) {
-
+		
 	}
 	
 	public static String maskCpf(String value) {

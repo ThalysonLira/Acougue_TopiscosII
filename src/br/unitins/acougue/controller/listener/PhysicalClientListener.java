@@ -12,25 +12,25 @@ import javax.persistence.EntityManager;
 import org.primefaces.PrimeFaces;
 
 import br.unitins.acougue.factory.JPAFactory;
-import br.unitins.acougue.model.ItemStock;
-import br.unitins.acougue.repository.ItemStockRepository;
+import br.unitins.acougue.model.PhysicalClient;
+import br.unitins.acougue.repository.PhysicalClientRepository;
+import br.unitins.acougue.model.Person;
 
-@Named
-@ViewScoped
-public class ItemStockListener extends Listener<ItemStock> {
+@Named @ViewScoped
+public class PhysicalClientListener extends Listener<Person>{
 
-	private static final long serialVersionUID = -3326688224192816093L;
-	private List<ItemStock> list;
+	private static final long serialVersionUID = -8692343065470325600L;
+	private List<PhysicalClient> list;
 	private String search;
 	
 	public void search() {
-		ItemStockRepository repository = new ItemStockRepository();
-		setList(repository.findByName(getSearch()));
+		PhysicalClientRepository repository = new PhysicalClientRepository();
+		setList(repository.findByNameOrCpf(getSearch()));
 	}
 	
 	public void select(int id) {
 		EntityManager em = JPAFactory.getEntityManager();
-		setEntity((ItemStock) em.find(ItemStock.class, id));
+		setEntity((PhysicalClient) em.find(PhysicalClient.class, id));
 		
 		PrimeFaces.current().dialog().closeDynamic(getEntity());
 	}
@@ -45,23 +45,23 @@ public class ItemStockListener extends Listener<ItemStock> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/estoque_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/listener/cliente_lista", options, null);
 	}
 
 	@Override
-	public ItemStock getEntity() {
+	public PhysicalClient getEntity() {
 		if (entity == null)
-			entity = new ItemStock();
-		return entity;
+			entity = new PhysicalClient();
+		return (PhysicalClient) entity;
 	}
 
-	public List<ItemStock> getList() {
+	public List<PhysicalClient> getList() {
 		if (list == null)
-			list = new ArrayList<ItemStock>();
+			list = new ArrayList<PhysicalClient>();
 		return list;
 	}
 
-	public void setList(List<ItemStock> list) {
+	public void setList(List<PhysicalClient> list) {
 		this.list = list;
 	}
 

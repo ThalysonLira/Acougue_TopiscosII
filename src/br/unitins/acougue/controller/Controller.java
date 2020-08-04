@@ -27,7 +27,7 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 		try {
 			if (getEntity().getValidator() != null)
 				getEntity().getValidator().validate(getEntity());
-			r.beginTransaction();
+			r.beginTransaction();;
 			r.save(getEntity());
 			r.commitTransaction();
 		} catch (RepositoryException e) {
@@ -60,7 +60,7 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 		}
 
 		this.clear();
-		Util.addMessageInfo("Exclus„o realizada com sucesso.");
+		Util.addMessageInfo("Exclus√£o realizada com sucesso.");
 	}
 
 	public void edit(int id) {

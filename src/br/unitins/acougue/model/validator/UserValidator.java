@@ -14,7 +14,7 @@ public class UserValidator implements Validator<User> {
 	private void validateEmail(User entity) throws ValidateException {
 		UserRepository repository = new UserRepository();
 		if (repository.contains(entity.getId(), entity.getEmail())) {
-			throw new ValidateException("Email Inv·lido. Este email j· est· sendo utilizado por outro usu·rio.");
+			throw new ValidateException("Email Inv√°lido. Este email j√° est√° sendo utilizado por outro usu√°rio.");
 		}
 	}
 

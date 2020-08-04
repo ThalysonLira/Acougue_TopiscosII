@@ -1,7 +1,6 @@
 package br.unitins.acougue.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -12,13 +11,13 @@ import org.primefaces.event.SelectEvent;
 import br.unitins.acougue.application.RandomPassword;
 import br.unitins.acougue.controller.listener.ClientListener;
 import br.unitins.acougue.model.Client;
+import br.unitins.acougue.model.Person;
 import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.Sex;
 import br.unitins.acougue.model.User;
 
-@Named
-@ViewScoped
-public class ClientController extends Controller<Client> {
+@Named @ViewScoped
+public class ClientController extends Controller<Person> {
 
 	private static final long serialVersionUID = -1443526557455688665L;
 
@@ -60,7 +59,6 @@ public class ClientController extends Controller<Client> {
 	private void createNewUser() {
 		// TODO encaminhar senha criada para email
 		getEntity().getUser().setPassword(RandomPassword.generatePassword(8));
-		getEntity().getUser().setCreationDate(new Date());
 		getEntity().getUser().setProfile(Profile.CLIENTE);
 	}
 
@@ -72,13 +70,13 @@ public class ClientController extends Controller<Client> {
 	public void save() {
 		if (getEntity().getUser() != null && getEntity().getUser().getId() == null) {
 			String email = getEntity().getUser().getEmail();
-			if ((email != null) && (!email.isBlank() && !email.isEmpty()))
+			if (email != null && !email.isEmpty())
 				createNewUser();
 			else
 				getEntity().setUser(null);
 		}
 		
-		// TODO descobrir porque n„o atualiza o USER
+		// TODO descobrir porque n√£o atualiza o USER
 		super.save();
 	}
 	
@@ -94,7 +92,7 @@ public class ClientController extends Controller<Client> {
 			entity = new Client();
 			entity.setUser(new User());
 		}
-		return entity;
+		return (Client) entity;
 	}
 
 	public String getSearch() {

@@ -1,12 +1,7 @@
 package br.unitins.acougue.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import br.unitins.acougue.model.validator.UserValidator;
 import br.unitins.acougue.model.validator.Validator;
 
@@ -20,9 +15,6 @@ public class User extends DefaultEntity<User>{
 	
 	@Column(nullable = false, length = 150)
 	private String password;
-	
-	@Temporal(TemporalType.DATE)
-	private Date creationDate;
 	
 	@Column(nullable = false)
 	private Profile profile;
@@ -50,14 +42,6 @@ public class User extends DefaultEntity<User>{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
 	}
 
 	public Profile getProfile() {

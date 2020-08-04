@@ -7,9 +7,7 @@ import javax.persistence.Query;
 
 public class JPAFactory {
 
-	private JPAFactory() {
-
-	}
+	private JPAFactory() {}
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("Acougue_TopicosII");
 	

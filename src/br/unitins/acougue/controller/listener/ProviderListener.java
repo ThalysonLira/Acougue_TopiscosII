@@ -12,12 +12,12 @@ import javax.persistence.EntityManager;
 import org.primefaces.PrimeFaces;
 
 import br.unitins.acougue.factory.JPAFactory;
+import br.unitins.acougue.model.Person;
 import br.unitins.acougue.model.Provider;
 import br.unitins.acougue.repository.ProviderRepository;
 
-@Named
-@ViewScoped
-public class ProviderListener extends Listener<Provider> {
+@Named @ViewScoped
+public class ProviderListener extends Listener<Person> {
 
 	private static final long serialVersionUID = 1374787629948314086L;
 	private List<Provider> list;
@@ -52,7 +52,7 @@ public class ProviderListener extends Listener<Provider> {
 	public Provider getEntity() {
 		if (entity == null)
 			entity = new Provider();
-		return entity;
+		return (Provider) entity;
 	}
 
 	public List<Provider> getList() {

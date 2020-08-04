@@ -9,36 +9,34 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import br.unitins.acougue.application.RandomPassword;
-import br.unitins.acougue.controller.listener.EmployeeListener;
-import br.unitins.acougue.model.Employee;
+import br.unitins.acougue.controller.listener.PhysicalClientListener;
+import br.unitins.acougue.model.PhysicalClient;
 import br.unitins.acougue.model.Person;
 import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.Sex;
-import br.unitins.acougue.model.Situation;
 import br.unitins.acougue.model.User;
 
 @Named @ViewScoped
-public class EmployeeController extends Controller<Person> {
+public class PhysicalClientController extends Controller<Person> {
 
-	private static final long serialVersionUID = 1397513922277282373L;
+	private static final long serialVersionUID = -1443526557455688665L;
 
 	private String search;
-	private List<Employee> listEmployee;
+	private List<PhysicalClient> listPhysicalClient;
 	private boolean userCreation;
-	
-	// TODO Buscar apenas ativos
-	public void openEmployeeListener() {
-		EmployeeListener listener = new EmployeeListener();
+
+	public void openClientListener() {
+		PhysicalClientListener listener = new PhysicalClientListener();
 		listener.open();
 	}
-	
-	public void getEmployeeListener(SelectEvent event) {
+
+	public void getPhysicalClientListener(SelectEvent event) {
 		clear();
-		Employee entity = (Employee) event.getObject();
+		PhysicalClient entity = (PhysicalClient) event.getObject();
 		setEntity(entity);
 		renderEmailField();
 	}
-	
+
 	public void renderEmailField() {
 		if (getEntity().getUser() != null && getEntity().getUser().getId() != null)
 			userCreation = true;
@@ -61,15 +59,11 @@ public class EmployeeController extends Controller<Person> {
 	private void createNewUser() {
 		// TODO encaminhar senha criada para email
 		getEntity().getUser().setPassword(RandomPassword.generatePassword(8));
-		getEntity().getUser().setProfile(Profile.FUNCIONARIO);
+		getEntity().getUser().setProfile(Profile.CLIENTE);
 	}
-	
+
 	public Sex[] getListSex() {
 		return Sex.values();
-	}
-	
-	public Situation[] getListSituation() {
-		return Situation.values();
 	}
 
 	@Override
@@ -82,17 +76,23 @@ public class EmployeeController extends Controller<Person> {
 				getEntity().setUser(null);
 		}
 		
-		// TODO descobrir porque não faz merge no USER
+		// TODO descobrir porque não atualiza o USER
 		super.save();
 	}
 	
 	@Override
-	public Employee getEntity() {
+	public void clear() {
+		super.clear();
+		userCreation = false;
+	}
+
+	@Override
+	public PhysicalClient getEntity() {
 		if (entity == null) {
-			entity = new Employee();
+			entity = new PhysicalClient();
 			entity.setUser(new User());
 		}
-		return (Employee) entity;
+		return (PhysicalClient) entity;
 	}
 
 	public String getSearch() {
@@ -110,11 +110,11 @@ public class EmployeeController extends Controller<Person> {
 	public void setUserCreation(boolean userCreation) {
 		this.userCreation = userCreation;
 	}
-	
-	public List<Employee> getListEmployee() {
-		if (listEmployee == null)
-			listEmployee = new ArrayList<Employee>();
-		return listEmployee;
+
+	public List<PhysicalClient> getListPhysicalClient() {
+		if (listPhysicalClient == null)
+			listPhysicalClient = new ArrayList<PhysicalClient>();
+		return listPhysicalClient;
 	}
-	
+
 }

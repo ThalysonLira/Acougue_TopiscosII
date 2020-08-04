@@ -3,54 +3,50 @@ package br.unitins.acougue.repository;
 import java.util.List;
 
 import javax.persistence.Query;
-
-import br.unitins.acougue.application.Util;
 import br.unitins.acougue.model.Product;
 
 public class ProductRepository extends Repository<Product> {
 
-	public List<Product> findByCut(String cut) {
+	public List<Product> findByName(String name) {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT p ");
 		jpql.append("FROM Product p ");
-		jpql.append("WHERE upper(p.cut) ");
-		jpql.append("LIKE upper(:cut) ");
+		jpql.append("WHERE upper(p.name) ");
+		jpql.append("LIKE upper(:name) ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("cut", "%" + cut + "%");
+		query.setParameter("name", "%" + name + "%");
 
 		return query.getResultList();
 	}
 
-	public List<Product> findByAnimal(String animal) {
+	public List<Product> findByLot(String lot) {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT p ");
 		jpql.append("FROM Product p ");
-		jpql.append("WHERE upper(p.animal) ");
-		jpql.append("LIKE upper(:animal) ");
+		jpql.append("WHERE upper(p.lot) ");
+		jpql.append("LIKE upper(:lot) ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("animal", "%" + animal + "%");
+		query.setParameter("lot", "%" + lot + "%");
 
 		return query.getResultList();
 	}
 
-	public List<Product> findByCutOrAnimal(String search) {
+	public List<Product> findByDescription(String description) {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT p ");
 		jpql.append("FROM Product p ");
-		jpql.append("WHERE upper(p.cut) ");
-		jpql.append("LIKE upper(:search) ");
-		jpql.append("OR upper(p.animal) ");
-		jpql.append("LIKE upper(:search) ");
+		jpql.append("WHERE upper(p.description) ");
+		jpql.append("LIKE upper(:description) ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("search", "%" + search + "%");
+		query.setParameter("description", "%" + description + "%");
 
 		return query.getResultList();
-	}	
+	}
 	
 }

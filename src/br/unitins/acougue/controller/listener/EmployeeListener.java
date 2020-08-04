@@ -13,11 +13,11 @@ import org.primefaces.PrimeFaces;
 
 import br.unitins.acougue.factory.JPAFactory;
 import br.unitins.acougue.model.Employee;
+import br.unitins.acougue.model.Person;
 import br.unitins.acougue.repository.EmployeeRepository;
 
-@Named
-@ViewScoped
-public class EmployeeListener extends Listener<Employee> {
+@Named @ViewScoped
+public class EmployeeListener extends Listener<Person> {
 
 	private static final long serialVersionUID = 3030358506307217188L;
 	private List<Employee> list;
@@ -52,7 +52,7 @@ public class EmployeeListener extends Listener<Employee> {
 	public Employee getEntity() {
 		if (entity == null)
 			entity = new Employee();
-		return entity;
+		return (Employee) entity;
 	}
 
 	public List<Employee> getList() {

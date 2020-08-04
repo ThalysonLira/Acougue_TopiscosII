@@ -8,11 +8,9 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import br.unitins.acougue.controller.listener.ProductListener;
-import br.unitins.acougue.model.MeatType;
 import br.unitins.acougue.model.Product;
 
-@Named
-@ViewScoped
+@Named @ViewScoped
 public class ProductController extends Controller<Product> {
 
 	private static final long serialVersionUID = 4570628857407841810L;
@@ -35,10 +33,6 @@ public class ProductController extends Controller<Product> {
 		if (entity == null)
 			entity = new Product();
 		return entity;
-	}
-
-	public MeatType[] getListType() {
-		return MeatType.values();
 	}
 
 	public String getSearch() {

@@ -43,7 +43,7 @@
 			<p:panel id="panel">
 				<f:facet name="header">
 					<div align="center">
-						<h1>Cadastro de Usuário</h1>
+						<h1>Cadastro de Cliente (Jurídico)</h1>
 					</div>
 				</f:facet>
 				<div class="ui-g ui-fluid">
@@ -51,29 +51,52 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Email: "
-									actionListener="#{userController.openUserListener}"
+								<p:commandLink value="Nome: "
+									actionListener="#{legalClientController.openClientListener}"
 									process="@this" update="@none">
 									<p:ajax event="dialogReturn"
-										listener="#{userController.getUserListener}" update="@form" />
-									<p:message for="itEmail" escape="false" />
+										listener="#{legalClientController.getClientListener}"
+										update="@form" />
+									<p:message for="itName" escape="false" />
 								</p:commandLink>
-								<p:inputText id="itEmail" value="#{userController.entity.email}"
-									required="true" requiredMessage="Informe o email." />
+								<p:inputText id="itName"
+									value="#{legalClientController.entity.name}" required="true"
+									requiredMessage="Informe o nome." />
 
-								<p:outputLabel value="Data de Cadastro: " />
-								<p:calendar value="#{userController.entity.creationDate}"
+								<p:outputLabel value="Razão Social: ">
+									<p:message for="itCompany" escape="false" />
+								</p:outputLabel>
+								<p:inputText id="itCompany"
+									value="#{legalClientController.entity.companyName}"
+									required="true" requiredMessage="Informe a razão social." />
+
+								<p:outputLabel value="Cnpj: ">
+									<p:message for="itCnpj" escape="false" />
+								</p:outputLabel>
+								<p:inputMask id="itCnpj"
+									value="#{legalClientController.entity.cnpj}"
+									mask="99.999.999/9999-99" />
+
+								<p:outputLabel value="Data de Fundação: " />
+								<p:calendar value="#{legalClientController.entity.birthDate}"
 									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
 
-								<p:outputLabel value="Perfil: " />
-								<p:selectOneMenu id="slbProfile"
-									value="#{userController.entity.profile}" size="1">
-									<f:selectItem itemLabel="Selecione ..." itemValue=""
-										noSelectionOption="true" />
-									<f:selectItems value="#{userController.listProfile}"
-										var="profile" itemLabel="#{profile.label}"
-										itemValue="#{profile}" />
-								</p:selectOneMenu>
+								<div>
+									<h:outputText value="Cliente acessará o sistema?" />
+									<p:toggleSwitch id="tsUser"
+										value="#{legalClientController.userCreation}"
+										disabled="#{legalClientController.disableToggle()}">
+										<p:ajax update="@form" resetValues="true" />
+									</p:toggleSwitch>
+								</div>
+								<p:outputLabel for="itEmail" value="Email: "
+									rendered="#{legalClientController.userCreation}">
+									<p:message for="itEmail" escape="false" />
+								</p:outputLabel>
+								<p:inputText id="itEmail"
+									rendered="#{legalClientController.userCreation}"
+									immediate="true"
+									value="#{legalClientController.entity.user.email}" />
 							</p:panelGrid>
 
 						</div>
@@ -82,10 +105,10 @@
 				<p:toolbar>
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
-							update="@form" action="#{userController.save}" />
+							update="@form" action="#{legalClientController.save}" />
 
-						<p:commandButton value="Limpar" process="@this" update="panel"
-							action="#{userController.clear}">
+						<p:commandButton value="Limpar" process="@this" update="@form"
+							action="#{legalClientController.clear}">
 							<p:ajax update="@form" resetValues="true" />
 						</p:commandButton>
 
@@ -93,7 +116,8 @@
 
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@form" update="@form" action="#{userController.delete}">
+							process="@form" update="@form"
+							action="#{legalClientController.delete}" resetValues="true">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>
@@ -106,32 +130,6 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
-
-			<p:dialog header="Listagem de Usuário" widgetVar="list" height="300"
-				width="90%" modal="true" resizable="true">
-				<p:outputLabel value="Email: " />
-				<p:inputText id="itSearch" value="#{userController.search}" />
-				<p:commandButton value="Pesquisar"
-					actionListener="#{userController.search}" process="@this itSearch"
-					update="dtList" />
-				<br />
-				<p:dataTable id="dtList" var="entity"
-					value="#{userController.listUser}">
-					<p:column headerText="Email">
-						<p:commandLink value="#{entity.email}"
-							actionListener="#{userController.edit(entity.id)}"
-							process="@this" update="@form" resetValues="true" />
-					</p:column>
-
-					<p:column headerText="Data de Cadastro">
-						<h:outputLabel value="#{entity.creationDate}" />
-					</p:column>
-
-					<p:column headerText="Perfil">
-						<h:outputLabel value="#{entity.profile}" />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 
 		</h:form>
 	</ui:define>

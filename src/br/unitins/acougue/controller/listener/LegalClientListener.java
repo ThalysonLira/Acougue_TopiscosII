@@ -12,25 +12,25 @@ import javax.persistence.EntityManager;
 import org.primefaces.PrimeFaces;
 
 import br.unitins.acougue.factory.JPAFactory;
-import br.unitins.acougue.model.Purchase;
-import br.unitins.acougue.repository.PurchaseRepository;
+import br.unitins.acougue.model.LegalClient;
+import br.unitins.acougue.model.Person;
+import br.unitins.acougue.repository.LegalClientRepository;
 
-@Named
-@ViewScoped
-public class PurchaseListener extends Listener<Purchase> {
+@Named @ViewScoped
+public class LegalClientListener extends Listener<Person>{
 
-	private static final long serialVersionUID = -1271519062853554361L;
-	private List<Purchase> list;
+	private static final long serialVersionUID = -8692343065470325600L;
+	private List<LegalClient> list;
 	private String search;
 	
 	public void search() {
-		PurchaseRepository repository = new PurchaseRepository();
-		setList(repository.findByItem(getSearch()));
+		LegalClientRepository repository = new LegalClientRepository();
+		setList(repository.findByNameOrCnpj(getSearch()));
 	}
 	
 	public void select(int id) {
 		EntityManager em = JPAFactory.getEntityManager();
-		setEntity((Purchase) em.find(Purchase.class, id));
+		setEntity((LegalClient) em.find(LegalClient.class, id));
 		
 		PrimeFaces.current().dialog().closeDynamic(getEntity());
 	}
@@ -45,23 +45,23 @@ public class PurchaseListener extends Listener<Purchase> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/item_venda_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/listener/cliente_lista", options, null);
 	}
 
 	@Override
-	public Purchase getEntity() {
+	public LegalClient getEntity() {
 		if (entity == null)
-			entity = new Purchase();
-		return entity;
+			entity = new LegalClient();
+		return (LegalClient) entity;
 	}
 
-	public List<Purchase> getList() {
+	public List<LegalClient> getList() {
 		if (list == null)
-			list = new ArrayList<Purchase>();
+			list = new ArrayList<LegalClient>();
 		return list;
 	}
 
-	public void setList(List<Purchase> list) {
+	public void setList(List<LegalClient> list) {
 		this.list = list;
 	}
 

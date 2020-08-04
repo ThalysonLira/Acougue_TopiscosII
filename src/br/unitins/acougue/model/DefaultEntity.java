@@ -19,8 +19,7 @@ public abstract class DefaultEntity<T> implements Serializable {
 	
 	private static final long serialVersionUID = 3154775394284502047L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment do id no bd
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment do id no bd
 	private Integer id;
 	
 	@Temporal(TemporalType.TIMESTAMP)

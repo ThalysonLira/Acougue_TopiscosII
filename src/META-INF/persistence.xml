@@ -4,14 +4,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="Acougue_TopicosII">
+		<class>br.unitins.acougue.model.Cart</class>
+		<class>br.unitins.acougue.model.City</class>
 		<class>br.unitins.acougue.model.Client</class>
+		<class>br.unitins.acougue.model.Country</class>
 		<class>br.unitins.acougue.model.DefaultEntity</class>
 		<class>br.unitins.acougue.model.Employee</class>
-		<class>br.unitins.acougue.model.ItemStock</class>
+		<class>br.unitins.acougue.model.Item</class>
+		<class>br.unitins.acougue.model.LegalClient</class>
+		<class>br.unitins.acougue.model.LegalPerson</class>
+		<class>br.unitins.acougue.model.Person</class>
+		<class>br.unitins.acougue.model.PhysicalClient</class>
+		<class>br.unitins.acougue.model.PhysicalPerson</class>
 		<class>br.unitins.acougue.model.Product</class>
 		<class>br.unitins.acougue.model.Provider</class>
-		<class>br.unitins.acougue.model.Purchase</class>
 		<class>br.unitins.acougue.model.Sale</class>
+		<class>br.unitins.acougue.model.State</class>
 		<class>br.unitins.acougue.model.User</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url"

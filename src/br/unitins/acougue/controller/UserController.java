@@ -11,8 +11,7 @@ import br.unitins.acougue.controller.listener.UserListener;
 import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.User;
 
-@Named
-@ViewScoped
+@Named @ViewScoped
 public class UserController extends Controller<User>{
 
 	private static final long serialVersionUID = 3092155194023413476L;

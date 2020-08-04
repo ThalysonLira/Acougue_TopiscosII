@@ -15,8 +15,7 @@ import br.unitins.acougue.factory.JPAFactory;
 import br.unitins.acougue.model.Sale;
 import br.unitins.acougue.repository.SaleRepository;
 
-@Named
-@ViewScoped
+@Named @ViewScoped
 public class SaleListener extends Listener<Sale> {
 
 	private static final long serialVersionUID = -4440907611439017130L;

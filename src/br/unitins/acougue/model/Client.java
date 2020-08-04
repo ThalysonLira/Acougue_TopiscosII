@@ -1,85 +1,39 @@
 package br.unitins.acougue.model;
 
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 import br.unitins.acougue.model.validator.ClientValidator;
 import br.unitins.acougue.model.validator.Validator;
 
-@Entity
-public class Client extends DefaultEntity<Client> {
+@Entity(name = "Client") @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Client extends Person {
 
 	private static final long serialVersionUID = -6475130528537879079L;
 	
-	@OneToOne()
-	private User user;
-	
-	@Column(nullable = false)
-	private String name;
-	
-	@Column(nullable = false, length = 14, unique = true)
-	private String cpf;
-	
-	@Temporal(TemporalType.DATE)
-	private Date birthDate;
-	
-	@Column(nullable = false)
-	private Sex sex;
+	private PersonType type;
 	
 	public Client() {
 		super();
 	}
 	
+	public Client(PersonType type) {
+		super();
+		this.type = type;
+	}
+	
+	public PersonType getType() {
+		return type;
+	}
+
+	public void setType(PersonType type) {
+		this.type = type;
+	}
+
 	@Override
-	public Validator<Client> getValidator() {
+	public Validator<Person> getValidator() {
 		return new ClientValidator();
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public User getUser() {
-		if (user == null)
-			user = new User();
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	
-	public Date getBirthDate() {
-		return birthDate;
-	}
-	
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-	
-	public Sex getSex() {
-		return sex;
-	}
-	
-	public void setSex(Sex sex) {
-		this.sex = sex;
 	}
 	
 }

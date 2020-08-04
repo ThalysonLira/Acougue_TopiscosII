@@ -1,6 +1,7 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 
 import br.unitins.acougue.model.validator.Validator;
 
@@ -23,11 +24,8 @@ public class Address extends DefaultEntity<Address>{
 	@Column(nullable = false)
 	private String neighborhood;
 	
-	@Column(nullable = false)
-	private String city;
-	
-	@Column(nullable = false)
-	private String state;
+	@JoinColumn(nullable = false)
+	private City city;
 
 	public Address() {
 		super();
@@ -78,20 +76,14 @@ public class Address extends DefaultEntity<Address>{
 		this.neighborhood = neighborhood;
 	}
 
-	public String getCity() {
+	public City getCity() {
+		if (city == null)
+			city = new City();
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
 	}
 
 }

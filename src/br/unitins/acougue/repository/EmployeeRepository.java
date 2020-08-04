@@ -6,8 +6,9 @@ import javax.persistence.Query;
 
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.model.Employee;
+import br.unitins.acougue.model.Person;
 
-public class EmployeeRepository extends Repository<Employee> {
+public class EmployeeRepository extends Repository<Person> {
 
 	public List<Employee> findByName(String name) {
 
@@ -62,7 +63,7 @@ public class EmployeeRepository extends Repository<Employee> {
 		jpql.append("AND e.id <> ? ");
 		
 		Query query = getEntityManager().createNativeQuery(jpql.toString());
-		query.setParameter(1, cpf);
+		query.setParameter(1, Util.maskCpf(cpf));
 		query.setParameter(2, id == null ? -1 : id);
 		
 		return (long) query.getSingleResult() == 0 ? false : true;

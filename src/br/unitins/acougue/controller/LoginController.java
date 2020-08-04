@@ -3,8 +3,7 @@ package br.unitins.acougue.controller;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-@Named
-@RequestScoped
+@Named @RequestScoped
 public class LoginController {
 
 	private String email;

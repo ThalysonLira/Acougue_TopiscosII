@@ -62,24 +62,24 @@
 								<p:inputText id="itName" value="#{clientController.entity.name}"
 									required="true" requiredMessage="Informe o nome." />
 
-								<p:outputLabel value="Cpf: ">
+								<!--p:outputLabel value="Cpf: ">
 									<p:message for="itCpf" escape="false" />
 								</p:outputLabel>
 								<p:inputMask id="itCpf" value="#{clientController.entity.cpf}"
-									mask="999.999.999-99" />
+									mask="999.999.999-99" /-->
 
 								<p:outputLabel value="Data de Nascimento: " />
 								<p:calendar value="#{clientController.entity.birthDate}"
 									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
 
-								<p:outputLabel value="Sexo: " />
+								<!--p:outputLabel value="Sexo: " />
 								<p:selectOneMenu id="slbSex"
 									value="#{clientController.entity.sex}" size="1">
 									<f:selectItem itemLabel="Selecione ..." itemValue=""
 										noSelectionOption="true" />
 									<f:selectItems value="#{clientController.listSex}" var="sex"
 										itemLabel="#{sex.label}" itemValue="#{sex}" />
-								</p:selectOneMenu>
+								</p:selectOneMenu-->
 
 								<div>
 									<h:outputText value="Cliente acessará o sistema?" />

@@ -12,25 +12,24 @@ import javax.persistence.EntityManager;
 import org.primefaces.PrimeFaces;
 
 import br.unitins.acougue.factory.JPAFactory;
-import br.unitins.acougue.model.Client;
-import br.unitins.acougue.model.Person;
-import br.unitins.acougue.repository.ClientRepository;
+import br.unitins.acougue.model.Cart;
+import br.unitins.acougue.repository.CartRepository;
 
 @Named @ViewScoped
-public class ClientListener extends Listener<Person>{
+public class CartListener extends Listener<Cart> {
 
-	private static final long serialVersionUID = -8692343065470325600L;
-	private List<Client> list;
+	private static final long serialVersionUID = -1271519062853554361L;
+	private List<Cart> list;
 	private String search;
 	
 	public void search() {
-		ClientRepository repository = new ClientRepository();
-		setList(repository.findByNameOrCpf_Cnpj(getSearch()));
+		CartRepository repository = new CartRepository();
+		setList(repository.findByClient(getSearch()));
 	}
 	
 	public void select(int id) {
 		EntityManager em = JPAFactory.getEntityManager();
-		setEntity((Client) em.find(Client.class, id));
+		setEntity((Cart) em.find(Cart.class, id));
 		
 		PrimeFaces.current().dialog().closeDynamic(getEntity());
 	}
@@ -45,23 +44,23 @@ public class ClientListener extends Listener<Person>{
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/cliente_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/listener/item_venda_lista", options, null);
 	}
 
 	@Override
-	public Client getEntity() {
+	public Cart getEntity() {
 		if (entity == null)
-			entity = new Client();
-		return (Client) entity;
+			entity = new Cart();
+		return entity;
 	}
 
-	public List<Client> getList() {
+	public List<Cart> getList() {
 		if (list == null)
-			list = new ArrayList<Client>();
+			list = new ArrayList<Cart>();
 		return list;
 	}
 
-	public void setList(List<Client> list) {
+	public void setList(List<Cart> list) {
 		this.list = list;
 	}
 
