@@ -55,7 +55,7 @@
 									actionListener="#{legalClientController.openClientListener}"
 									process="@this" update="@none">
 									<p:ajax event="dialogReturn"
-										listener="#{legalClientController.getClientListener}"
+										listener="#{legalClientController.getLegalClientListener}"
 										update="@form" />
 									<p:message for="itName" escape="false" />
 								</p:commandLink>

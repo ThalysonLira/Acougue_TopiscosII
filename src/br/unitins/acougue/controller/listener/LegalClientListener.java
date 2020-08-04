@@ -25,7 +25,7 @@ public class LegalClientListener extends Listener<Person>{
 	
 	public void search() {
 		LegalClientRepository repository = new LegalClientRepository();
-		setList(repository.findByNameOrCnpj(getSearch()));
+		setList(repository.findByName(getSearch()));
 	}
 	
 	public void select(int id) {

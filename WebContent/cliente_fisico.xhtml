@@ -55,7 +55,7 @@
 									actionListener="#{physicalClientController.openClientListener}"
 									process="@this" update="@none">
 									<p:ajax event="dialogReturn"
-										listener="#{physicalClientController.getClientListener}"
+										listener="#{physicalClientController.getPhysicalClientListener}"
 										update="@form" />
 									<p:message for="itName" escape="false" />
 								</p:commandLink>
