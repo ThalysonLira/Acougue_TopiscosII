@@ -1,10 +1,9 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Entity @DiscriminatorValue("Physical Client")
+@Entity
 public class PhysicalClient extends Client {
 
 	private static final long serialVersionUID = 2894663712410062862L;

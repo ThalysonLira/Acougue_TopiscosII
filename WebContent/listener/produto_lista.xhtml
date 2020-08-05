@@ -47,26 +47,26 @@
 
 						<p:dataTable id="dtList" var="entity" rowIndexVar="row"
 							paginator="false" reflow="true" value="#{productListener.list}">
-							<p:column headerText="Corte">
-								<p:commandLink value="#{entity.cut}"
+							<p:column headerText="Nome">
+								<p:commandLink value="#{entity.name}"
 									action="#{productListener.select(entity.id)}" process="@this"
 									update="@form" resetValues="true" />
 							</p:column>
 
-							<p:column headerText="Animal">
-								<h:outputText value="#{entity.animal}" />
+							<p:column headerText="Valor">
+								<h:outputText value="R$ #{entity.value}" />
 							</p:column>
 
-							<p:column headerText="Categoria">
-								<h:outputLabel value="#{entity.category}" />
+							<p:column headerText="Data de Validade">
+								<h:outputText value="#{entity.shelfLife}" />
 							</p:column>
 
-							<p:column headerText="Tipo">
+							<p:column headerText="Quantidade Disponível">
+								<h:outputLabel value="#{entity.availableQuantity}" />
+							</p:column>
+
+							<p:column headerText="Tipo de produto">
 								<h:outputLabel value="#{entity.type}" />
-							</p:column>
-
-							<p:column headerText="Valor Kg">
-								<h:outputLabel value="#{entity.valueKG}" />
 							</p:column>
 
 							<f:facet name="footer">

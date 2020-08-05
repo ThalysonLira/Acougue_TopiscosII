@@ -33,7 +33,7 @@ public class ProviderRepository extends Repository<Person> {
 		jpql.append("LIKE :cnpj ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("cnpj", "%" + Util.maskCnpj(cnpj) + "%");
+		query.setParameter("cnpj", "%" + cnpj + "%");
 
 		return query.getResultList();
 	}
@@ -50,7 +50,7 @@ public class ProviderRepository extends Repository<Person> {
 
 		Query query = getEntityManager().createQuery(jpql.toString());
 		query.setParameter("search", "%" + search + "%");
-		query.setParameter("search", "%" + Util.maskCnpj(search) + "%");
+		query.setParameter("search", "%" + search + "%");
 
 		return query.getResultList();
 	}
@@ -63,7 +63,7 @@ public class ProviderRepository extends Repository<Person> {
 		jpql.append("AND p.id <> ? ");
 		
 		Query query = getEntityManager().createNativeQuery(jpql.toString());
-		query.setParameter(1, cnpj);
+		query.setParameter(1, Util.maskCnpj(cnpj));
 		query.setParameter(2, id == null ? -1 : id);
 		
 		return (long) query.getSingleResult() == 0 ? false : true;

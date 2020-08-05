@@ -1,7 +1,11 @@
 package br.unitins.acougue.model;
 
-import javax.persistence.Column;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class Meat extends Product {
 
 	private static final long serialVersionUID = -8781574807821411262L;
@@ -16,19 +20,24 @@ public class Meat extends Product {
 	private int category;
 	
 	@Column(nullable = false)
-	private MeatType type;
+	private MeatType meatType;
 	
 	public Meat() {
-		super();
+		super(ProductType.CARNE);
 		super.setValue(0.0);
 	}
-	
-	public Meat(String cut, String animal, int category, MeatType type, Double valueKG) {
+
+	public Meat(String name, String description, int evaluation, Double value, ProductType type, String lot,
+			Date shelfLife, Double availableQuantity) {
+		super(name, description, evaluation, value, type, lot, shelfLife, availableQuantity);
+	}
+
+	public Meat(String cut, String animal, int category, MeatType meatType, Double valueKG) {
 		super();
 		this.cut = cut;
 		this.animal = animal;
 		this.category = category;
-		this.type = type;
+		this.meatType = meatType;
 		super.setValue(valueKG);
 	}
 
@@ -56,12 +65,12 @@ public class Meat extends Product {
 		this.category = category;
 	}
 
-	public MeatType getType() {
-		return type;
+	public MeatType getMeatType() {
+		return meatType;
 	}
 
-	public void setType(MeatType type) {
-		this.type = type;
+	public void setMeatType(MeatType meatType) {
+		this.meatType = meatType;
 	}
 	
 }

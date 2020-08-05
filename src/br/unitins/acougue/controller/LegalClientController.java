@@ -17,8 +17,7 @@ import br.unitins.acougue.model.Profile;
 import br.unitins.acougue.model.Sex;
 import br.unitins.acougue.model.User;
 
-@Named
-@ViewScoped
+@Named @ViewScoped
 public class LegalClientController extends Controller<Person> {
 
 	private static final long serialVersionUID = -1443526557455688665L;

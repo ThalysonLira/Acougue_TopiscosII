@@ -38,12 +38,12 @@
 			<p:graphicImage name="/images/loading.gif" />
 		</p:dialog>
 
-		<h:form id="form">
+		<h:form>
 			<p:growl id="growl" globalOnly="false" />
 			<p:panel id="panel">
 				<f:facet name="header">
 					<div align="center">
-						<h1>Cadastro de Cliente</h1>
+						<h1>Cadastro de Produto (Carne)</h1>
 					</div>
 				</f:facet>
 				<div class="ui-g ui-fluid">
@@ -51,51 +51,57 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Nome: "
-									actionListener="#{clientController.openClientListener}"
+								<p:commandLink value="Corte: "
+									actionListener="#{meatController.openMeatListener}"
 									process="@this" update="@none">
 									<p:ajax event="dialogReturn"
-										listener="#{clientController.getClientListener}"
-										update="@form" />
-									<p:message for="itName" escape="false" />
+										listener="#{meatController.getMeatListener}" update="@form" />
+									<p:message for="itCut" escape="false" />
 								</p:commandLink>
-								<p:inputText id="itName" value="#{clientController.entity.name}"
-									required="true" requiredMessage="Informe o nome." />
+								<p:inputText id="itCut" value="#{meatController.entity.cut}"
+									required="true" requiredMessage="Informe o tipo de corte." />
 
-								<!--p:outputLabel value="Cpf: ">
-									<p:message for="itCpf" escape="false" />
+								<p:outputLabel value="Animal: ">
+									<p:message for="itAnimal" escape="false" />
 								</p:outputLabel>
-								<p:inputMask id="itCpf" value="#{clientController.entity.cpf}"
-									mask="999.999.999-99" /-->
+								<p:inputText id="itAnimal"
+									value="#{meatController.entity.animal}" />
 
-								<p:outputLabel value="Data de Nascimento: " />
-								<p:calendar value="#{clientController.entity.birthDate}"
-									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
-
-								<!--p:outputLabel value="Sexo: " />
-								<p:selectOneMenu id="slbSex"
-									value="#{clientController.entity.sex}" size="1">
+								<p:outputLabel value="Tipo: " />
+								<p:selectOneMenu id="slbType"
+									value="#{meatController.entity.meatType}" size="1">
 									<f:selectItem itemLabel="Selecione ..." itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{clientController.listSex}" var="sex"
-										itemLabel="#{sex.label}" itemValue="#{sex}" />
-								</p:selectOneMenu-->
+									<f:selectItems value="#{meatController.listMeatType}" var="type"
+										itemLabel="#{type.label}" itemValue="#{meatType}" />
+								</p:selectOneMenu>
 
-								<div>
-									<h:outputText value="Cliente acessará o sistema?" />
-									<p:toggleSwitch id="tsUser"
-										value="#{clientController.userCreation}"
-										disabled="#{clientController.disableToggle()}">
-										<p:ajax update="@form" resetValues="true" />
-									</p:toggleSwitch>
-								</div>
-								<p:outputLabel for="itEmail" value="Email: "
-									rendered="#{clientController.userCreation}">
-									<p:message for="itEmail" escape="false" />
+								<p:outputLabel value="Categoria: " />
+								<p:spinner min="1" max="3" rotate="true"
+									value="#{meatController.entity.category}" />
+
+								<p:outputLabel value="Valor do Kg: " />
+								<p:spinner min="0" prefix="R$ " stepFactor="0.25"
+									value="#{meatController.entity.value}" />
+
+								<p:outputLabel value="Lote: " />
+								<p:inputText id="itLot" value="#{meatController.entity.lot}" />
+
+								<p:outputLabel value="Quantidade disponível: " />
+								<p:spinner min="0" prefix="KG " stepFactor="0.25"
+									value="#{meatController.entity.availableQuantity}" />
+
+								<p:outputLabel value="Data de Validade: " />
+								<p:calendar value="#{meatController.entity.shelfLife}"
+									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
+
+								<p:outputLabel value="Descrição: ">
+									<p:message for="itDescription" escape="false" />
 								</p:outputLabel>
-								<p:inputText id="itEmail"
-									rendered="#{clientController.userCreation}" immediate="true"
-									value="#{clientController.entity.user.email}" />
+								<p:inputTextarea id="itDescription" counter="display"
+									maxlength="150" counterTemplate="{0} caracteres restantes."
+									autoResize="true" value="#{meatController.entity.description}" />
+								<h:outputText id="display" />
 							</p:panelGrid>
 
 						</div>
@@ -104,10 +110,10 @@
 				<p:toolbar>
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
-							update="@form" action="#{clientController.save}" />
+							update="@form" action="#{meatController.save}" />
 
-						<p:commandButton value="Limpar" process="@this" update="@form"
-							action="#{clientController.clear}">
+						<p:commandButton value="Limpar" process="@this" update="panel"
+							action="#{meatController.clear}">
 							<p:ajax update="@form" resetValues="true" />
 						</p:commandButton>
 
@@ -115,8 +121,7 @@
 
 					<f:facet name="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@form" update="@form"
-							action="#{clientController.delete}" resetValues="true">
+							process="@form" update="@form" action="#{meatController.delete}">
 							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
 						</p:commandButton>
 					</f:facet>

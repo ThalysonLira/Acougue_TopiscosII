@@ -1,10 +1,12 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 
 import br.unitins.acougue.model.validator.Validator;
 
+@Entity
 public class Address extends DefaultEntity<Address>{
 
 	private static final long serialVersionUID = 205467836201825885L;

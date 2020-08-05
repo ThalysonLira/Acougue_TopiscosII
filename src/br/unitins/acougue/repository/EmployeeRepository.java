@@ -33,7 +33,7 @@ public class EmployeeRepository extends Repository<Person> {
 		jpql.append("LIKE :cpf ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("cpf", "%" + Util.maskCpf(cpf) + "%");
+		query.setParameter("cpf", "%" + cpf + "%");
 
 		return query.getResultList();
 	}
@@ -50,7 +50,7 @@ public class EmployeeRepository extends Repository<Person> {
 
 		Query query = getEntityManager().createQuery(jpql.toString());
 		query.setParameter("search", "%" + search + "%");
-		query.setParameter("search", "%" + Util.maskCpf(search) + "%");
+		query.setParameter("search", "%" + search + "%");
 
 		return query.getResultList();
 	}

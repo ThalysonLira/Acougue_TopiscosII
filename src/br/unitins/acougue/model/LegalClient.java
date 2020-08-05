@@ -1,10 +1,9 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Entity @DiscriminatorValue("Legal Client")
+@Entity
 public class LegalClient extends Client {
 
 	private static final long serialVersionUID = 6635432464296089619L;

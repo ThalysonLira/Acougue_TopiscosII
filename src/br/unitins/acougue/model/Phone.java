@@ -1,9 +1,11 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
 import br.unitins.acougue.model.validator.Validator;
 
+@Entity
 public class Phone extends DefaultEntity<Phone> {
 
 	private static final long serialVersionUID = -5896182273654357753L;

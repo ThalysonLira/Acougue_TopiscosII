@@ -7,7 +7,7 @@ import javax.persistence.InheritanceType;
 import br.unitins.acougue.model.validator.ClientValidator;
 import br.unitins.acougue.model.validator.Validator;
 
-@Entity(name = "Client") @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Client extends Person {
 
 	private static final long serialVersionUID = -6475130528537879079L;

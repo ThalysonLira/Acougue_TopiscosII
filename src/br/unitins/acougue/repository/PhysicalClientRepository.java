@@ -6,7 +6,6 @@ import javax.persistence.Query;
 
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.model.PhysicalClient;
-import br.unitins.acougue.model.LegalClient;
 import br.unitins.acougue.model.Person;
 
 public class PhysicalClientRepository extends Repository<Person> {
@@ -34,7 +33,7 @@ public class PhysicalClientRepository extends Repository<Person> {
 		jpql.append("LIKE :cpf ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("cpf", "%" + Util.maskCpf(cpf) + "%");
+		query.setParameter("cpf", "%" + cpf + "%");
 
 		return query.getResultList();
 	}
