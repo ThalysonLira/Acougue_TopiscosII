@@ -4,30 +4,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
-	<ui:define name="head">
-		<style type="text/css">
-.ui-panelgrid.form-elements .ui-grc-2 {
-	padding-left: 60px;
-}
-
-@media ( max-width :1024px) {
-	.ui-panelgrid.form-elements .ui-grc-2 {
-		padding-left: 20px;
-	}
-}
-
-@media ( max-width :640px) {
-	.ui-panelgrid.form-elements .ui-grc-2 {
-		padding-left: 6px;
-	}
-}
-
-.dialogDemo label {
-	line-height: 2.1em;
-}
-</style>
-	</ui:define>
-
 	<ui:define name="content">
 
 		<p:ajaxStatus onstart="PF('statusDialog').show()"

@@ -45,12 +45,12 @@ public class Cart extends DefaultEntity<Cart> {
 	}
 
 	public Double getTotal() {
-		if (!getItems().isEmpty()) {
-			for (Item item : items) {
-				total += item.getValue();
-			}
-		}
-		return total;
+//		if (!getItems().isEmpty()) {
+//			for (Item item : items) {
+//				total += item.getValue(); // TODO verificar nullpointer
+//			}
+//		}
+		return 0.0;
 	}
 
 	public void setTotal(Double total) {

@@ -5,8 +5,8 @@ import java.util.List;
 import javax.persistence.Query;
 
 import br.unitins.acougue.application.Util;
-import br.unitins.acougue.model.PhysicalClient;
 import br.unitins.acougue.model.Person;
+import br.unitins.acougue.model.PhysicalClient;
 
 public class PhysicalClientRepository extends Repository<Person> {
 
@@ -14,7 +14,7 @@ public class PhysicalClientRepository extends Repository<Person> {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT c ");
-		jpql.append("FROM PhysicalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE upper(c.name) ");
 		jpql.append("LIKE upper(:name) ");
 
@@ -28,7 +28,7 @@ public class PhysicalClientRepository extends Repository<Person> {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT c ");
-		jpql.append("FROM PhysicalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE c.cpf ");
 		jpql.append("LIKE :cpf ");
 
@@ -42,7 +42,7 @@ public class PhysicalClientRepository extends Repository<Person> {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT c ");
-		jpql.append("FROM PhysicalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE c.name ");
 		jpql.append("LIKE :name ");
 		jpql.append("OR c.cpf ");
@@ -59,7 +59,7 @@ public class PhysicalClientRepository extends Repository<Person> {
 		
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT COUNT(*) ");
-		jpql.append("FROM PhysicalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE c.cpf = ? ");
 		jpql.append("AND c.id <> ? ");
 		

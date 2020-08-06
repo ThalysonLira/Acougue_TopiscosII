@@ -13,7 +13,7 @@ public class SaleRepository extends Repository<Sale> {
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT s ");
 		jpql.append("FROM Sale s ");
-		jpql.append("WHERE upper(s.buyer.name) ");
+		jpql.append("WHERE upper(s.cart.client.name) ");
 		jpql.append("LIKE upper(:buyer) ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
@@ -41,7 +41,7 @@ public class SaleRepository extends Repository<Sale> {
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT s ");
 		jpql.append("FROM Sale s ");
-		jpql.append("WHERE upper(s.buyer.name) ");
+		jpql.append("WHERE upper(s.cart.client.name) ");
 		jpql.append("LIKE upper(:search) ");
 		jpql.append("OR upper(s.salesman.name) ");
 		jpql.append("LIKE upper(:search) ");

@@ -52,6 +52,8 @@ public class Sale extends DefaultEntity<Sale>{
 	}
 
 	public Cart getCart() {
+		if (cart == null)
+			cart = new Cart();
 		return cart;
 	}
 

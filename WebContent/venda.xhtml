@@ -67,29 +67,29 @@
 									<p:message for="itBuyer" escape="false" />
 								</p:commandLink>
 								<p:inputText id="itBuyer"
-									value="#{saleController.entity.buyer.name}" readonly="true"
+									value="#{saleController.entity.cart.client.name}" readonly="true"
 									requiredMessage="Informe o comprador." />
 
 								<p:commandLink value="Produtos em estoque: "
-									actionListener="#{itemStockController.openItemStockListener}"
+									actionListener="#{productController.openProductListener}"
 									process="@this" update="@none">
 									<p:ajax event="dialogReturn"
-										listener="#{saleController.getItemStockListener}" update="@form" />
+										listener="#{saleController.getProductListener}" update="@form" />
 									<p:message for="dtListItem" escape="false" />
 								</p:commandLink>
 								<p:dataTable id="dtListItem" var="entity"
-									value="#{saleController.entity.listPurchase}">
+									value="#{saleController.entity.cart.items}">
 									<p:column headerText="Produto">
-										<h:outputLabel value="#{entity.item.name}" />
+										<h:outputLabel value="#{entity.product.name}" />
 									</p:column>
 									<p:column headerText="Valor">
-										<h:outputLabel value="R$ #{entity.value}" />
+										<h:outputLabel value="R$ #{entity.product.value}" />
 									</p:column>
 									<p:column headerText="Quantidade">
 										<p:spinner min="0" prefix="Kg " stepFactor="0.25"
 											value="#{entity.quantity}">
-											<p:ajax listener="#{saleController.generateTotal}"
-												update="@form" />
+											<p:ajax listener="#{saleController.entity.cart}"
+												update="@form" />  <!-- TODO verificar quantitativo de produtos / carne -->
 										</p:spinner>
 									</p:column>
 									<p:column headerText="Ação">
@@ -103,7 +103,7 @@
 
 								<p:outputLabel value="Valor Total: " />
 								<p:inputText readonly="true"
-									value="R$ #{saleController.entity.total}" />
+									value="R$ #{saleController.entity.cart.total}" />
 
 								<p:outputLabel value="Data de Venda: " />
 								<p:calendar value="#{saleController.entity.saleDate}"

@@ -8,18 +8,13 @@ import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 
-import br.unitins.acougue.application.RepositoryException;
-import br.unitins.acougue.application.Util;
 import br.unitins.acougue.controller.listener.SaleListener;
 import br.unitins.acougue.model.Client;
-import br.unitins.acougue.model.Cart;
 import br.unitins.acougue.model.Item;
 import br.unitins.acougue.model.Product;
 import br.unitins.acougue.model.Sale;
-import br.unitins.acougue.repository.Repository;
 
-@Named
-@ViewScoped
+@Named @ViewScoped
 public class SaleController extends Controller<Sale> {
 
 	private static final long serialVersionUID = 3138471975776387061L;
@@ -44,7 +39,7 @@ public class SaleController extends Controller<Sale> {
 //		entity.setSalesman("logUser");
 	}
 
-	public void getItemStockListener(SelectEvent event) {
+	public void getProductListener(SelectEvent event) {
 		Product product = (Product) event.getObject();
 		getEntity().getCart().getItems().add(new Item(product));
 	}

@@ -1,9 +1,9 @@
 package br.unitins.acougue.model;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
-@Entity
+@MappedSuperclass
 public abstract class LegalPerson extends Person {
 
 	private static final long serialVersionUID = -1951903267796370355L;

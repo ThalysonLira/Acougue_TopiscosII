@@ -22,7 +22,7 @@ public class UserRepository extends Repository<User> {
 		return query.getResultList();
 	}
 
-	public List<User> findByProfile(String profile) {
+	public List<User> findByProfile(int profile) {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT u ");
@@ -31,7 +31,7 @@ public class UserRepository extends Repository<User> {
 		jpql.append("LIKE :profile ");
 
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("profile", "%" + profile + "%");
+		query.setParameter("profile", profile);
 
 		return query.getResultList();
 	}

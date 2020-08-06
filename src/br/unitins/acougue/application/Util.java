@@ -10,46 +10,41 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class Util {
 
 	public static void main(String args[]) {
-		
 	}
-	
+
 	public static String maskCpf(String value) {
 		MaskFormatter mask;
 		try {
-			
-		if (value.length() < 4) {
-			return value;
-		} else if (value.length() < 7) {
-			mask = new MaskFormatter("###.###");
-		} else if (value.length() < 9){
-			mask = new MaskFormatter("###.###.###");
-		} else {
-			mask = new MaskFormatter("###.###.###-##");
-		}
-		
+			if (value.length() < 4) {
+				return value;
+			} else if (value.length() < 7) {
+				mask = new MaskFormatter("###.###");
+			} else if (value.length() < 9) {
+				mask = new MaskFormatter("###.###.###");
+			} else {
+				mask = new MaskFormatter("###.###.###-##");
+			}
 			mask.setValueContainsLiteralCharacters(false);
 			return mask.valueToString(value).trim();
 		} catch (ParseException e) {
 			return value;
 		}
 	}
-	
+
 	public static String maskCnpj(String value) {
 		MaskFormatter mask;
 		try {
-			
-		if (value.length() < 3) {
-			return value;
-		} else if (value.length() < 6) {
-			mask = new MaskFormatter("##.###");
-		} else if (value.length() < 9){
-			mask = new MaskFormatter("##.###.###");
-		} else if (value.length() < 13){
-			mask = new MaskFormatter("##.###.###/####");
-		} else {
-			mask = new MaskFormatter("##.###.###/####-##");
-		}
-		
+			if (value.length() < 3) {
+				return value;
+			} else if (value.length() < 6) {
+				mask = new MaskFormatter("##.###");
+			} else if (value.length() < 9) {
+				mask = new MaskFormatter("##.###.###");
+			} else if (value.length() < 13) {
+				mask = new MaskFormatter("##.###.###/####");
+			} else {
+				mask = new MaskFormatter("##.###.###/####-##");
+			}
 			mask.setValueContainsLiteralCharacters(false);
 			return mask.valueToString(value).trim();
 		} catch (ParseException e) {

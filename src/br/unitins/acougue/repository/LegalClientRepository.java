@@ -14,7 +14,7 @@ public class LegalClientRepository extends Repository<Person> {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT c ");
-		jpql.append("FROM LegalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE upper(c.name) ");
 		jpql.append("LIKE upper(:name) ");
 
@@ -28,7 +28,7 @@ public class LegalClientRepository extends Repository<Person> {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT c ");
-		jpql.append("FROM LegalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE c.cnpj ");
 		jpql.append("LIKE :cnpj ");
 
@@ -42,7 +42,7 @@ public class LegalClientRepository extends Repository<Person> {
 
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT c ");
-		jpql.append("FROM LegalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE c.name ");
 		jpql.append("LIKE :name ");
 		jpql.append("OR c.cnpj ");
@@ -59,7 +59,7 @@ public class LegalClientRepository extends Repository<Person> {
 		
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT COUNT(*) ");
-		jpql.append("FROM LegalClient c ");
+		jpql.append("FROM Client c ");
 		jpql.append("WHERE c.cnpj = ? ");
 		jpql.append("AND c.id <> ? ");
 		

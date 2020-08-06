@@ -48,7 +48,7 @@
 						<p:dataTable id="dtList" var="entity" rowIndexVar="row"
 							paginator="false" reflow="true" value="#{saleListener.list}">
 							<p:column headerText="Comprador">
-								<p:commandLink value="#{entity.buyer.name}"
+								<p:commandLink value="#{entity.cart.client.name}"
 									action="#{saleListener.select(entity.id)}" process="@this"
 									update="@form" resetValues="true" />
 							</p:column>
@@ -58,7 +58,7 @@
 							</p:column>
 
 							<p:column headerText="Total">
-								<h:outputText value="R$ #{entity.total}" />
+								<h:outputText value="R$ #{entity.cart.total}" />
 							</p:column>
 
 							<p:column headerText="Data da venda">

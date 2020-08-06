@@ -25,7 +25,7 @@ public class ClientListener extends Listener<Person>{
 	
 	public void search() {
 		ClientRepository repository = new ClientRepository();
-		setList(repository.findByNameOrCpf_Cnpj(getSearch()));
+		setList(repository.findByName(getSearch()));
 	}
 	
 	public void select(int id) {
