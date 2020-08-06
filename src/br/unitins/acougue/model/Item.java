@@ -12,13 +12,13 @@ public class Item extends DefaultEntity<Item> {
 
 	private static final long serialVersionUID = -4750642961165057477L;
 
-	@OneToOne @JoinColumn(nullable = false)
+	@OneToOne @JoinColumn
 	private Product product;
 	
-	@Column(nullable = false)
+	@Column
 	private Double quantity;
 
-	@Column(nullable = false)
+	@Column
 	private Double value;
 
 	public Item() {

@@ -88,7 +88,7 @@
 									<p:column headerText="Quantidade">
 										<p:spinner min="0" prefix="Kg " stepFactor="0.25"
 											value="#{entity.quantity}">
-											<p:ajax listener="#{saleController.entity.cart}"
+											<p:ajax listener="#{saleController.entity.cart.getTotal()}"
 												update="@form" />  <!-- TODO verificar quantitativo de produtos / carne -->
 										</p:spinner>
 									</p:column>
@@ -96,7 +96,7 @@
 										<p:commandButton icon="pi pi-trash" process="@form"
 											update="@form"
 											actionListener="#{saleController.removePurchase(entity)}"
-											action="#{saleController.generateTotal}">
+											action="#{saleController.entity.cart.getTotal()}">
 										</p:commandButton>
 									</p:column>
 								</p:dataTable>

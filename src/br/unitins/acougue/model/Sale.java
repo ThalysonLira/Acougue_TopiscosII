@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 import br.unitins.acougue.model.validator.Validator;
 
 @Entity
-public class Sale extends DefaultEntity<Sale>{
+public class Sale extends DefaultEntity<Sale> {
 
 	private static final long serialVersionUID = 2834281686033039479L;
 
@@ -36,6 +36,8 @@ public class Sale extends DefaultEntity<Sale>{
 	}
 
 	public Employee getSalesman() {
+		if (salesman == null)
+			salesman = new Employee();
 		return salesman;
 	}
 

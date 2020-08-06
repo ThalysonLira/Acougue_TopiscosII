@@ -21,10 +21,10 @@ public class Cart extends DefaultEntity<Cart> {
 	@JoinColumn(nullable = false)
 	private Client client;
 
-	@OneToOne @JoinColumn(nullable = false)
+	@OneToOne @JoinColumn
 	private Sale sale;
 
-	@JoinColumn(nullable = false)
+	@JoinColumn
 	private List<Item> items;
 
 	public Cart() {
@@ -45,12 +45,14 @@ public class Cart extends DefaultEntity<Cart> {
 	}
 
 	public Double getTotal() {
-//		if (!getItems().isEmpty()) {
-//			for (Item item : items) {
-//				total += item.getValue(); // TODO verificar nullpointer
-//			}
-//		}
-		return 0.0;
+		total = 0.0;
+		
+		if (getItems().size() >= 1) {
+			for (Item item : getItems()) {
+				total += item.getValue(); // TODO verificar nullpointer
+			}
+		}
+		return total;
 	}
 
 	public void setTotal(Double total) {

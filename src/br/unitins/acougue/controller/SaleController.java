@@ -21,8 +21,10 @@ public class SaleController extends Controller<Sale> {
 
 	private String search;
 	private List<Sale> listSale;
+	private Item item;
 
 	public void openSaleListener() {
+		clear();
 		SaleListener listener = new SaleListener();
 		listener.open();
 	}
@@ -41,7 +43,10 @@ public class SaleController extends Controller<Sale> {
 
 	public void getProductListener(SelectEvent event) {
 		Product product = (Product) event.getObject();
-		getEntity().getCart().getItems().add(new Item(product));
+		getItem().setProduct(product);
+		getEntity().getCart().getItems().add(getItem());
+		
+		setItem(null);
 	}
 
 	public void removePurchase(Item item) {
@@ -83,6 +88,16 @@ public class SaleController extends Controller<Sale> {
 		if (listSale == null)
 			listSale = new ArrayList<Sale>();
 		this.listSale = listSale;
+	}
+
+	public Item getItem() {
+		if (item == null)
+			item = new Item();
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 }
