@@ -75,12 +75,12 @@ public abstract class Person extends DefaultEntity<Person> {
 	}
 
 	public List<Phone> getPhones() {
+		if (phones == null)
+			phones = new ArrayList<Phone>();
 		return phones;
 	}
 
 	public void setPhones(List<Phone> phones) {
-		if (phones == null)
-			phones = new ArrayList<Phone>();
 		this.phones = phones;
 	}
 

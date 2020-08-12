@@ -15,7 +15,10 @@ public class City extends DefaultEntity<City> {
 	@Column(nullable = false)
 	private String name;
 	
-	@ManyToOne @JoinColumn(nullable = false)
+	@Column(nullable = false)
+	private String abbreviation;
+	
+	@ManyToOne @JoinColumn
 	private State state;
 
 	public City() {
@@ -39,6 +42,14 @@ public class City extends DefaultEntity<City> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
 	}
 
 	public State getState() {

@@ -4,30 +4,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
-	<ui:define name="head">
-		<style type="text/css">
-.ui-panelgrid.form-elements .ui-grc-2 {
-	padding-left: 60px;
-}
-
-@media ( max-width :1024px) {
-	.ui-panelgrid.form-elements .ui-grc-2 {
-		padding-left: 20px;
-	}
-}
-
-@media ( max-width :640px) {
-	.ui-panelgrid.form-elements .ui-grc-2 {
-		padding-left: 6px;
-	}
-}
-
-.dialogDemo label {
-	line-height: 2.1em;
-}
-</style>
-	</ui:define>
-
 	<ui:define name="content">
 
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
@@ -46,73 +22,77 @@
 						<h1>Gerenciamento de Venda</h1>
 					</div>
 				</f:facet>
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12">
-						<div class="card card-w-title">
-							<p:panelGrid columns="1"
-								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:commandLink value="Visualizar vendas"
-									actionListener="#{saleController.openSaleListener}"
-									process="@this" update="@none">
-									<p:ajax event="dialogReturn"
-										listener="#{saleController.getSaleListener}" update="@form" />
-								</p:commandLink>
+				<div class="ui-fluid p-formgrid p-grid">
 
-								<p:commandLink value="Comprador: "
-									actionListener="#{clientController.openClientListener}"
-									process="@this" update="@none">
-									<p:ajax event="dialogReturn"
-										listener="#{saleController.getClientListener}"
+					<div class="p-field p-col-12 p-md-12">
+						<p:commandLink value="Visualizar vendas"
+							actionListener="#{saleController.openSaleListener}"
+							process="@this" update="@none">
+							<p:ajax event="dialogReturn"
+								listener="#{saleController.getSaleListener}" update="@form" />
+						</p:commandLink>
+					</div>
+
+					<div class="p-field p-col-12 p-md-12">
+						<p:commandLink value="Comprador: "
+							actionListener="#{clientController.openClientListener}"
+							process="@this" update="@none">
+							<p:ajax event="dialogReturn"
+								listener="#{saleController.getClientListener}" update="@form" />
+						</p:commandLink>
+						<p:inputText id="itBuyer"
+							value="#{saleController.entity.cart.client.name}" readonly="true"
+							requiredMessage="Informe o comprador." />
+					</div>
+
+					<div class="p-field p-col-12 p-md-12">
+						<h:outputLabel value="Carrinho de compras: ">
+							<p:message for="dtListItem" escape="false" />
+							<p:commandLink value="Buscar Produtos"
+								actionListener="#{productController.openProductListener}"
+								process="@this" update="@none">
+								<p:ajax event="dialogReturn"
+									listener="#{saleController.getProductListener}" update="@form" />
+							</p:commandLink>
+						</h:outputLabel>
+						<p:dataTable id="dtListItem" var="entity"
+							value="#{saleController.entity.cart.items}">
+							<p:column headerText="Produto">
+								<h:outputLabel value="#{entity.product.name}" />
+							</p:column>
+							<p:column headerText="Valor">
+								<h:outputLabel value="R$ #{entity.product.value}" />
+							</p:column>
+							<p:column headerText="Quantidade">
+								<p:spinner min="0" prefix="Kg " stepFactor="0.25"
+									value="#{entity.quantity}">
+									<p:ajax listener="#{saleController.entity.cart.getTotal()}"
 										update="@form" />
-									<p:message for="itBuyer" escape="false" />
-								</p:commandLink>
-								<p:inputText id="itBuyer"
-									value="#{saleController.entity.cart.client.name}" readonly="true"
-									requiredMessage="Informe o comprador." />
+								</p:spinner>
+							</p:column>
+							<p:column headerText="Ação">
+								<p:commandButton icon="pi pi-trash" process="@form"
+									update="@form"
+									actionListener="#{saleController.removePurchase(entity)}"
+									action="#{saleController.entity.cart.getTotal()}">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</div>
 
-								<p:commandLink value="Produtos em estoque: "
-									actionListener="#{productController.openProductListener}"
-									process="@this" update="@none">
-									<p:ajax event="dialogReturn"
-										listener="#{saleController.getProductListener}" update="@form" />
-									<p:message for="dtListItem" escape="false" />
-								</p:commandLink>
-								<p:dataTable id="dtListItem" var="entity"
-									value="#{saleController.entity.cart.items}">
-									<p:column headerText="Produto">
-										<h:outputLabel value="#{entity.product.name}" />
-									</p:column>
-									<p:column headerText="Valor">
-										<h:outputLabel value="R$ #{entity.product.value}" />
-									</p:column>
-									<p:column headerText="Quantidade">
-										<p:spinner min="0" prefix="Kg " stepFactor="0.25"
-											value="#{entity.quantity}">
-											<p:ajax listener="#{saleController.entity.cart.getTotal()}"
-												update="@form" />  <!-- TODO verificar quantitativo de produtos / carne -->
-										</p:spinner>
-									</p:column>
-									<p:column headerText="Ação">
-										<p:commandButton icon="pi pi-trash" process="@form"
-											update="@form"
-											actionListener="#{saleController.removePurchase(entity)}"
-											action="#{saleController.entity.cart.getTotal()}">
-										</p:commandButton>
-									</p:column>
-								</p:dataTable>
+					<div class="p-field p-col-12 p-md-6">
+						<h:outputLabel value="Data de Venda: " />
+						<p:calendar value="#{saleController.entity.saleDate}"
+							pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
+					</div>
 
-								<p:outputLabel value="Valor Total: " />
-								<p:inputText readonly="true"
-									value="R$ #{saleController.entity.cart.total}" />
-
-								<p:outputLabel value="Data de Venda: " />
-								<p:calendar value="#{saleController.entity.saleDate}"
-									pattern="dd/MM/yyyy" mask="99/99/9999" locale="pt_BR" />
-							</p:panelGrid>
-
-						</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:outputLabel value="Valor Total: " />
+						<p:inputText readonly="true"
+							value="R$ #{saleController.entity.cart.total}" />
 					</div>
 				</div>
+
 				<p:toolbar>
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"

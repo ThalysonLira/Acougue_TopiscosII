@@ -8,7 +8,7 @@ public class PhysicalClient extends Client {
 
 	private static final long serialVersionUID = 2894663712410062862L;
 
-	@Column(length = 14, unique = true)
+	@Column(nullable = false, length = 14, unique = true)
 	private String cpf;
 	
 	@Column

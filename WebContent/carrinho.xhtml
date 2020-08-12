@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+		<h:form id="form">
+			<p:growl id="growl" globalOnly="false" />
+
+			<p:panel header="Meu carrinho">
+				<div class="ui-fluid p-formgrid p-grid" style="padding: 10px;">
+					<p:dataTable id="dtCart" var="entity"
+						value="#{cartController.entity.items}">
+						<div class="p-field p-col-12 p-md-6">
+							<p:column headerText="Produto">
+								<h:outputLabel value="#{entity.product.name}" />
+							</p:column>
+						</div>
+
+						<div class="p-field p-col-12 p-md-2">
+							<p:column headerText="Valor">
+								<h:outputLabel value="R$ #{entity.product.value}" />
+							</p:column>
+						</div>
+
+						<div class="p-field p-col-12 p-md-2">
+							<p:column headerText="Quantidade">
+								<p:spinner min="0" prefix="Kg " stepFactor="0.25"
+									value="#{entity.quantity}">
+									<p:ajax listener="#{cartController.entity.getTotal()}"
+										update="@form" />
+								</p:spinner>
+								<p:commandButton icon="pi pi-trash" process="@form"
+									update="@form"
+									actionListener="#{cartController.removePurchase(entity)}"
+									action="#{cartController.entity.getTotal()}">
+								</p:commandButton>
+							</p:column>
+						</div>
+					</p:dataTable>
+
+					<div class="p-field p-col-12 p-md-6" style="padding: 30px 0;">
+						<p:toolbar>
+							<f:facet name="left">
+								<b><h:outputLabel value="Resumo do pedido" /></b>
+								<br />
+								<h:outputText
+									value="#{cartController.entity.items.size()} produtos" />
+							</f:facet>
+							<f:facet name="right">
+								<h:outputText value="R$ #{cartController.entity.getTotal()}" />
+							</f:facet>
+						</p:toolbar>
+					</div>
+
+					<p:commandButton value="Finalizar Compra"
+						action="#{cartController.save}" update="growl" process="@this"
+						disabled="#{cartController.entity.items.size() &lt; 1}" />
+
+				</div>
+
+			</p:panel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

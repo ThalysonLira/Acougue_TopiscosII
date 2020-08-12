@@ -1,0 +1,144 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 60px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.dialogDemo label {
+	line-height: 2.1em;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+		<h:form>
+			<p:growl id="growl" globalOnly="false" />
+			<p:panel id="panel">
+				<f:facet name="header">
+					<div align="center">
+						<h1>Cadastro de Estado</h1>
+					</div>
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<p:commandLink value="Nome: "
+									actionListener="#{stateController.openStateListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{stateController.getStateListener}" update="@form" />
+									<p:message for="itName" escape="false" />
+								</p:commandLink>
+								<p:inputText id="itName" value="#{stateController.entity.name}"
+									required="true" requiredMessage="Informe o nome." />
+
+								<p:outputLabel value="Abreviação: ">
+									<p:message for="itAbbreviation" escape="false" />
+								</p:outputLabel>
+								<p:inputText id="itAbbreviation"
+									value="#{stateController.entity.abbreviation}" required="true"
+									requiredMessage="Informe a abreviação." />
+
+								<p:commandLink value="Capital: "
+									actionListener="#{cityController.openCityListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{stateController.getCapitalListener}" update="@this itCapital" />
+									<p:message for="itCapital" escape="false" />
+								</p:commandLink>
+								<p:inputText id="itCapital"
+									value="#{stateController.entity.capital.name}" readonly="true"
+									requiredMessage="Informe a capital." />
+
+								<p:commandLink value="País: "
+									actionListener="#{countryController.openCountryListener}"
+									process="@this" update="@none">
+									<p:ajax event="dialogReturn"
+										listener="#{stateController.getCountryListener}" update="@this itCountry" />
+									<p:message for="itCountry" escape="false" />
+								</p:commandLink>
+								<p:inputText id="itCountry"
+									value="#{stateController.entity.country.name}" readonly="true"
+									requiredMessage="Informe a país." />
+
+								<p:outputLabel value="Cidades: ">
+									<p:dataTable id="dtListItem" var="entity"
+										value="#{stateController.entity.cities}">
+										<p:column headerText="Nome">
+											<h:outputLabel value="#{entity.name}" />
+										</p:column>
+										<p:column headerText="Abreviação">
+											<h:outputLabel value="#{entity.abbreviation}" />
+										</p:column>
+										<p:column headerText="Ação">
+											<p:commandButton icon="pi pi-trash" process="@form"
+												update="@form"
+												actionListener="#{stateController.removeState(entity)}">
+											</p:commandButton>
+										</p:column>
+									</p:dataTable>
+								</p:outputLabel>
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
+							update="@form" action="#{stateController.save}" />
+
+						<p:commandButton value="Limpar" process="@this" update="panel"
+							action="#{stateController.clear}">
+							<p:ajax update="@form" resetValues="true" />
+						</p:commandButton>
+
+					</f:facet>
+
+					<f:facet name="right">
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@form" update="@form" action="#{stateController.delete}">
+							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</p:panel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

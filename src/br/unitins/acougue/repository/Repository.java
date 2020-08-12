@@ -1,5 +1,7 @@
 package br.unitins.acougue.repository;
 
+import java.lang.reflect.ParameterizedType;
+
 import javax.persistence.EntityManager;
 
 import br.unitins.acougue.application.RepositoryException;
@@ -77,6 +79,13 @@ public class Repository<T extends DefaultEntity<T>> {
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao salvar uma transação.");
 		}
+	}
+	
+	public T findById(Integer id) {
+		final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass(); 
+		Class<T> theType = (Class<T>) (type).getActualTypeArguments()[0];
+		T t = (T) getEntityManager().find(theType, id);
+		return t;
 	}
 
 	public EntityManager getEntityManager() {

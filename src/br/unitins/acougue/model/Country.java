@@ -18,7 +18,10 @@ public class Country extends DefaultEntity<Country>{
 	@Column(nullable = false)
 	private String name;
 	
-	@JoinColumn(nullable = false)
+	@Column(nullable = false)
+	private String abbreviation;
+	
+	@JoinColumn
 	private City capital;
 	
 	@OneToMany(mappedBy = "country")
@@ -46,6 +49,14 @@ public class Country extends DefaultEntity<Country>{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
 	}
 
 	public City getCapital() {
