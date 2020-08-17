@@ -1,7 +1,10 @@
 package br.unitins.acougue.application;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.swing.text.MaskFormatter;
 
@@ -9,7 +12,19 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class Util {
 
+	// /images
+	public static final String PATH_IMAGES = File.separator + "images";
+
 	public static void main(String args[]) {
+	}
+
+	public static void redirect(String page) {
+		ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+		try {
+			external.redirect(external.getRequestContextPath() + page);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static String maskCpf(String value) {

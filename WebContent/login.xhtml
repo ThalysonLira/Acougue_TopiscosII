@@ -13,24 +13,64 @@
 			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 	</f:facet>
+
 	<title>Login</title>
-	<ui:insert name="head" />
+	<link rel="icon" type="image/png"
+		href="http://localhost:8080/Acougue_TopicosII/resources/layout/images/icon.png" />
 </h:head>
 
 <h:body>
-	<h:form>
-		<div>
-			<p:outputLabel value="Email" />
-			<br />
-			<p:inputText value="#{loginController.email}" />
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage name="/images/loading.gif" />
+	</p:dialog>
+
+	<h:form style="padding: 125px 0;">
+		<p:growl id="growl" globalOnly="false" />
+		<div align="center">
+			<p:panel id="panel" style="width:500px">
+				<f:facet name="header">
+					<img src="resources/layout/images/logo.png" height="50px" />
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<h:outputLabel value="Email" />
+								<p:inputText value="#{loginController.email}" />
+
+								<h:outputLabel value="Senha" />
+								<p:password value="#{loginController.password}" />
+							</p:panelGrid>
+
+
+						</div>
+					</div>
+				</div>
+
+				<f:facet name="footer">
+					<div align="center">
+						<p:commandButton style="margin-bottom: 10px;" icon="pi pi-sign-in" value="Acessar" action="#{loginController.login}"
+							process="@form" update="@form" />
+						<br />
+						<p:commandButton value="Esqueci a senha" icon="pi pi-question-circle"
+							action="#{loginController.forgotPassword}" process="@form"
+							update="@form" />
+					</div>
+				</f:facet>
+			</p:panel>
 		</div>
-		<div>
-			<p:outputLabel value="Senha" />
-			<br />
-			<p:password value="#{loginController.password}" />
-		</div>
-		<p:commandButton value="Acessar" action="#{loginController.login}"
-			process="@form" update="@form" />
 	</h:form>
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	<title>Sistema Acadêmico</title>
+
 </h:body>
 </html>

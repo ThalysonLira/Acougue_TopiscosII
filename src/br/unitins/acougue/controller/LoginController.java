@@ -22,6 +22,10 @@ public class LoginController {
 //			System.out.println("Erro");
 //		}
 	}
+	
+	public void forgotPassword() {
+		// TODO implementar
+	}
 
 	public String getEmail() {
 		return email;

@@ -1,36 +1,54 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core"
-   	  xmlns:ui="http://java.sun.com/jsf/facelets" 
-   	  xmlns:p="http://primefaces.org/ui" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" lang="en">
 
 <h:head>
-    <f:facet name="first">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-    </f:facet>
-    <title>Açougue</title>
-    <ui:insert name="head" />
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+
+	<title>Toro Loko</title>
+	<link rel="icon" type="image/png"
+		href="http://localhost:8080/Acougue_TopicosII/resources/layout/images/icon.png" />
+
+	<ui:insert name="head" />
 </h:head>
 
 <h:body>
-    <div class="layout-wrapper">
-        <ui:include src="./sidebar.xhtml" />
-        <ui:include src="./topbar.xhtml" />
+	<div class="layout-wrapper">
+		<ui:include src="./topbar.xhtml" />
+		<ui:include src="./sidebar.xhtml" />
 
-        <div class="layout-content">
-            <ui:insert name="content" />
-        </div>
+		<div class="layout-content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
 
-        <ui:include src="./footer.xhtml" />
-    </div>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				position="center center">
+				<p:graphicImage name="layout/images/loading.gif" />
+			</p:dialog>
+			<ui:insert name="content" />
+		</div>
 
-    <h:outputStylesheet name="style/primefaces.css"  />
-    <h:outputStylesheet name="style/primeflex.css"  />
-    <h:outputScript name="script/primefaces.js"  />
+		<ui:include src="./footer.xhtml" />
+	</div>
+
+	<h:outputStylesheet name="layout/style/layout.css" />
+	<h:outputScript name="layout/script/layout.js" />
+
+	<h:outputStylesheet name="layout/style/primeflex.css" />
+	<h:outputScript name="layout/script/primefaces.js" />
+
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
 </h:body>
 
 </html>

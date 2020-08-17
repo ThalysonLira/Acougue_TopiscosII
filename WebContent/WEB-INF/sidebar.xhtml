@@ -5,23 +5,52 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ph="http://primefaces.org/harmony">
 
-	<div class="layout-sidebar">
+	<div id="layout-sidebar" class="layout-sidebar">
+		<div class="profile">
+			<div class="picture">
+				<img src="http://localhost:8080/Acougue_TopicosII/resources/layout/images/user-image.png" />
+				<div class="overlay">
+					<a href="#" class="icon" title="Perfil de Usuário"> <i
+						class="pi pi-cog"></i>
+					</a>
+				</div>
+			</div>
+			<span class="username"><h:outputLabel
+					value="Bem vindo, faça login ou cadastre-se!" /></span>
+			<ul class="profile-options">
+				<li><a href="#" style="border-top: 0;">Alterar foto</a></li>
+				<li><a href="#">Alterar senha</a></li>
+				<li><a href="#">Atualizar perfil</a></li>
+				<li><a href="#">Notificações</a></li>
+			</ul>
+		</div>
+
 		<ul id="layout-menu" class="layout-menu">
-			<li><h:link outcome="/aluno">
-					<i class="pi pi-globe" />
-					<span>Sobre</span>
-				</h:link></li>
-
-			<li><h:link outcome="/aluno">
-					<i class="pi pi-globe" />
-					<span>Cadastro de Cliente</span>
-				</h:link></li>
-
-			<li><h:link outcome="/aluno">
-					<i class="pi pi-globe" />
-					<span>Contato</span>
-				</h:link></li>
+			<li><span style="border-top: 0;">Início</span></li>
+			<li><span class="opener">Cadastros <i
+					class="pi pi-chevron-down" />
+			</span>
+				<ul>
+					<li><a href="./cliente_fisico.xhtml">Cliente Físico</a></li>
+					<li><a href="./cliente_juridico.xhtml">Cliente Jurídico</a></li>
+					<li><a href="./fornecedor.xhtml">Fornecedor</a></li>
+					<li><a href="./funcionario.xhtml">Funcionário</a></li>
+					<li><a href="./produto_carne.xhtml">Produto</a></li>
+				</ul></li>
+			<li><span class="opener">Produtos <i
+					class="pi pi-chevron-down" /></span>
+				<ul>
+					<li><a href="#">Aves</a></li>
+					<li><a href="#">Bovinos</a></li>
+					<li><a href="#">Cordeiros</a></li>
+					<li><a href="#">Hambúrgueres</a></li>
+					<li><a href="#">Linguiças</a></li>
+					<li><a href="#">Miudezas</a></li>
+					<li><a href="#">Suínos</a></li>
+				</ul></li>
 		</ul>
+
+		<a href="#" id="menu-btn" class="menu-btn"><i class="pi pi-bars"></i></a>
 	</div>
 
 </ui:composition>
