@@ -43,8 +43,7 @@ body.layout-scroll-block {
 	border: 0;
 	font-size: 100%;
 	vertical-align: baseline;
-	background-image:
-		url('http://localhost:8080/Acougue_TopicosII/resources/layout/images/icon.png');
+	background-image: url(../images/icon.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	height: 100%;
@@ -55,6 +54,31 @@ body.layout-scroll-block {
 .layout-wrapper .layout-topbar .layout-topbar-content .topbar-logo {
 	max-width: 100%;
 	height: auto;
+}
+
+.layout-wrapper .layout-topbar .layout-topbar-content .icons {
+	position: absolute;
+	display: inline-block;
+	right: 0;
+	height: 25px;
+	width: 25px;
+}
+
+.layout-wrapper .layout-topbar .layout-topbar-content .icons a  {
+	height: 100%;
+	width: 100%;
+	display: block;
+}
+
+.layout-wrapper .layout-topbar .layout-topbar-content .icons #cart {
+	background-image: url(../images/icons/shopping-cart.png);
+	background-repeat: no-repeat;
+	background-size: auto;
+	background-size: contain;
+	height: 100%;
+	width: 100%;
+	/*background-image: url(../images/icons/shopping-cart.svg);*/
+	/*color: #7f888f;*/
 }
 
 .layout-wrapper .layout-topbar .layout-topbar-content .topbar-link {
