@@ -37,7 +37,7 @@ public class SaleController extends Controller<Sale> {
 	public void getClientListener(SelectEvent event) {
 		// TODO adicionar verificação de usuário logado para cliente e funcionário
 		Client client = (Client) event.getObject();
-		getEntity().getCart().setClient(client);
+		getEntity().getCart().setUser(client.getUser());
 //		entity.setSalesman("logUser");
 	}
 

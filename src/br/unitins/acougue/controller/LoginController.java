@@ -3,24 +3,29 @@ package br.unitins.acougue.controller;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+import br.unitins.acougue.application.Session;
+import br.unitins.acougue.application.Util;
+import br.unitins.acougue.model.User;
+import br.unitins.acougue.repository.UserRepository;
+
 @Named @RequestScoped
 public class LoginController {
 
 	private String email;
 	private String password;
 
-	public void login() {
+	public String login() {
 		// TODO Consultar BD
-//		EntityManager em = JPAFactory.getEntityManager();
-//		Query query = em.createQuery("SELECT u " + "FROM User u " + "WHERE u.email LIKE :email");
-//		query.setParameter("email", "%" + getEmail() + "%");
-//		User user = (User) query.getSingleResult();
-//		
-//		if (user.getPassword().equals(getPassword())) {
-//			System.out.println("Entrou");
-//		} else {
-//			System.out.println("Erro");
-//		}
+		UserRepository repository = new UserRepository();
+		User user = (User) repository.validateLogin(email, password);
+		
+		if (user != null) {
+			Session.getInstance().setAttribute("logUser", user);
+			return "/index.xhtml?faces-redirect=true";
+		}
+		
+		Util.addMessageError("Login ou Senha inválido.");
+		return "";
 	}
 	
 	public void forgotPassword() {

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import br.unitins.acougue.application.Session;
+import br.unitins.acougue.controller.TemplateController;
 import br.unitins.acougue.model.validator.Validator;
 
 @Entity
@@ -19,7 +21,7 @@ public class Cart extends DefaultEntity<Cart> {
 	private Double total;
 	
 	@JoinColumn(nullable = false)
-	private Client client;
+	private User user;
 
 	@OneToOne @JoinColumn
 	private Sale sale;
@@ -59,14 +61,14 @@ public class Cart extends DefaultEntity<Cart> {
 		this.total = total;
 	}
 
-	public Client getClient() {
-		if (client == null)
-			client = new Client();
-		return client;
+	public User getUser() {
+		if (user == null)
+			user = (User) Session.getInstance().getAttribute("logUser");
+		return user;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Sale getSale() {
