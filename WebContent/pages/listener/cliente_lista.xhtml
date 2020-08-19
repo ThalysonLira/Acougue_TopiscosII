@@ -6,18 +6,22 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Consulta de Estados</title>
+	<title>Consulta de Cliente</title>
 </h:head>
 
 <h:body>
 
-	<p:ajaxStatus onstart="PF('statusDialog').show()"
-		onsuccess="PF('statusDialog').hide()" />
+	<div class="layout-content">
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
 
-	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-		closable="false" resizable="false" showHeader="false">
-		<p:graphicImage name="/images/loading.gif" />
-	</p:dialog>
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false"
+			position="center center">
+			<p:graphicImage name="layout/images/loading.gif" />
+		</p:dialog>
+		<ui:insert name="content" />
+	</div>
 
 	<h:form>
 		<p:growl id="growl" globalOnly="false" />
@@ -28,10 +32,10 @@
 						<div class="ui-g-12">
 							<div class="card card-w-title">
 								<div class="ui-inputgroup">
-									<p:inputText id="itSearch" value="#{stateListener.search}"
-										placeholder="Informe o nome do estado ..." />
+									<p:inputText id="itSearch" value="#{clientListener.search}"
+										placeholder="Informe o nome do cliente ..." />
 									<p:commandButton value="Pesquisar"
-										actionListener="#{stateListener.search}"
+										actionListener="#{clientListener.search}"
 										process="@this itSearch" update="dtList" />
 								</div>
 							</div>
@@ -46,28 +50,27 @@
 					<div class="card card-w-title">
 
 						<p:dataTable id="dtList" var="entity" rowIndexVar="row"
-							paginator="false" reflow="true" value="#{stateListener.list}">
+							paginator="false" reflow="true" value="#{clientListener.list}">
 							<p:column headerText="Nome">
 								<p:commandLink value="#{entity.name}"
-									action="#{stateListener.select(entity.id)}" process="@this"
+									action="#{clientListener.select(entity.id)}" process="@this"
 									update="@form" resetValues="true" />
 							</p:column>
 
-							<p:column headerText="Abreviação">
-								<h:outputText value="#{entity.abbreviation}" />
+							<p:column headerText="Email">
+								<h:outputText value="#{entity.user.email}" />
 							</p:column>
 
-							<p:column headerText="Capital">
-								<h:outputText
-									value="#{entity.capital.name} - #{entity.capital.state.abbreviation}" />
+							<p:column headerText="Data de Nascimento">
+								<h:outputLabel value="#{entity.birthDate}" />
 							</p:column>
 
-							<p:column headerText="País">
-								<h:outputText value="#{entity.country.name}" />
+							<p:column headerText="Tipo">
+								<h:outputLabel value="#{entity.type}" />
 							</p:column>
 
 							<f:facet name="footer">
-							        Total de #{stateListener.list.size()} estados.
+							        Total de #{clientListener.list.size()} clientes.
 							    </f:facet>
 						</p:dataTable>
 					</div>

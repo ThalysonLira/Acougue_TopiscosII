@@ -45,7 +45,7 @@ public class ProviderListener extends Listener<Person> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/fornecedor_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/fornecedor_lista", options, null);
 	}
 
 	@Override

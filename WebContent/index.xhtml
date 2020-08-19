@@ -6,32 +6,23 @@
 
 	<ui:define name="content">
 
-		<!-- Conteúdo -->
+		<p:carousel value="#{productController.listProduct}" headerText="Responsive"
+			var="entity" itemStyle="text-align:center" responsive="true">
+			<p:panelGrid columns="2" style="width:100%;margin:10px 0px;"
+				columnClasses="label,value" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<f:facet name="header">
+					<p:graphicImage name="demo/meat/#{entity.brand}.gif" />
+				</f:facet>
 
-		<section id="sobre" class="layout-content">
-			<h2>SOBRE</h2>
-			<p>Somos uma empresa voltada a ...</p>
-			<a href="#contato" class="botao">ENTRAR EM CONTATO</a>
-		</section>
+				<h:outputText value="#{entity.name}" />
 
-		<section id="contato" class="layout-content">
-			<h2>CONTATO</h2>
-			<p>Entre em contato conosco.</p>
-			<div>
-				<img src="https://img.icons8.com/color/48/000000/whatsapp.png"
-					alt="Fone" />
-				<p>
-					<a href="tel:xx00000000">(xx) 0000-0000</a>
-				</p>
-			</div>
-			<div>
-				<img src="https://img.icons8.com/color/48/000000/new-post.png"
-					alt="Mail" />
-				<p>
-					<a href="mailto:acougue.com.br">acougue.com.br</a>
-				</p>
-			</div>
-		</section>
+			</p:panelGrid>
+
+			<f:facet name="footer">
+                In total there are #{productController.listProduct.size()} cars.
+        </f:facet>
+		</p:carousel>
 
 	</ui:define>
 </ui:composition>

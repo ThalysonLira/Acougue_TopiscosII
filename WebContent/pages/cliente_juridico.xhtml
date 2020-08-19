@@ -122,41 +122,12 @@
 
 							<div class="p-field p-col-12 p-md-1">
 								<p:inputMask id="itAreaCode"
-									value="#{legalClientController.phone.areaCode}" mask="( 99 )"/>
+									value="#{legalClientController.entity.phone.areaCode}" mask="( 99 )"/>
 							</div>
 
 							<div class="p-field p-col-12 p-md-9">
 								<p:inputMask id="itPhoneNumber"
-									value="#{legalClientController.phone.number}" mask="99999-9999"/>
-							</div>
-
-							<div class="p-field p-col-12 p-md-1">
-								<p:commandButton icon="pi pi-save"
-									update="itAreaCode itPhoneNumber dtPhones"
-									actionListener="#{legalClientController.savePhone()}">
-								</p:commandButton>
-							</div>
-
-							<div class="p-field p-col-12 p-md-12">
-								<p:dataTable id="dtPhones" var="entity"
-									value="#{legalClientController.entity.phones}">
-									<p:column headerText="Código de Área">
-										<h:outputLabel value="#{entity.areaCode}" />
-									</p:column>
-									<p:column headerText="Número">
-										<h:outputLabel value="#{entity.number}" />
-									</p:column>
-									<p:column headerText="Ação">
-										<p:commandButton icon="pi pi-pencil"
-											update="form:itAreaCode form:itPhoneNumber form:dtPhones"
-											actionListener="#{legalClientController.editPhone(entity)}">
-										</p:commandButton>
-										<p:commandButton icon="pi pi-trash"
-											update="form:itAreaCode form:itPhoneNumber form:dtPhones"
-											actionListener="#{legalClientController.removePhone(entity)}">
-										</p:commandButton>
-									</p:column>
-								</p:dataTable>
+									value="#{legalClientController.entity.phone.number}" mask="99999-9999"/>
 							</div>
 
 							<div class="p-field p-col-12 p-md-12">
@@ -226,7 +197,7 @@
 								<h:panelGrid columns="2" columnClasses="label, value">
 									<h:outputText value="Telefones cadastrados: " />
 									<h:outputText
-										value="#{legalClientController.entity.phones.size()}" />
+										value="#{legalClientController.entity.phone.areaCode} #{legalClientController.entity.phone.number}" />
 
 									<h:outputText value="Email: *" />
 									<h:outputText

@@ -82,20 +82,20 @@ public class PhysicalClientController extends Controller<Person> {
 		return repository.findByState(getState());
 	}
 
-	public void savePhone() {
-		if (!getEntity().getPhones().contains(getPhone()))
-			getEntity().getPhones().add(phone);
-		setPhone(null);
-	}
-
-	public void editPhone(Phone phone) {
-		setPhone(phone);
-	}
-
-	public void removePhone(Phone phone) {
-		getEntity().getPhones().remove(phone);
-		setPhone(null);
-	}
+//	public void savePhone() {
+//		if (!getEntity().getPhones().contains(getPhone()))
+//			getEntity().getPhones().add(phone);
+//		setPhone(null);
+//	}
+//
+//	public void editPhone(Phone phone) {
+//		setPhone(phone);
+//	}
+//
+//	public void removePhone(Phone phone) {
+//		getEntity().getPhones().remove(phone);
+//		setPhone(null);
+//	}
 
 	@Override
 	public void save() {

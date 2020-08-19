@@ -1,11 +1,14 @@
 package br.unitins.acougue.application;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.swing.text.MaskFormatter;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,9 +16,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class Util {
 
 	// /images
-	public static final String PATH_IMAGES = File.separator + "images";
+	public static final String PATH_IMAGES = File.separator + "dev" + File.separator + "images";
+	// /images/product
+	public static final String PATH_IMAGES_PRODUCT = PATH_IMAGES + File.separator + "product";
 
 	public static void main(String args[]) {
+		System.out.println(System.getProperty("user.home") + PATH_IMAGES_PRODUCT);
 	}
 
 	public static void redirect(String page) {
@@ -65,6 +71,36 @@ public class Util {
 		} catch (ParseException e) {
 			return value;
 		}
+	}
+	
+	public static boolean saveImageProduct(InputStream inputStream, String imageType, int idProduct) {
+		// Exemplo da maquina do janio: /home/janio/images/professor
+		String directory = System.getProperty("user.home") + PATH_IMAGES_PRODUCT;
+		
+		// Criando os diretorios caso nao exista
+		File file = new File(directory);
+		if (!file.exists()) {
+			file.mkdirs(); // mkdirs - cria arquivo ou directory (caso o directory anterior nao exeista ele cria tambem)
+		}
+		
+		try {
+			// criando o espaco de memoria para armazenamento de uma imagem
+			// inputStream - eh o fluxo de dados de entrada 
+			BufferedImage bImage = ImageIO.read(inputStream);
+			
+			// estrutura final do arquivo ex: /home/janio/images/professor/01.png
+			File finalFile = new File(directory + File.separator + idProduct + "." + imageType);
+			// salvando a imagem
+			// buffer da imagem, png/gif, 01.png
+			ImageIO.write(bImage, imageType, finalFile);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 
 	public static String encrypt(String value) {

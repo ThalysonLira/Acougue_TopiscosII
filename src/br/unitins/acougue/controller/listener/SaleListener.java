@@ -44,7 +44,7 @@ public class SaleListener extends Listener<Sale> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/venda_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/venda_lista", options, null);
 	}
 
 	@Override

@@ -74,3 +74,12 @@ $('.menu-btn').on('click', '.layout-sidebar.active', function(e) {
 	e.stopPropagation();
 	$('.layout-sidebar').removeClass('active');
 });
+
+// Redirect
+function redirectTo(url) {
+	window.location = "http://localhost:8080/Acougue_TopicosII/faces" + url;
+}
+
+function maintenance() {
+	alert("Desculpe, esta opção está em manutenção. Em breve retornaremos.");
+}

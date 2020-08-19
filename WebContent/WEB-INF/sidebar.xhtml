@@ -8,7 +8,8 @@
 	<div id="layout-sidebar" class="layout-sidebar">
 		<div class="profile">
 			<div class="picture">
-				<img src="http://localhost:8080/Acougue_TopicosII/resources/layout/images/user-image.png" />
+				<img
+					src="http://localhost:8080/Acougue_TopicosII/resources/layout/images/user-image.png" />
 				<div class="overlay">
 					<a href="#" class="icon" title="Perfil de Usuário"> <i
 						class="pi pi-cog"></i>
@@ -16,7 +17,13 @@
 				</div>
 			</div>
 			<span class="username"><h:outputLabel
-					value="Bem vindo, faça login ou cadastre-se!" /></span>
+					rendered="#{templateController.logUser == null}">Bem vindo, faça <a
+						onclick="redirectTo('/login.xhtml')">login</a> ou <a
+						onclick="maintenance()">cadastre-se</a>!</h:outputLabel> <h:outputLabel
+					rendered="#{templateController.logUser != null}">Bem vindo, #{templateController.logUser.email}. 
+					<a onclick="redirectTo('/login.xhtml')">(Sair)</a>
+				</h:outputLabel></span>
+
 			<ul class="profile-options">
 				<li><a href="#" style="border-top: 0;">Alterar foto</a></li>
 				<li><a href="#">Alterar senha</a></li>
@@ -26,16 +33,22 @@
 		</div>
 
 		<ul id="layout-menu" class="layout-menu">
-			<li><span style="border-top: 0;">Início</span></li>
+			<li><span style="border-top: 0;" onclick="redirectTo('/index.xhtml')">Início</span></li>
 			<li><span class="opener">Cadastros <i
 					class="pi pi-chevron-down" />
 			</span>
 				<ul>
-					<li><a href="../pages/cliente_fisico.xhtml">Cliente Físico</a></li>
-					<li><a href="../pages/cliente_juridico.xhtml">Cliente Jurídico</a></li>
-					<li><a href="../pages/fornecedor.xhtml">Fornecedor</a></li>
-					<li><a href="../pages/funcionario.xhtml">Funcionário</a></li>
-					<li><a href="../pages/produto_carne.xhtml">Produto</a></li>
+				<li><a onclick="redirectTo('/pages/cidade.xhtml')">Cidade</a></li>
+					<li><a onclick="redirectTo('/pages/cliente_fisico.xhtml')">Cliente
+							Físico</a></li>
+					<li><a onclick="redirectTo('/pages/cliente_juridico.xhtml')">Cliente
+							Jurídico</a></li>
+					<li><a onclick="redirectTo('/pages/estado.xhtml')">Estado</a></li>
+					<li><a onclick="redirectTo('/pages/fornecedor.xhtml')">Fornecedor</a></li>
+					<li><a onclick="redirectTo('/pages/funcionario.xhtml')">Funcionário</a></li>
+					<li><a onclick="redirectTo('/pages/pais.xhtml')">País</a></li>
+					<li><a onclick="redirectTo('/pages/produto_carne.xhtml')">Produto</a></li>
+					<li><a onclick="redirectTo('/pages/venda.xhtml')">Venda</a></li>
 				</ul></li>
 			<li><span class="opener">Produtos <i
 					class="pi pi-chevron-down" /></span>

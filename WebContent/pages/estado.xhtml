@@ -78,7 +78,8 @@
 						</div>
 					</div>
 				</div>
-				<p:toolbar>
+				
+				<p:toolbar style="background-color: transparent; border: 0;">
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
 							update="@form" action="#{stateController.save}" />
@@ -87,7 +88,6 @@
 							action="#{stateController.clear}">
 							<p:ajax update="@form" resetValues="true" />
 						</p:commandButton>
-
 					</f:facet>
 
 					<f:facet name="right">

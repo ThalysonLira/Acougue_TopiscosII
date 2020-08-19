@@ -45,7 +45,7 @@ public class CountryListener extends Listener<Country> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/pais_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/pais_lista", options, null);
 	}
 
 	@Override

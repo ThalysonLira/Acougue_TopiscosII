@@ -1,5 +1,6 @@
 package br.unitins.acougue.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -37,7 +38,7 @@ public class ClientRepository extends Repository<Person> {
 
 		return query.getResultList();
 	}
-	
+
 	public List<Client> findByCnpj(String cnpj) {
 
 		StringBuffer jpql = new StringBuffer();
@@ -51,7 +52,7 @@ public class ClientRepository extends Repository<Person> {
 
 		return query.getResultList();
 	}
-	
+
 	public List<Client> findByNameOrCpf_Cnpj(String search) {
 
 		StringBuffer jpql = new StringBuffer();
@@ -70,22 +71,23 @@ public class ClientRepository extends Repository<Person> {
 
 		return query.getResultList();
 	}
-	
+
 	public boolean contains(Integer id, String search) {
-		
+
 		StringBuffer jpql = new StringBuffer();
 		jpql.append("SELECT COUNT(*) ");
 		jpql.append("FROM Client c ");
 		jpql.append("WHERE c.cpf = ? ");
 		jpql.append("OR c.cnpj = ? ");
 		jpql.append("AND c.id <> ? ");
-		
+
 		Query query = getEntityManager().createNativeQuery(jpql.toString());
 		query.setParameter(1, Util.maskCpf(search));
 		query.setParameter(2, Util.maskCnpj(search));
 		query.setParameter(3, id == null ? -1 : id);
-		
-		return (long) query.getSingleResult() == 0 ? false : true;
+
+		BigInteger result = (BigInteger) query.getSingleResult();
+		return (result == null || result.equals(BigInteger.ZERO)) ? false : true;
 	}
 
 }

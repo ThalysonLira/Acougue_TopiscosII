@@ -45,7 +45,7 @@ public class StateListener extends Listener<State> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/estado_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/estado_lista", options, null);
 	}
 
 	@Override

@@ -3,13 +3,13 @@ package br.unitins.acougue.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import br.unitins.acougue.application.Session;
-import br.unitins.acougue.controller.TemplateController;
 import br.unitins.acougue.model.validator.Validator;
 
 @Entity
@@ -26,7 +26,7 @@ public class Cart extends DefaultEntity<Cart> {
 	@OneToOne @JoinColumn
 	private Sale sale;
 
-	@JoinColumn
+	@OneToOne(targetEntity = Item.class, cascade = CascadeType.ALL)
 	private List<Item> items;
 
 	public Cart() {

@@ -15,7 +15,6 @@ public class LoginController {
 	private String password;
 
 	public String login() {
-		// TODO Consultar BD
 		UserRepository repository = new UserRepository();
 		User user = (User) repository.validateLogin(email, password);
 		

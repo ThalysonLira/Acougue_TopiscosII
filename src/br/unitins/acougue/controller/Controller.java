@@ -7,11 +7,12 @@ import javax.persistence.EntityManager;
 import br.unitins.acougue.application.RepositoryException;
 import br.unitins.acougue.application.Util;
 import br.unitins.acougue.application.ValidateException;
+import br.unitins.acougue.application.VersionException;
 import br.unitins.acougue.factory.JPAFactory;
 import br.unitins.acougue.model.DefaultEntity;
 import br.unitins.acougue.repository.Repository;
 
-public abstract class Controller<T extends DefaultEntity<T>> implements Serializable {
+public abstract class Controller<T extends DefaultEntity<? super T>> implements Serializable {
 
 	private static final long serialVersionUID = 3135991960979657083L;
 
@@ -22,27 +23,35 @@ public abstract class Controller<T extends DefaultEntity<T>> implements Serializ
 	}
 
 	public void save() {
+		if (safeSave()) {
+			clear();
+			Util.addMessageInfo("Cadastro realizado com sucesso.");
+		}
+	}
+	
+	protected boolean safeSave() {
 		Repository<T> r = new Repository<T>();
-
 		try {
-			if (getEntity().getValidator() != null)
-				getEntity().getValidator().validate(getEntity());
-			r.beginTransaction();;
-			r.save(getEntity());
-			r.commitTransaction();
+			r.beginTransaction();
+			setEntity(r.save(getEntity()));
+			r.commitTransaction();	
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 			r.rollbackTransaction();
 			Util.addMessageError("Erro ao salvar.");
-			setEntity(null);
-		} catch (ValidateException v) {
-			System.out.println(v.getMessage());
-			Util.addMessageError(v.getMessage());
-			return;
+			return false;
+		} catch (VersionException e) {
+			e.printStackTrace();
+			r.rollbackTransaction();
+			Util.addMessageError("Erro ao salvar. Por favor, atualize a página e faça o cadastro novamente.");
+			return false;
+		} catch (ValidateException e) {
+			System.out.println(e.getMessage());
+			r.rollbackTransaction();
+			Util.addMessageError(e.getMessage());
+			return false;
 		}
-
-		this.clear();
-		Util.addMessageInfo("Cadastro realizado com sucesso.");
+		return true;
 	}
 
 	public void delete() {

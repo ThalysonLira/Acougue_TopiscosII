@@ -45,7 +45,7 @@ public class LegalClientListener extends Listener<Person>{
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/cliente_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/cliente_lista", options, null);
 	}
 
 	@Override

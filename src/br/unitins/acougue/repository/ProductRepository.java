@@ -49,4 +49,18 @@ public class ProductRepository extends Repository<Product> {
 		return query.getResultList();
 	}
 	
+	public List<Product> findByAvailable(String name) {
+
+		StringBuffer jpql = new StringBuffer();
+		jpql.append("SELECT p ");
+		jpql.append("FROM Product p ");
+		jpql.append("WHERE upper(p.name) = upper(:name) ");
+		jpql.append("AND p.availableQuantity >= 1 ");
+
+		Query query = getEntityManager().createQuery(jpql.toString());
+		query.setParameter("name", "%" + name + "%");
+
+		return query.getResultList();
+	}
+	
 }

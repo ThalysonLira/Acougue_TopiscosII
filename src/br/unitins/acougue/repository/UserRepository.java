@@ -1,5 +1,6 @@
 package br.unitins.acougue.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -66,7 +67,8 @@ public class UserRepository extends Repository<User> {
 		query.setParameter(1, email);
 		query.setParameter(2, id == null ? -1 : id);
 
-		return (long) query.getSingleResult() == 0 ? false : true;
+		BigInteger result = (BigInteger) query.getSingleResult();
+		return (result == null || result.equals(BigInteger.ZERO)) ? false : true;
 	}
 
 }

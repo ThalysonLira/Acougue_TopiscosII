@@ -8,13 +8,9 @@
 		<div class="layout-topbar-content">
 			<div class="logo" />
 			<div class="icons">
-				<a href="../carrinho.xhtml"><img id="cart" /></a>
+				<a onclick="redirectTo('/carrinho.xhtml')"><img id="cart" src="../resources/layout/images/icons/shopping-cart.png"/></a>
 			</div>
 
-			<p:commandLink value="Olá #{templateController.logUser} (Sair)"
-				rendered="#{templateController.logUser != null}"
-				styleClass="topbar-link" process="@this"
-				actionListener="#{templateController.finishSession}" />
 		</div>
 	</div>
 

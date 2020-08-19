@@ -41,7 +41,7 @@
 								listener="#{saleController.getClientListener}" update="@form" />
 						</p:commandLink>
 						<p:inputText id="itBuyer"
-							value="#{saleController.entity.cart.client.name}" readonly="true"
+							value="#{saleController.entity.cart.user.email}" readonly="true"
 							requiredMessage="Informe o comprador." />
 					</div>
 
@@ -93,7 +93,7 @@
 					</div>
 				</div>
 
-				<p:toolbar>
+				<p:toolbar style="background-color: transparent; border: 0;">
 					<f:facet name="left">
 						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
 							update="@form" action="#{saleController.save}" />

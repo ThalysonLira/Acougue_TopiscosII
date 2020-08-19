@@ -44,7 +44,7 @@ public class CartListener extends Listener<Cart> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/carrinho_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/carrinho_lista", options, null);
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class CityListener extends Listener<City> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/cidade_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/cidade_lista", options, null);
 	}
 
 	@Override

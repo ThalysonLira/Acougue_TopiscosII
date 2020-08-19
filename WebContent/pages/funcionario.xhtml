@@ -138,41 +138,12 @@
 
 							<div class="p-field p-col-12 p-md-1">
 								<p:inputText id="itAreaCode"
-									value="#{employeeController.phone.areaCode}" />
+									value="#{employeeController.entity.phone.areaCode}" />
 							</div>
 
 							<div class="p-field p-col-12 p-md-9">
 								<p:inputText id="itPhoneNumber"
-									value="#{employeeController.phone.number}" />
-							</div>
-
-							<div class="p-field p-col-12 p-md-1">
-								<p:commandButton icon="pi pi-save"
-									update="itAreaCode itPhoneNumber dtPhones"
-									actionListener="#{employeeController.savePhone()}">
-								</p:commandButton>
-							</div>
-
-							<div class="p-field p-col-12 p-md-12">
-								<p:dataTable id="dtPhones" var="entity"
-									value="#{employeeController.entity.phones}">
-									<p:column headerText="Código de Área">
-										<h:outputLabel value="( #{entity.areaCode} )" />
-									</p:column>
-									<p:column headerText="Número">
-										<h:outputLabel value="#{entity.number}" />
-									</p:column>
-									<p:column headerText="Ação">
-										<p:commandButton icon="pi pi-pencil" process="@this"
-											update="form:itAreaCode form:itPhoneNumber form:dtPhones"
-											actionListener="#{employeeController.editPhone(entity)}">
-										</p:commandButton>
-										<p:commandButton icon="pi pi-trash" process="@this"
-											update="form:itAreaCode form:itPhoneNumber form:dtPhones"
-											actionListener="#{employeeController.removePhone(entity)}">
-										</p:commandButton>
-									</p:column>
-								</p:dataTable>
+									value="#{employeeController.entity.phone.number}" />
 							</div>
 
 							<div class="p-field p-col-12 p-md-12">
@@ -243,7 +214,7 @@
 								<h:panelGrid columns="2" columnClasses="label, value">
 									<h:outputText value="Telefones cadastrados: " />
 									<h:outputText
-										value="#{employeeController.entity.phones.size()}" />
+										value="(#{employeeController.entity.phone.areaCode}) #{employeeController.entity.phone.number}" />
 
 									<h:outputText value="Email: *" />
 									<h:outputText id="itEmail"
@@ -260,7 +231,7 @@
 				</p:tab>
 			</p:wizard>
 
-			<p:toolbar>
+			<p:toolbar  style="background-color: transparent; border: 0;">
 				<f:facet name="left">
 					<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
 						update="@form" action="#{employeeController.save}" />

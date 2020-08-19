@@ -43,7 +43,7 @@ public class MeatListener extends Listener<Product> {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");  
 
-        PrimeFaces.current().dialog().openDynamic("/listener/produto_lista", options, null);
+        PrimeFaces.current().dialog().openDynamic("/pages/listener/produto_lista", options, null);
 	}
 
 	@Override

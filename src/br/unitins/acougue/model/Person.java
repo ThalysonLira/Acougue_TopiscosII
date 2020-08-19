@@ -1,24 +1,21 @@
 package br.unitins.acougue.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@MappedSuperclass @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public abstract class Person extends DefaultEntity<Person> {
 
 	private static final long serialVersionUID = -8416462140759250308L;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL) @JoinColumn(unique = true)
 	private User user;
 	
 	@Column(nullable = false)
@@ -27,8 +24,8 @@ public abstract class Person extends DefaultEntity<Person> {
 	@JoinColumn
 	private Address address;
 	
-	@JoinColumn
-	private List<Phone> phones;
+	@OneToOne(cascade = CascadeType.ALL) @JoinColumn(unique = true)
+	private Phone phone;
 	
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
@@ -37,12 +34,12 @@ public abstract class Person extends DefaultEntity<Person> {
 		super();
 	}
 
-	public Person(User user, String name, Address address, List<Phone> phones, Date birthDate) {
+	public Person(User user, String name, Address address, Phone phone, Date birthDate) {
 		super();
 		this.user = user;
 		this.name = name;
 		this.address = address;
-		this.phones = phones;
+		this.phone = phone;
 		this.birthDate = birthDate;
 	}
 
@@ -74,14 +71,14 @@ public abstract class Person extends DefaultEntity<Person> {
 		this.address = address;
 	}
 
-	public List<Phone> getPhones() {
-		if (phones == null)
-			phones = new ArrayList<Phone>();
-		return phones;
+	public Phone getPhone() {
+		if (phone == null)
+			phone = new Phone();
+		return phone;
 	}
 
-	public void setPhones(List<Phone> phones) {
-		this.phones = phones;
+	public void setPhone(Phone phone) {
+		this.phone = phone;
 	}
 
 	public Date getBirthDate() {
